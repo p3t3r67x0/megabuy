@@ -21,6 +21,7 @@ export class UsersComponent implements OnInit {
   constructor(private http: Http, private data: DataService, private auth: AuthService) {
     this.BASE_URL = 'http://localhost:5000';
     this.headers = new Headers({ 'content-type': 'application/json' });
+    this.changeStatus();
   }
 
   ngOnInit() {
@@ -36,6 +37,10 @@ export class UsersComponent implements OnInit {
       .catch((err) => {
         console.log(err.json());
       });
+  }
+
+  changeStatus() {
+    this.data.changeStatus(true);
   }
 
   loadUser(token) {

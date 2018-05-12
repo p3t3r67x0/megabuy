@@ -25,18 +25,22 @@ export class RegisterComponent implements OnInit {
     this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
   }
 
+  changeStatus() {
+    this.data.changeStatus(true);
+  }
 
   onRegister(): void {
     this.auth.register(this.user)
       .then((user) => {
-        console.log(user.json());
+        // console.log(user.json());
 
         if (user.json().status === 'fail') {
           this.error = user.json();
           $('#myModal').modal();
         } else {
-          localStorage.setItem('token', user.json().auth_token);
-          this.router.navigateByUrl('/status');
+          this.changeStatus();
+          localStorage.setItem('token', user.json().token);
+          this.router.navigateByUrl('/users');
         }
       })
       .catch((err) => {
