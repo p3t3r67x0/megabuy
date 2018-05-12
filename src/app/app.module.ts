@@ -14,6 +14,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { AuthService } from './services/auth.service';
 import { EnsureAuthenticatedService } from './services/ensure-authenticated.service';
 import { LoginRedirectService } from './services/login-redirect.service';
+import { DataService } from './services/data.service';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { LoginRedirectService } from './services/login-redirect.service';
   providers: [
     AuthService,
     EnsureAuthenticatedService,
-    LoginRedirectService
+    LoginRedirectService,
+    DataService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { AuthService } from '../../services/auth.service';
+import { DataService } from '../../services/data.service';
 import { User } from '../../models/user';
 
 
@@ -17,19 +18,13 @@ export class UsersComponent implements OnInit {
   token: string;
   users: User[];
 
-  constructor(private http: Http, private auth: AuthService) {
+  constructor(private http: Http, private data: DataService, private auth: AuthService) {
     this.BASE_URL = 'http://localhost:5000';
     this.headers = new Headers({ 'content-type': 'application/json' });
   }
 
   ngOnInit() {
-    this.token = localStorage.getItem('token');
-
-    if (this.token) {
-      this.isLoggedIn = true;
-    } else {
-      this.isLoggedIn = false;
-    }
+    this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
 
     const token = localStorage.getItem('token');
 

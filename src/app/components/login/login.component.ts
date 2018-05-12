@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { DataService } from '../../services/data.service';
 import { User } from '../../models/user';
 
 declare var jquery: any;
@@ -17,24 +18,21 @@ export class LoginComponent implements OnInit {
   error: any = {};
   token: string;
 
-  constructor(private router: Router, private auth: AuthService) {
+  constructor(private router: Router, private data: DataService, private auth: AuthService) {
   }
 
-  ngOnInit(): void {
-    this.token = localStorage.getItem('token');
+  ngOnInit() {
+    this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
+  }
 
-    if (this.token) {
-      this.isLoggedIn = true;
-    } else {
-      this.isLoggedIn = false;
-    }
+  changeStatus() {
+    this.data.changeStatus(true);
   }
 
   onLogin(): void {
     this.auth.login(this.user)
       .then((user) => {
-        this.isLoggedIn = true;
-        this.auth.isLoggedIn = this.isLoggedIn;
+        this.changeStatus();
         localStorage.setItem('token', user.json().token);
         this.router.navigateByUrl('/users');
       })

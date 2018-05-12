@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { DataService } from '../../services/data.service';
 import { User } from '../../models/user';
 
 declare var jquery: any;
@@ -14,12 +15,15 @@ declare var $: any;
 })
 export class RegisterComponent implements OnInit {
   user: User = new User();
+  isLoggedIn: boolean;
   users: String[];
   error: any = {};
 
-  constructor(private router: Router, private auth: AuthService) { }
+  constructor(private router: Router, private data: DataService, private auth: AuthService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
+  }
 
 
   onRegister(): void {
