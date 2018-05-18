@@ -43,11 +43,11 @@ export class AuthService {
     return this.http.post(url, user, { headers: this.headers }).toPromise();
   }
 
-  ensureAuthenticated(token): Promise<any> {
+  loginStatus(token): Promise<any> {
     let url: string;
     let headers: Headers;
 
-    url = `${this.BASE_URL}/users`;
+    url = `${this.BASE_URL}/status`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

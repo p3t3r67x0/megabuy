@@ -1,10 +1,45 @@
 <div class="row">
-  <div class="col-md-4">
-    <h1>Users</h1>
-    <hr><br>
-    {{ message }}
-    <div *ngFor="let user of users">
-      {{ user.name }}<br> {{ user.email }}<br> {{ user.admin }}<br><br>
+  <div class="col-xs-12">
+    <h1>Users</h1> {{ length }}
+    <hr>
+    <div class="col-xs-12 margin-bottom-24">
+      <ul class="list-unstyled">
+        <li class="tender row" *ngFor="let user of users">
+          <div class="col-xs-12 padding-12">
+            <button *ngIf="isAdmin" class="pull-right btn btn-primary" (click)="showInputField(user.public_id)">Edit</button>
+            <strong>
+              {{ user.name }}
+            </strong>
+            <br> {{ user.email }}
+          </div>
+          <div class="col-xs-12 padding-12" id="{{ user.public_id }}">
+            <div *ngIf="editField == user.public_id" class="row">
+              <div class="col-sm-6 col-md-4">
+                <label for="{{ user.public_id }}-name">Name</label><br>
+                <input style="width: 100%" (blur)="updateEntry(user)" [(ngModel)]="user.name" type="text" placeholder="Mr. Example" name="name" id="{{ user.public_id }}-name"><br>
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="{{ user.public_id }}-email">E-Mail</label><br>
+                <input style="width: 100%" (blur)="updateEntry(user)" [(ngModel)]="user.email" type="text" placeholder="max@example.com" name="email" id="{{ user.public_id }}-email"><br>
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="{{ user.public_id }}-username">Username</label><br>
+                <input style="width: 100%" (blur)="updateEntry(user)" [(ngModel)]="user.username" type="text" placeholder="@username" name="username" id="{{ user.public_id }}-username"><br>
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="{{ user.public_id }}-phone">Phone</label><br>
+                <input style="width: 100%" (blur)="updateEntry(user)" [(ngModel)]="user.phone" type="text" placeholder="040 1233432" name="phone" id="{{ user.public_id }}-phone"><br>
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <label for="{{ user.public_id }}-website">Website</label><br>
+                <input style="width: 100%" (blur)="updateEntry(user)" [(ngModel)]="user.website" type="text" placeholder="example.com" name="website" id="{{ user.public_id }}-website"><br>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
+<app-pagination (goPage)="goToPage($event)" (goNext)="onNext()" (goPrev)="onPrev()" [pagesToShow]="3" [page]="page" [perPage]="limit" [count]="total"></app-pagination>
+<app-modal [error]="error"></app-modal>

@@ -1,17 +1,31 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { AuthService } from './auth.service';
+import { DataService } from './data.service';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
 @Injectable()
-export class EnsureAuthenticatedService implements CanActivate {
-  constructor(private router: Router) { }
+export class AuthGuard {
+  constructor(private auth: AuthService,
+    private data: DataService,
+    private router: Router) { }
 
-  canActivate(): boolean {
-    if (localStorage.getItem('token')) {
-      return true;
-    } else {
-      this.router.navigateByUrl('/login');
-      return false;
-    }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    return this.auth.loginStatus(localStorage.getItem('token'))
+      .then((user) => {
+        console.log(user.json());
+        this.changeStatus();
+        return true;
+      })
+      .catch((err) => {
+        console.log(err.json());
+        localStorage.removeItem('token');
+        this.router.navigateByUrl('/login');
+        return false;
+      });
+  }
 
+  changeStatus() {
+    this.data.changeStatus(true);
   }
 }

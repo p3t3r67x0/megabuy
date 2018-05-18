@@ -1,18 +1,23 @@
 <div class="row">
   <div class="col-md-4">
-    <h1>Login</h1>
-    {{ message }}
-    <hr><br>
-    <form (ngSubmit)="onLogin()" novalidate>
+    <form [formGroup]="rForm" (ngSubmit)="onLogin(rForm.value)">
+      <h1>Login</h1>
+      <hr>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="text" class="form-control" id="email" placeholder="enter email" [(ngModel)]="user.email" name="email" required>
+        <input type="text" class="form-control" id="email" placeholder="enter email" formControlName="email">
+        <div class="alert margin-top-9" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">
+          {{ errorEmail }}
+        </div>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="enter password" [(ngModel)]="user.password" name="password" required>
+        <input type="password" class="form-control" id="password" placeholder="enter password" formControlName="password">
+        <div class="alert margin-top-9" *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">
+          {{ errorPassword }}
+        </div>
       </div>
-      <button type="submit" class="btn btn-default">Submit</button>
+      <button type="submit" class="btn btn-default" [disabled]="!rForm.valid">Submit</button>
     </form>
   </div>
 </div>

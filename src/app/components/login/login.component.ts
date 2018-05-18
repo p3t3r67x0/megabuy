@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { User } from '../../models/user';
@@ -13,28 +14,42 @@ declare var $: any;
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  user: User = new User();
-  isLoggedIn: boolean;
+  errorEmail: string;
+  errorPassword: string;
+  rForm: FormGroup;
+  post: any;
+
+  isAdmin: string;
   error: any = {};
   token: string;
 
-  constructor(private router: Router, private data: DataService, private auth: AuthService) {
+  constructor(private fb: FormBuilder, private router: Router, private data: DataService, private auth: AuthService) {
+    this.errorEmail = 'You\'ll use this when you log in and if you ever need to reset your password.';
+    this.errorPassword = 'Enter a combination of at least six numbers, letters and punctuation marks.';
+    this.rForm = fb.group({
+      'password': [null, Validators.required],
+      'email': [null, Validators.compose([Validators.required, Validators.email])],
+    });
   }
 
   ngOnInit() {
-    this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
+    this.data.currentAdminStatus.subscribe(isAdmin => this.isAdmin = isAdmin);
   }
 
-  changeStatus() {
-    this.data.changeStatus(true);
+  changeAdminStatus() {
+    this.data.changeAdminStatus(true);
   }
 
-  onLogin(): void {
-    this.auth.login(this.user)
+  onLogin(value): void {
+    this.auth.login(value)
       .then((user) => {
-        this.changeStatus();
+        if (user.json().admin) {
+          this.changeAdminStatus();
+          localStorage.setItem('admin', user.json().admin);
+        }
+
         localStorage.setItem('token', user.json().token);
-        this.router.navigateByUrl('/users');
+        this.router.navigateByUrl('/product');
       })
       .catch((err) => {
         this.error = err.json();
@@ -45,7 +60,7 @@ export class LoginComponent implements OnInit {
           this.error.status = 'error';
         }
 
-        console.log(this.error);
+        console.log(err.json());
         $('#myModal').modal();
       });
   }
