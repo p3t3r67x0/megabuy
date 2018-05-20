@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { User } from '../../models/user';
+import { environment } from '../../../environments/environment';
+
 
 declare var jquery: any;
 declare var $: any;
@@ -15,7 +17,7 @@ declare var $: any;
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  private BASE_URL: string;
+  private url: string;
   private headers: Headers;
 
   isAdmin: string;
@@ -36,7 +38,7 @@ export class UsersComponent implements OnInit {
     private http: Http,
     private data: DataService,
     private auth: AuthService) {
-    this.BASE_URL = 'http://localhost:5000';
+    this.url = environment.apiUrl;
     this.headers = new Headers({ 'content-type': 'application/json' });
   }
 
@@ -104,7 +106,7 @@ export class UsersComponent implements OnInit {
     let headers: Headers;
     const params = new URLSearchParams();
 
-    url = `${this.BASE_URL}/user`;
+    url = `${this.url}/user`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
@@ -120,7 +122,7 @@ export class UsersComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.BASE_URL}/user/${user.public_id}`;
+    url = `${this.url}/user/${user.public_id}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`

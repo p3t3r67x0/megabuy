@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { environment } from '../../../environments/environment';
+
 
 @Component({
   selector: 'app-product',
@@ -9,22 +11,26 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  private headers: Headers;
-  private BASE_URL: string;
-  private rForm: FormGroup;
-  private product: Product;
-  private token: string;
-  private errorName: string;
-  private description: string;
-  private name: string;
-  private loading: boolean;
-  private error: Error;
+  headers: Headers;
+  url: string;
+  rForm: FormGroup;
+  product: Product;
+  token: string;
+  errorName: string;
+  description: string;
+  name: string;
+  loading: boolean;
+  error: Error;
+  prodories: any = [];
+  productCategories: any = [];
 
   constructor(private fb: FormBuilder, private http: Http, private router: Router) {
-    this.BASE_URL = 'http://localhost:5000';
+    this.token = localStorage.getItem('token');
+    this.url = environment.apiUrl;
     this.headers = new Headers({
       'content-type': 'application/json'
     });
+    this.getProductCategories();
     this.errorName = 'This field is required';
     this.description = '';
     this.name = '';
@@ -33,6 +39,7 @@ export class ProductComponent implements OnInit {
       'name': [null, Validators.required],
       'description': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(500)])],
       'category': [null, Validators.required],
+      'thumbnail': [null, Validators.required],
       'validate': ''
     });
   }
@@ -51,10 +58,58 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  addProduct(value): void {
-    this.token = localStorage.getItem('token');
-    this.loading = true;
+  onFileChange(event) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.rForm.get('thumbnail').setValue({
+          filename: file.name,
+          filetype: file.type,
+          value: reader.result.split(',')[1]
+        });
+      };
+    }
+  }
 
+  getProductCategories() {
+    this.loadProductCategories(this.token, -1, 1)
+      .then((productCategories) => {
+        console.log(productCategories.json());
+        this.productCategories = productCategories.json()['product-categories'];
+      })
+      .catch((err) => {
+        console.log(err.json());
+        this.error = err.json();
+
+        if (err.status === 401) {
+          localStorage.removeItem('token');
+          this.router.navigateByUrl('/login');
+        }
+      });
+  }
+
+  loadProductCategories(token, limit, page) {
+    let url: string;
+    let headers: Headers;
+    const params = new URLSearchParams();
+
+    url = `${this.url}/product-categories`;
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    });
+
+    params.append('limit', limit);
+    params.append('page', page);
+
+    return this.http.get(url, { params: params, headers: headers }).toPromise();
+  }
+
+  addProduct(value): void {
+    this.loading = true;
+    console.log(value);
     this.postProduct(this.token, value)
       .then((user) => {
         console.log(user.json());
@@ -77,7 +132,7 @@ export class ProductComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.BASE_URL}/product`;
+    url = `${this.url}/product`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

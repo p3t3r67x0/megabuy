@@ -12,6 +12,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { SearchComponent } from './components/search/search.component';
 import { ProductComponent } from './components/product/product.component';
 import { ProductsComponent } from './components/products/products.component';
+import { ProductCategoryComponent } from './components/product-category/product-category.component';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/ensure-authenticated.service';
@@ -58,6 +59,11 @@ import { SearchFilterPipe } from './search-filter.pipe';
         path: 'products',
         component: ProductsComponent,
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'product-category',
+        component: ProductCategoryComponent,
+        canActivate: [AuthGuard]
       }
     ])
   ],
@@ -72,7 +78,8 @@ import { SearchFilterPipe } from './search-filter.pipe';
     ClickOutsideDirective,
     SearchFilterPipe,
     ProductComponent,
-    ProductsComponent
+    ProductsComponent,
+    ProductCategoryComponent
   ],
   providers: [
     AuthService,

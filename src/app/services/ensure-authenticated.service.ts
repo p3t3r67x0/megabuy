@@ -15,6 +15,7 @@ export class AuthGuard {
       .then((user) => {
         console.log(user.json());
         this.changeStatus();
+        this.changeUserId(user.json().user_id);
         return true;
       })
       .catch((err) => {
@@ -23,6 +24,10 @@ export class AuthGuard {
         this.router.navigateByUrl('/login');
         return false;
       });
+  }
+
+  changeUserId(userId) {
+    this.data.changeUserId(userId);
   }
 
   changeStatus() {

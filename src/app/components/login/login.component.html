@@ -5,19 +5,19 @@
       <hr>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="text" class="form-control" id="email" placeholder="enter email" formControlName="email">
+        <input type="text" class="form-control" id="email" placeholder="Email address" formControlName="email">
         <div class="alert margin-top-9" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">
           {{ errorEmail }}
         </div>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="enter password" formControlName="password">
+        <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
         <div class="alert margin-top-9" *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">
           {{ errorPassword }}
         </div>
       </div>
-      <button type="submit" class="btn btn-default" [disabled]="!rForm.valid">Submit</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!rForm.valid">Submit</button>
     </form>
   </div>
 </div>

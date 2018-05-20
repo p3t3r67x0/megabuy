@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { User } from '../../models/user';
 
+
 declare var jquery: any;
 declare var $: any;
 
@@ -19,12 +20,13 @@ export class LoginComponent implements OnInit {
   rForm: FormGroup;
   post: any;
 
+  userId: string;
   isAdmin: string;
   error: any = {};
   token: string;
 
   constructor(private fb: FormBuilder, private router: Router, private data: DataService, private auth: AuthService) {
-    this.errorEmail = 'You\'ll use this when you log in and if you ever need to reset your password.';
+    this.errorEmail = 'The email address that you\'ve entered doesn\'t match any account.';
     this.errorPassword = 'Enter a combination of at least six numbers, letters and punctuation marks.';
     this.rForm = fb.group({
       'password': [null, Validators.required],
@@ -34,6 +36,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.data.currentAdminStatus.subscribe(isAdmin => this.isAdmin = isAdmin);
+    this.data.currentUserId.subscribe(userId => this.userId = userId);
+  }
+
+  changeUserId(userId) {
+    this.data.changeUserId(userId);
   }
 
   changeAdminStatus() {
@@ -43,11 +50,14 @@ export class LoginComponent implements OnInit {
   onLogin(value): void {
     this.auth.login(value)
       .then((user) => {
+        console.log(user.json());
+
         if (user.json().admin) {
           this.changeAdminStatus();
           localStorage.setItem('admin', user.json().admin);
         }
 
+        this.changeUserId(user.json().user_id);
         localStorage.setItem('token', user.json().token);
         this.router.navigateByUrl('/product');
       })

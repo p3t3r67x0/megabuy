@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { User } from '../models/user';
+import { environment } from '../../environments/environment';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class AuthService {
-  private BASE_URL: string;
+  private url: string;
   private headers: Headers;
   isLoggedIn: boolean;
 
   constructor(private http: Http) {
-    this.BASE_URL = 'http://localhost:5000';
+    this.url = environment.apiUrl;
     this.headers = new Headers({ 'content-type': 'application/json' });
   }
 
@@ -19,7 +20,7 @@ export class AuthService {
     let headers: Headers;
 
     headers = new Headers();
-    url = `${this.BASE_URL}/login`;
+    url = `${this.url}/login`;
     headers.append('Authorization', 'Basic ' + btoa(user.email + ':' + user.password));
     return this.http.post(url, user, { headers: headers }).toPromise();
   }
@@ -28,7 +29,7 @@ export class AuthService {
     let url: string;
     let headers: Headers;
 
-    url = `${this.BASE_URL}/logout`;
+    url = `${this.url}/logout`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
@@ -39,7 +40,7 @@ export class AuthService {
 
   register(user): Promise<any> {
     let url: string;
-    url = `${this.BASE_URL}/user`;
+    url = `${this.url}/user`;
     return this.http.post(url, user, { headers: this.headers }).toPromise();
   }
 
@@ -47,7 +48,7 @@ export class AuthService {
     let url: string;
     let headers: Headers;
 
-    url = `${this.BASE_URL}/status`;
+    url = `${this.url}/status`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
