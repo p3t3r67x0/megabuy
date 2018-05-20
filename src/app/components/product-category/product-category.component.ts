@@ -24,7 +24,7 @@ export class ProductCategoryComponent implements OnInit {
 
   constructor(private http: Http, private router: Router, private fb: FormBuilder, private data: DataService) {
     this.rForm = fb.group({
-      'name': [null, Validators.compose([Validators.required, Validators.minLength(10)])],
+      'name': [null, Validators.compose([Validators.required, Validators.minLength(5)])],
       'description': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(500)])],
     });
   }

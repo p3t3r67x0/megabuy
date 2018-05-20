@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Headers, Http, URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { User } from '../../models/user';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  private BASE_URL: string;
+  private url: string;
   private headers: Headers;
   showDropDown = false;
   loading = false;
@@ -24,7 +25,7 @@ export class SearchComponent implements OnInit {
   searchForm: FormGroup;
 
   constructor(private router: Router, private http: Http, private form: FormBuilder) {
-    this.BASE_URL = 'http://localhost:5000';
+    this.url = environment.apiUrl;
     this.headers = new Headers({ 'content-type': 'application/json' });
     this.initForm();
   }
@@ -83,7 +84,7 @@ export class SearchComponent implements OnInit {
     let headers: Headers;
     const params = new URLSearchParams();
 
-    url = `${this.BASE_URL}/user`;
+    url = `${this.url}/user`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

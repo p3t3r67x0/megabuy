@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Router } from '@angular/router';
+import { DataService } from '../../services/data.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 
@@ -11,20 +12,27 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  headers: Headers;
   url: string;
+  limit: number;
+  page: number;
+  userId: string;
   rForm: FormGroup;
+  headers: Headers;
   product: Product;
+  editField: string;
+  loading: boolean;
   token: string;
-  errorName: string;
   description: string;
   name: string;
-  loading: boolean;
   error: Error;
-  prodories: any = [];
+  errorName: string;
+  products: any = [];
   productCategories: any = [];
 
-  constructor(private fb: FormBuilder, private http: Http, private router: Router) {
+  constructor(private fb: FormBuilder,
+              private http: Http,
+              private router: Router,
+              private data: DataService) {
     this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
     this.headers = new Headers({
@@ -40,22 +48,22 @@ export class ProductComponent implements OnInit {
       'description': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(500)])],
       'category': [null, Validators.required],
       'thumbnail': [null, Validators.required],
-      'validate': ''
     });
   }
 
   ngOnInit() {
-    this.rForm.get('validate').valueChanges.subscribe((validate) => {
-      if (validate) {
-        this.rForm.get('name').setValidators([Validators.required, Validators.minLength(3)]);
-        this.errorName = 'You need to specify at least 3 characters';
-      } else {
-        this.rForm.get('name').setValidators(Validators.required);
-        this.errorName = 'This field is required';
-      }
+    this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.limit = -1;
+    this.page = 1;
+    this.getProducts();
+  }
 
-      this.rForm.get('name').updateValueAndValidity();
-    });
+  showUpdateForm(productId) {
+    if (!this.editField || this.editField !== productId) {
+      this.editField = productId;
+    } else {
+      this.editField = '';
+    }
   }
 
   onFileChange(event) {
@@ -71,6 +79,35 @@ export class ProductComponent implements OnInit {
         });
       };
     }
+  }
+
+  updateEntry(product) {
+    this.updateProduct(product, this.token)
+      .then((res) => {
+        console.log(res.json());
+      })
+      .catch((err) => {
+        console.log(err.json());
+        this.error = err.json();
+
+        if (err.status === 401) {
+          localStorage.removeItem('token');
+          this.router.navigateByUrl('/login');
+        }
+      });
+  }
+
+  updateProduct(product, token) {
+    let url: string;
+    let headers: Headers;
+
+    url = `${this.url}/product/${product.id}`;
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put(url, product, { headers: headers }).toPromise();
   }
 
   getProductCategories() {
@@ -139,6 +176,74 @@ export class ProductComponent implements OnInit {
     });
 
     return this.http.post(url, product, { headers: headers }).toPromise();
+  }
+
+  removeProduct(productId) {
+    this.deleteProduct(this.token, productId)
+      .then((product) => {
+        console.log(product.json());
+        for (let i = 0; i < this.products.length; i++) {
+          if (this.products[i]['id'] === productId) {
+            this.products.splice(i, 1);
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err.json());
+        this.error = err.json();
+
+        if (err.status === 401) {
+          localStorage.removeItem('token');
+          this.router.navigateByUrl('/login');
+        }
+      });
+  }
+
+  getProducts() {
+    this.loadProducts(this.token, this.limit, this.page)
+      .then((products) => {
+        console.log(products.json());
+        this.products = products.json().products;
+      })
+      .catch((err) => {
+        console.log(err.json());
+        this.error = err.json();
+
+        if (err.status === 401) {
+          localStorage.removeItem('token');
+          this.router.navigateByUrl('/login');
+        }
+      });
+  }
+
+  loadProducts(token, limit, page) {
+    let url: string;
+    let headers: Headers;
+    const params = new URLSearchParams();
+
+    url = `${this.url}/product`;
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    });
+
+    params.append('limit', limit);
+    params.append('page', page);
+
+    return this.http.get(url, { params: params, headers: headers }).toPromise();
+  }
+
+  deleteProduct(token, productId) {
+    let url: string;
+    let headers: Headers;
+
+    url = `${this.url}/product/${productId}`;
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.delete(url, { headers: headers }).toPromise();
   }
 
 }
