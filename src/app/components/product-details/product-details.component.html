@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-xs-12">
+    <ul class="list-unstyled margin-bottom-0">
+      <li class="tender padding-12">
+        <div class="row">
+          <div class="col-sm-4">
+            <img width="100%" height="auto" src="data:image/jpg;base64,{{ product.thumbnail }}">
+          </div>
+          <div class="col-sm-8">
+            <p class="margin-bottom-0 h4">{{ product.name }}</p>
+            <p class="margin-bottom-12"><small>By <a routerLink="/">{{ product.user_name }}</a> in <a routerLink="/">{{ product.category }}</a></small></p>
+            <p>{{ product.description }}</p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

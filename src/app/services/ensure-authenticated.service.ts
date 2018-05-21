@@ -13,13 +13,14 @@ export class AuthGuard {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.auth.loginStatus(localStorage.getItem('token'))
       .then((user) => {
-        console.log(user.json());
+        // console.log(user.json());
         this.changeStatus();
         this.changeUserId(user.json().user_id);
+        this.changeUserName(user.json().name);
         return true;
       })
       .catch((err) => {
-        console.log(err.json());
+        // console.log(err.json());
         localStorage.removeItem('token');
         this.router.navigateByUrl('/login');
         return false;
@@ -28,6 +29,10 @@ export class AuthGuard {
 
   changeUserId(userId) {
     this.data.changeUserId(userId);
+  }
+
+  changeUserName(userName) {
+    this.data.changeUserName(userName);
   }
 
   changeStatus() {

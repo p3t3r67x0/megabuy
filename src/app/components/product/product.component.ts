@@ -30,9 +30,9 @@ export class ProductComponent implements OnInit {
   productCategories: any = [];
 
   constructor(private fb: FormBuilder,
-              private http: Http,
-              private router: Router,
-              private data: DataService) {
+    private http: Http,
+    private router: Router,
+    private data: DataService) {
     this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
     this.headers = new Headers({
@@ -145,13 +145,13 @@ export class ProductComponent implements OnInit {
   }
 
   addProduct(value): void {
-    this.loading = true;
-    console.log(value);
     this.postProduct(this.token, value)
       .then((user) => {
         console.log(user.json());
+
         if (user.json().status === 'success') {
           this.rForm.reset();
+          this.getProducts();
         }
       })
       .catch((err) => {
@@ -200,7 +200,7 @@ export class ProductComponent implements OnInit {
   }
 
   getProducts() {
-    this.loadProducts(this.token, this.limit, this.page)
+    this.loadProducts(this.token)
       .then((products) => {
         console.log(products.json());
         this.products = products.json().products;
@@ -216,21 +216,17 @@ export class ProductComponent implements OnInit {
       });
   }
 
-  loadProducts(token, limit, page) {
+  loadProducts(token) {
     let url: string;
     let headers: Headers;
-    const params = new URLSearchParams();
 
-    url = `${this.url}/product`;
+    url = `${this.url}/product/user`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     });
 
-    params.append('limit', limit);
-    params.append('page', page);
-
-    return this.http.get(url, { params: params, headers: headers }).toPromise();
+    return this.http.get(url, { headers: headers }).toPromise();
   }
 
   deleteProduct(token, productId) {

@@ -14,6 +14,7 @@ import { User } from './models/user';
 export class AppComponent implements OnInit {
   user: User = new User();
   isLoggedIn: boolean;
+  userName: string;
   token: string;
 
   constructor(private router: Router,
@@ -24,6 +25,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
+    this.data.currentUserName.subscribe(userName => this.userName = userName);
   }
 
   onLogout(): void {

@@ -5,9 +5,9 @@ import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { User } from '../../models/user';
 
-
 declare var jquery: any;
 declare var $: any;
+
 
 @Component({
   selector: 'app-login',
@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   post: any;
 
   userId: string;
+  userName: string;
   isAdmin: string;
   error: any = {};
   token: string;
@@ -36,6 +37,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.data.currentAdminStatus.subscribe(isAdmin => this.isAdmin = isAdmin);
+    this.data.currentUserName.subscribe(userName => this.userName = userName);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
   }
 
@@ -50,7 +52,7 @@ export class LoginComponent implements OnInit {
   onLogin(value): void {
     this.auth.login(value)
       .then((user) => {
-        console.log(user.json());
+        // console.log(user.json());
 
         if (user.json().admin) {
           this.changeAdminStatus();

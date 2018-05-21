@@ -12,6 +12,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { SearchComponent } from './components/search/search.component';
 import { ProductComponent } from './components/product/product.component';
 import { ProductsComponent } from './components/products/products.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { ProductCategoryComponent } from './components/product-category/product-category.component';
 
 import { AuthService } from './services/auth.service';
@@ -21,6 +22,7 @@ import { DataService } from './services/data.service';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { ClickOutsideDirective } from './click-outside.directive';
 import { SearchFilterPipe } from './search-filter.pipe';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
 
 @NgModule({
@@ -30,6 +32,10 @@ import { SearchFilterPipe } from './search-filter.pipe';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
+      {
+        path: '',
+        component: ProductsComponent,
+      },
       {
         path: 'login',
         component: LoginComponent,
@@ -64,6 +70,14 @@ import { SearchFilterPipe } from './search-filter.pipe';
         path: 'product-category',
         component: ProductCategoryComponent,
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent,
+        canActivate: [AuthGuard]
+      },
+      { path: 'product/:id',
+        component: ProductDetailsComponent
       }
     ])
   ],
@@ -79,7 +93,9 @@ import { SearchFilterPipe } from './search-filter.pipe';
     SearchFilterPipe,
     ProductComponent,
     ProductsComponent,
-    ProductCategoryComponent
+    ProductCategoryComponent,
+    SettingsComponent,
+    ProductDetailsComponent
   ],
   providers: [
     AuthService,

@@ -126,7 +126,7 @@ export class ProductCategoryComponent implements OnInit {
     let headers: Headers;
     const params = new URLSearchParams();
 
-    url = `${this.url}/product-categories`;
+    url = `${this.url}/product-categories/user`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

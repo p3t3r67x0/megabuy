@@ -1,34 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { Headers, Http, URLSearchParams } from '@angular/http';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Headers, Http } from '@angular/http';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { environment } from '../../../environments/environment';
 
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  selector: 'app-product-details',
+  templateUrl: './product-details.component.html',
+  styleUrls: ['./product-details.component.css']
 })
-export class ProductsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
+  private sub: any;
   url: string;
-  limit: number;
-  page: number;
-  token: string;
-  error: any = {};
-  products: any = [];
+  productId: string;
   userId: string;
+  product: any = {};
+  error: any = {};
 
-  constructor(private http: Http, private data: DataService, private auth: AuthService) {
-    this.checkUserStatus();
-  }
+  constructor(private route: ActivatedRoute, private http: Http, private data: DataService, private auth: AuthService) { }
 
   ngOnInit() {
-    this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.sub = this.route.params.subscribe(params => {
+      this.productId = params['id'];
+    });
     this.url = environment.apiUrl;
-    this.limit = -1;
-    this.page = 1;
-    this.getAllProducts();
+    this.checkUserStatus();
+    this.getProduct();
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   checkUserStatus() {
@@ -44,11 +47,11 @@ export class ProductsComponent implements OnInit {
       });
   }
 
-  getAllProducts() {
-    this.loadProducts(this.limit, this.page)
-      .then((products) => {
-        console.log(products.json());
-        this.products = products.json().products;
+  getProduct() {
+    this.getOneProduct()
+      .then((product) => {
+        // console.log(product.json());
+        this.product = product.json();
       })
       .catch((err) => {
         console.log(err.json());
@@ -56,20 +59,16 @@ export class ProductsComponent implements OnInit {
       });
   }
 
-  loadProducts(limit, page) {
+  getOneProduct() {
     let url: string;
     let headers: Headers;
-    const params = new URLSearchParams();
 
-    url = `${this.url}/products`;
+    url = `${this.url}/product/${this.productId}`;
     headers = new Headers({
       'Content-Type': 'application/json'
     });
 
-    params.append('limit', limit);
-    params.append('page', page);
-
-    return this.http.get(url, { params: params, headers: headers }).toPromise();
+    return this.http.get(url, { headers: headers }).toPromise();
   }
 
   changeUserId(userId) {

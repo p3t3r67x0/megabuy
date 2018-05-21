@@ -1,8 +1,9 @@
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-sm-6 col-md-4">
     <form [formGroup]="rForm" (ngSubmit)="onRegister(rForm.value)">
-      <h1>Join Brand!</h1>
+      <h1>Join <span style="color: #ff0055;">Megabuy</span>!</h1>
       <hr>
+      <p>Already have a Megabuy account? <a routerLink="/login">Log In</a></p>
       <div class="form-group">
         <label for="name">Name</label>
         <input type="text" class="form-control" id="name" placeholder="Name" formControlName="name">

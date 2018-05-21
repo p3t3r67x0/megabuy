@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-6 margin-bottom-24">
-    <h1>Categories</h1>
-    <ul class="list-unstyled margin-bottom-0">
+    <h1>Your categories</h1>
+    <ul *ngIf="productCategories.length > 0" class="list-unstyled margin-bottom-0">
       <li id="{{ productCategory.id }}" class="tender padding-12" *ngFor="let productCategory of productCategories">
         <ng-container *ngIf="productCategory.user_id == userId">
           <button class="pull-right btn btn-primary btn-xs glyphicon glyphicon-edit" (click)="showUpdateForm(productCategory.id)"></button>
@@ -21,6 +21,7 @@
         </div>
       </li>
     </ul>
+    <p *ngIf="productCategories.length == 0" >Hey add your first product category!</p>
   </div>
 
   <div class="col-sm-6">
