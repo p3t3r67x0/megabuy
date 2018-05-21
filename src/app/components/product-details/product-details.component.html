@@ -8,7 +8,7 @@
           </div>
           <div class="col-sm-8">
             <p class="margin-bottom-0 h4">{{ product.name }}</p>
-            <p class="margin-bottom-12"><small>By <a routerLink="/">{{ product.user_name }}</a> in <a routerLink="/">{{ product.category }}</a></small></p>
+            <p class="margin-bottom-12"><small>By <a routerLink="/">{{ product.user_name }}</a> in <a routerLink="/category/{{ product.category_id }}">{{ product.category }}</a></small></p>
             <p>{{ product.description }}</p>
           </div>
         </div>

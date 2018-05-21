@@ -15,6 +15,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { ProductCategoryComponent } from './components/product-category/product-category.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { ProductCategoryTagComponent } from './components/product-category-tag/product-category-tag.component';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/ensure-authenticated.service';
@@ -70,6 +71,9 @@ import { DataService } from './services/data.service';
       },
       { path: 'product/:id',
         component: ProductDetailsComponent
+      },
+      { path: 'category/:id',
+        component: ProductCategoryTagComponent
       }
     ])
   ],
@@ -84,7 +88,8 @@ import { DataService } from './services/data.service';
     ProductsComponent,
     ProductCategoryComponent,
     SettingsComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    ProductCategoryTagComponent
   ],
   providers: [
     AuthService,
