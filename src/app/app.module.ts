@@ -20,8 +20,6 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/ensure-authenticated.service';
 import { LoginRedirectService } from './services/login-redirect.service';
 import { DataService } from './services/data.service';
-import { ClickOutsideDirective } from './click-outside.directive';
-import { SearchFilterPipe } from './search-filter.pipe';
 
 
 @NgModule({
