@@ -9,20 +9,19 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UsersComponent } from './components/users/users.component';
 import { ModalComponent } from './components/modal/modal.component';
-import { SearchComponent } from './components/search/search.component';
 import { ProductComponent } from './components/product/product.component';
 import { ProductsComponent } from './components/products/products.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 import { ProductCategoryComponent } from './components/product-category/product-category.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/ensure-authenticated.service';
 import { LoginRedirectService } from './services/login-redirect.service';
 import { DataService } from './services/data.service';
-import { PaginationComponent } from './components/pagination/pagination.component';
 import { ClickOutsideDirective } from './click-outside.directive';
 import { SearchFilterPipe } from './search-filter.pipe';
-import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
 
 @NgModule({
@@ -49,11 +48,6 @@ import { ProductDetailsComponent } from './components/product-details/product-de
       {
         path: 'users',
         component: UsersComponent,
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'search',
-        component: SearchComponent,
         canActivate: [AuthGuard]
       },
       {
@@ -88,9 +82,6 @@ import { ProductDetailsComponent } from './components/product-details/product-de
     UsersComponent,
     ModalComponent,
     PaginationComponent,
-    SearchComponent,
-    ClickOutsideDirective,
-    SearchFilterPipe,
     ProductComponent,
     ProductsComponent,
     ProductCategoryComponent,
