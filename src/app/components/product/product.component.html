@@ -13,15 +13,20 @@
               <button class="pull-right btn btn-danger btn-xs glyphicon glyphicon-trash margin-right-6" (click)="removeProduct(product.id)"></button>
             </ng-container>
             <h4>{{ product.name }}</h4>
+            <p><strong>Preis {{ product.price }}</strong></p>
             <p>{{ product.description }}</p>
             <div *ngIf="editField == product.id" id="{{ product.id }}" class="row">
               <div class="col-xs-12 margin-bottom-12">
                 <label for="{{ product.id }}-name">Name</label><br>
-                <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.name" type="text" placeholder="Mr. Example" name="name" id="{{ product.id }}-name">
+                <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.name" type="text" placeholder="Flowers" name="name" id="{{ product.id }}-name">
+              </div>
+              <div class="col-xs-12 margin-bottom-12">
+                <label for="{{ product.id }}-price">Price</label><br>
+                <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.price" type="text" placeholder="37€" name="price" id="{{ product.id }}-price">
               </div>
               <div class="col-xs-12">
                 <label for="{{ product.id }}-description">Description</label><br>
-                <textarea class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.description" type="text" placeholder="example.com" name="description" id="{{ product.id }}-description"></textarea>
+                <textarea class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.description" type="text" placeholder="Write a short description about your item" name="description" id="{{ product.id }}-description"></textarea>
               </div>
             </div>
           </div>
@@ -48,6 +53,13 @@
         </div>
       </div>
       <div class="form-group">
+        <label>Price</label>
+        <input class="form-control" type="text" formControlName="price">
+        <div class="alert margin-top-9" *ngIf="!rForm.controls['price'].valid && rForm.controls['price'].touched">
+          You must specify a price.
+        </div>
+      </div>
+      <div class="form-group">
         <label for="thumbnail">Thumbnail</label>
         <input type="file" id="thumbnail" (change)="onFileChange($event)">
       </div>
@@ -56,8 +68,10 @@
           <select class="form-control" formControlName="category">
             <option *ngFor="let productCategory of productCategories" value="{{ productCategory.id }}">{{ productCategory.name }}</option>
           </select>
+          <div class="alert margin-top-9" *ngIf="!rForm.controls['category'].valid && rForm.controls['category'].touched">
+            You must choose a category
+          </div>
       </div>
-
       <input type="submit" class="btn btn-primary" value="Save now" [disabled]="!rForm.valid">
     </form>
   </div>

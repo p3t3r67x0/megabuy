@@ -48,6 +48,7 @@ export class ProductComponent implements OnInit {
       'description': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(500)])],
       'category': [null, Validators.required],
       'thumbnail': [null, Validators.required],
+      'price': [null, Validators.required]
     });
   }
 

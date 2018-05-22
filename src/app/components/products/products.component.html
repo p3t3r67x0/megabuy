@@ -14,8 +14,13 @@
             </a>
           </div>
           <div class="col-sm-9">
+            <div class="pos-absolute pos-right">
+              <span class="tags">
+              	<span class="price-tag"><a href="javascript:void()">{{ product.price }}</a></span>
+              </span>
+            </div>
             <p class="margin-bottom-0"><a routerLink="/product/{{ product.id }}" class="h4">{{ product.name }}</a></p>
-            <p class="margin-bottom-12"><small>By <a routerLink="/">{{ product.user_name }}</a> in <a routerLink="/category/{{ product.category_id }}">{{ product.category }}</a></small></p>
+            <p class="margin-bottom-12"><small>By <a routerLink="/user/{{ product.user_id }}">{{ product.user_name }}</a> in <a routerLink="/category/{{ product.category_id }}">{{ product.category }}</a></small></p>
             <p>{{ product.description }}</p>
           </div>
         </div>

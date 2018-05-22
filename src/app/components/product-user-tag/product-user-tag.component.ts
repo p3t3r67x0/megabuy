@@ -6,14 +6,13 @@ import { DataService } from '../../services/data.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-product-category-tag',
-  templateUrl: './product-category-tag.component.html',
-  styleUrls: ['./product-category-tag.component.css']
+  selector: 'app-product-user-tag',
+  templateUrl: './product-user-tag.component.html',
+  styleUrls: ['./product-user-tag.component.css']
 })
-export class ProductCategoryTagComponent implements OnInit, OnDestroy {
+export class ProductUserTagComponent implements OnInit, OnDestroy {
   private sub: any;
   url: string;
-  categoryId: string;
   userId: string;
   products: any = [];
   error: any = {};
@@ -22,7 +21,7 @@ export class ProductCategoryTagComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this.categoryId = params['id'];
+      this.userId = params['id'];
     });
     this.url = environment.apiUrl;
     this.checkUserStatus();
@@ -37,7 +36,7 @@ export class ProductCategoryTagComponent implements OnInit, OnDestroy {
   checkUserStatus() {
     this.auth.loginStatus(localStorage.getItem('token'))
       .then((user) => {
-        // console.log(user.json());
+        console.log(user.json());
         this.changeStatus();
         this.changeUserId(user.json().user_id);
         this.changeUserName(user.json().name);
@@ -48,7 +47,7 @@ export class ProductCategoryTagComponent implements OnInit, OnDestroy {
   }
 
   getProducts() {
-    this.getAllProducts(this.categoryId)
+    this.getAllProducts(this.userId)
       .then((products) => {
         // console.log(products.json().products);
         this.products = products.json().products;
@@ -59,11 +58,11 @@ export class ProductCategoryTagComponent implements OnInit, OnDestroy {
       });
   }
 
-  getAllProducts(categoryId) {
+  getAllProducts(userId) {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/product/category/${categoryId}`;
+    url = `${this.url}/product/user/${userId}`;
     headers = new Headers({
       'Content-Type': 'application/json'
     });
