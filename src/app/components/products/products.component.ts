@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Headers, Http, URLSearchParams } from '@angular/http';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { environment } from '../../../environments/environment';
@@ -10,7 +11,7 @@ import { environment } from '../../../environments/environment';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
   url: string;
   limit: number;
   page: number;
@@ -18,17 +19,30 @@ export class ProductsComponent implements OnInit {
   error: any = {};
   products: any = [];
   userId: string;
+  query: string;
+  sub: any;
 
-  constructor(private http: Http, private data: DataService, private auth: AuthService) {
-    this.checkUserStatus();
-  }
+  constructor(private route: ActivatedRoute, private http: Http, private data: DataService, private auth: AuthService) { }
 
   ngOnInit() {
     this.data.currentUserId.subscribe(userId => this.userId = userId);
     this.url = environment.apiUrl;
     this.limit = -1;
     this.page = 1;
-    this.getAllProducts();
+    this.sub = this.route.params.subscribe(params => {
+      this.query = params['query'];
+      this.queryProducts();
+    });
+
+    if (!this.query) {
+      this.getAllProducts();
+    }
+
+    this.checkUserStatus();
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   checkUserStatus() {
@@ -47,7 +61,7 @@ export class ProductsComponent implements OnInit {
   getAllProducts() {
     this.loadProducts(this.limit, this.page)
       .then((products) => {
-        console.log(products.json());
+        // console.log(products.json());
         this.products = products.json().products;
       })
       .catch((err) => {
@@ -62,6 +76,34 @@ export class ProductsComponent implements OnInit {
     const params = new URLSearchParams();
 
     url = `${this.url}/products`;
+    headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    params.append('limit', limit);
+    params.append('page', page);
+
+    return this.http.get(url, { params: params, headers: headers }).toPromise();
+  }
+
+  queryProducts() {
+    this.getQueryProducts(this.limit, this.page)
+      .then((products) => {
+        // console.log(products);
+        this.products = products.json().products;
+      })
+      .catch((err) => {
+        console.log(err);
+        this.error = err.json();
+      });
+  }
+
+  getQueryProducts(limit, page) {
+    let url: string;
+    let headers: Headers;
+    const params = new URLSearchParams();
+
+    url = `${this.url}/search/${this.query}`;
     headers = new Headers({
       'Content-Type': 'application/json'
     });

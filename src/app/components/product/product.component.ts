@@ -221,7 +221,7 @@ export class ProductComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/product/user`;
+    url = `${this.url}/product/user/${this.userId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

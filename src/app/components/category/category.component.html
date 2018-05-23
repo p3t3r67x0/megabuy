@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form [formGroup]="rForm" class="padding-0" >
+      <div class="">
+        <label>Category</label>
+        <select class="form-control" formControlName="category" (change)="category(rForm.value)">
+          <option *ngFor="let productCategory of productCategories" value="{{ productCategory.id }}">{{ productCategory.name }}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+</div>

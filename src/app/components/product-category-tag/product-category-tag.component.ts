@@ -21,12 +21,12 @@ export class ProductCategoryTagComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private http: Http, private data: DataService, private auth: AuthService) { }
 
   ngOnInit() {
+    this.url = environment.apiUrl;
     this.sub = this.route.params.subscribe(params => {
       this.categoryId = params['id'];
+      this.getProducts();
     });
-    this.url = environment.apiUrl;
     this.checkUserStatus();
-    this.getProducts();
   }
 
   ngOnDestroy() {

@@ -22,6 +22,8 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/ensure-authenticated.service';
 import { LoginRedirectService } from './services/login-redirect.service';
 import { DataService } from './services/data.service';
+import { SearchComponent } from './components/search/search.component';
+import { CategoryComponent } from './components/category/category.component';
 
 
 @NgModule({
@@ -70,14 +72,21 @@ import { DataService } from './services/data.service';
         component: SettingsComponent,
         canActivate: [AuthGuard]
       },
-      { path: 'product/:id',
+      {
+        path: 'product/:id',
         component: ProductDetailsComponent
       },
-      { path: 'category/:id',
+      {
+        path: 'category/:id',
         component: ProductCategoryTagComponent
       },
-      { path: 'user/:id',
+      {
+        path: 'user/:id',
         component: ProductUserTagComponent
+      },
+      {
+        path: 'search/:query',
+        component: ProductsComponent
       }
     ])
   ],
@@ -94,7 +103,9 @@ import { DataService } from './services/data.service';
     SettingsComponent,
     ProductDetailsComponent,
     ProductCategoryTagComponent,
-    ProductUserTagComponent
+    ProductUserTagComponent,
+    SearchComponent,
+    CategoryComponent
   ],
   providers: [
     AuthService,

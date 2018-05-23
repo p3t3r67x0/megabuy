@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Headers, Http } from '@angular/http';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
@@ -17,7 +17,11 @@ export class ProductUserTagComponent implements OnInit, OnDestroy {
   products: any = [];
   error: any = {};
 
-  constructor(private route: ActivatedRoute, private http: Http, private data: DataService, private auth: AuthService) { }
+  constructor(private route: ActivatedRoute,
+    private http: Http,
+    private router: Router,
+    private data: DataService,
+    private auth: AuthService) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -32,6 +36,9 @@ export class ProductUserTagComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  showProducts(products) {
+    this.router.navigateByUrl('/');
+  }
 
   checkUserStatus() {
     this.auth.loginStatus(localStorage.getItem('token'))

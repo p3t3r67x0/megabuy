@@ -10,9 +10,6 @@
       <a class="navbar-brand" routerLink="/" style="color: #ff0055; font-weight: 500;">Megabuy</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li><a class="nav-link" routerLink="/">Home</a></li>
-      </ul>
       <ul class="nav navbar-nav navbar-right">
         <li *ngIf="!isLoggedIn"><a class="nav-link" routerLink="/login">Login</a></li>
         <li *ngIf="!isLoggedIn"><a class="nav-link" routerLink="/register">Sign up</a></li>
