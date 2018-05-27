@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Headers, Http } from '@angular/http';
+import { SplitPipe } from 'angular-pipes';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { environment } from '../../../environments/environment';

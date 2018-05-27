@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Headers, Http } from '@angular/http';
+import { SplitPipe } from 'angular-pipes';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { environment } from '../../../environments/environment';
@@ -52,9 +53,10 @@ export class ProductCategoryTagComponent implements OnInit, OnDestroy {
       .then((products) => {
         // console.log(products.json().products);
         this.products = products.json().products;
+        // this.products.image = this.products['thumbnail'].split(',')[0];
       })
       .catch((err) => {
-        console.log(err.json());
+        console.log(err);
         this.error = err.json();
       });
   }

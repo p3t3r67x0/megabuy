@@ -17,14 +17,16 @@ import { ProductCategoryComponent } from './components/product-category/product-
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductCategoryTagComponent } from './components/product-category-tag/product-category-tag.component';
 import { ProductUserTagComponent } from './components/product-user-tag/product-user-tag.component';
+import { SearchComponent } from './components/search/search.component';
+import { CategoryComponent } from './components/category/category.component';
+import { UploadComponent } from './components/upload/upload.component';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/ensure-authenticated.service';
 import { LoginRedirectService } from './services/login-redirect.service';
 import { DataService } from './services/data.service';
-import { SearchComponent } from './components/search/search.component';
-import { CategoryComponent } from './components/category/category.component';
-
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { NgStringPipesModule } from 'angular-pipes';
 
 @NgModule({
   imports: [
@@ -32,6 +34,8 @@ import { CategoryComponent } from './components/category/category.component';
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
+    ImageCropperModule,
+    NgStringPipesModule,
     RouterModule.forRoot([
       {
         path: '',
@@ -87,6 +91,10 @@ import { CategoryComponent } from './components/category/category.component';
       {
         path: 'search/:query',
         component: ProductsComponent
+      },
+      {
+        path: 'upload',
+        component: UploadComponent
       }
     ])
   ],
@@ -105,7 +113,8 @@ import { CategoryComponent } from './components/category/category.component';
     ProductCategoryTagComponent,
     ProductUserTagComponent,
     SearchComponent,
-    CategoryComponent
+    CategoryComponent,
+    UploadComponent
   ],
   providers: [
     AuthService,

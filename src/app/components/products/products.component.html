@@ -7,22 +7,24 @@
   </div>
   <div class="col-sm-8 col-md-9">
     <ul *ngIf="products" class="list-unstyled margin-bottom-0">
-      <li class="tender padding-12" *ngFor="let product of products">
+      <li class="margin-bottom-24 white" *ngFor="let product of products">
         <div class="row">
-          <div class="col-sm-3">
+          <div class="col-md-6 box-product-image">
             <a routerLink="/product/{{ product.id }}">
               <img width="100%" height="auto" src="data:image/jpg;base64,{{ product.thumbnail }}">
             </a>
           </div>
-          <div class="col-sm-9">
-            <div class="pos-absolute pos-right">
-              <span class="tags">
+          <div class="col-md-6 box-product-text">
+            <div class="padding-right-12 padding-bottom-12 padding-left-12">
+              <div class="pos-absolute pos-right-12">
+                <span class="tags">
               	<span class="price-tag"><a href="javascript:void()">{{ product.price }}</a></span>
-              </span>
+                </span>
+              </div>
+              <p class="margin-bottom-0"><a routerLink="/product/{{ product.id }}" class="h4">{{ product.name }}</a></p>
+              <p class="margin-bottom-12"><small>By <a routerLink="/user/{{ product.user_id }}">{{ product.user_name }}</a> in <a routerLink="/category/{{ product.category_id }}">{{ product.category }}</a></small></p>
+              <p class="margin-bottom-0">{{ (product.description.length > 300) ? (product.description | slice: 0: 300) + '...' : product.description }}</p>
             </div>
-            <p class="margin-bottom-0"><a routerLink="/product/{{ product.id }}" class="h4">{{ product.name }}</a></p>
-            <p class="margin-bottom-12"><small>By <a routerLink="/user/{{ product.user_id }}">{{ product.user_name }}</a> in <a routerLink="/category/{{ product.category_id }}">{{ product.category }}</a></small></p>
-            <p>{{ product.description }}</p>
           </div>
         </div>
       </li>

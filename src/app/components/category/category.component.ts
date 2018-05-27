@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
+  @Input() categoryId: string;
   rForm: FormGroup;
   url: string;
   query: string;
@@ -28,7 +29,7 @@ export class CategoryComponent implements OnInit {
   ngOnInit() {   }
 
   category(id) {
-    this.router.navigateByUrl(`/category/${id.category}`);
+    this.router.navigateByUrl(`/category/${id}`);
   }
 
   getProductCategories() {
@@ -39,7 +40,7 @@ export class CategoryComponent implements OnInit {
       })
       .catch((err) => {
         console.log(err.json());
-        this.error = err.json();
+        // this.error = err.json();
       });
   }
 

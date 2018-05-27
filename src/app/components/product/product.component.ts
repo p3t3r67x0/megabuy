@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Router } from '@angular/router';
+import { SplitPipe } from 'angular-pipes';
 import { DataService } from '../../services/data.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
@@ -28,6 +29,10 @@ export class ProductComponent implements OnInit {
   errorName: string;
   products: any = [];
   productCategories: any = [];
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  selectedFile = null;
+
 
   constructor(private fb: FormBuilder,
     private http: Http,
@@ -52,6 +57,33 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  onFileSelected(event) {
+    this.selectedFile = [];
+    let file = '';
+
+    for (file of event.target.files) {
+      this.selectedFile.push(file);
+    }
+  }
+
+  onUpload() {
+    const fd = new FormData;
+    let headers: Headers;
+    let file: any = '';
+    for (file of this.selectedFile) {
+      fd.append('image', file, file.name);
+    }
+    console.log(fd);
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    this.http.post('http://localhost:5000/upload', fd, { headers: headers }).subscribe(res => {
+      console.log(res);
+    });
+  }
+
   ngOnInit() {
     this.data.currentUserId.subscribe(userId => this.userId = userId);
     this.limit = -1;
@@ -67,25 +99,11 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  onFileChange(event) {
-    const reader = new FileReader();
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.rForm.get('thumbnail').setValue({
-          filename: file.name,
-          filetype: file.type,
-          value: reader.result.split(',')[1]
-        });
-      };
-    }
-  }
 
   updateEntry(product) {
     this.updateProduct(product, this.token)
       .then((res) => {
-        console.log(res.json());
+        // console.log(res.json());
       })
       .catch((err) => {
         console.log(err.json());
@@ -146,9 +164,10 @@ export class ProductComponent implements OnInit {
   }
 
   addProduct(value): void {
+    value.thumbnail = this.selectedFile;
     this.postProduct(this.token, value)
       .then((user) => {
-        console.log(user.json());
+        // console.log(user.json());
 
         if (user.json().status === 'success') {
           this.rForm.reset();
@@ -169,6 +188,10 @@ export class ProductComponent implements OnInit {
   postProduct(token, product): Promise<any> {
     let url: string;
     let headers: Headers;
+    const fd = new FormData();
+    fd.append('thumbnail', this.selectedFile, this.selectedFile.name);
+
+    console.log(product);
 
     url = `${this.url}/product`;
     headers = new Headers({

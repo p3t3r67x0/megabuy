@@ -31,12 +31,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.page = 1;
     this.sub = this.route.params.subscribe(params => {
       this.query = params['query'];
-      this.queryProducts();
-    });
 
-    if (!this.query) {
-      this.getAllProducts();
-    }
+      if (this.query) {
+        this.queryProducts();
+      } else  {
+        this.getAllProducts();
+      }
+    });
 
     this.checkUserStatus();
   }

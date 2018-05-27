@@ -28,6 +28,10 @@ h4, .h4 {
   font-family: 'Muli';
 }
 
+div.image-margin-left-12+div.image-margin-left-12 {
+  margin-left: 12px;
+}
+
 .margin-bottom-24 {
   margin-bottom: 24px;
 }
@@ -56,6 +60,30 @@ h4, .h4 {
   margin-top: 12px;
 }
 
+.padding-right-15 {
+  padding-right: 15px;
+}
+
+.padding-bottom-15 {
+  padding-bottom: 15px
+}
+
+.padding-left-15 {
+  padding-left: 15px;
+}
+
+.padding-right-12 {
+  padding-right: 12px;
+}
+
+.padding-bottom-12 {
+  padding-bottom: 12px
+}
+
+.padding-left-12 {
+  padding-left: 12px;
+}
+
 .padding-12 {
   padding: 12px;
 }
@@ -64,16 +92,31 @@ h4, .h4 {
   padding: 6px;
 }
 
+.padding-3 {
+  padding: 3px;
+}
+
 .padding-0 {
   padding: 0;
+}
+
+.padding-top-0 {
+  padding-top: 0;
+}
+.padding-top-12 {
+  padding-top: 12px;
+}
+
+.padding-right-0 {
+  padding-right: 0;
 }
 
 .pos-absolute {
   position: absolute;
 }
 
-.pos-right {
-  right: 0;
+.pos-right-12 {
+  right: 12px;
 }
 
 .full-width {
@@ -96,8 +139,26 @@ h4, .h4 {
   animation: 1s alertAnim forwards;
 }
 
-.tender {
-  background-color: red;
+.box-product-image {
+   padding-top: 0;
+   padding-right: 15px;
+   padding-bottom: 15px;
+   padding-left: 15px;
+}
+
+@media (min-width: 992px) {
+  .box-product-image {
+     padding-bottom: 0;
+     padding-right: 0;
+  }
+
+  .box-product-text {
+    padding: 12px 12px 12px 0;
+  }
+}
+
+.white {
+  background-color: #fff;
 }
 
 li.tender:nth-of-type(even) {
