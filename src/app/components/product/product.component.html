@@ -2,16 +2,14 @@
   <div class="col-sm-6">
     <h1>Your products</h1>
     <ul *ngIf="products.length > 0" class="list-unstyled margin-bottom-24">
-      <li class="tender padding-12" *ngFor="let product of products">
+      <li class="tender margin-bottom-24" *ngFor="let product of products">
         <div class="row">
-          <div class="col-sm-3 padding-right-0">
+          <div class="col-xs-12">
             <img class="" width="100%" height="auto" src="data:image/jpg;base64,{{ product.thumbnail | split: ',': 1 }}">
           </div>
-          <div class="col-sm-9">
-            <ng-container *ngIf="product.user_id == userId">
-              <button class="pull-right btn btn-primary btn-xs glyphicon glyphicon-edit" (click)="showUpdateForm(product.id)"></button>
-              <button class="pull-right btn btn-danger btn-xs glyphicon glyphicon-trash margin-right-6" (click)="removeProduct(product.id)"></button>
-            </ng-container>
+          <div class="col-xs-12 padding-top-12 padding-left-24 padding-right-24">
+            <button class="pull-right btn btn-primary btn-xs glyphicon glyphicon-edit" (click)="showUpdateForm(product.id)"></button>
+            <button class="pull-right btn btn-danger btn-xs glyphicon glyphicon-trash margin-right-6" (click)="removeProductById(product.id)"></button>
             <h4>{{ product.name }}</h4>
             <p><strong>Preis {{ product.price }}</strong></p>
             <p>{{ product.description }}</p>
@@ -20,9 +18,15 @@
                 <label for="{{ product.id }}-name">Name</label><br>
                 <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.name" type="text" placeholder="Flowers" name="name" id="{{ product.id }}-name">
               </div>
-              <div class="form-group">
+              <div class="form-group col-xs-6 padding-left-0 padding-right-0">
                 <label for="{{ product.id }}-price">Price</label><br>
                 <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.price" type="text" placeholder="37€" name="price" id="{{ product.id }}-price">
+              </div>
+              <div class="form-group col-xs-6 padding-right-0">
+                <label for="{{ product.id }}-price">Currency</label><br>
+                <select class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.currency_id" name="Currency">
+                  <option *ngFor="let currency of currencies" [ngValue]="currency.id">{{ currency.name }} ({{ currency.unit_symbol }})</option>
+                </select>
               </div>
               <div class="form-group">
                 <label>Category</label>
@@ -30,7 +34,7 @@
                     <option *ngFor="let productCategory of productCategories" [ngValue]="productCategory.id">{{ productCategory.name }}</option>
                   </select>
               </div>
-              <div class="form-group">
+              <div class="margin-bottom-12">
                 <label for="{{ product.id }}-description">Description</label><br>
                 <textarea class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.description" type="text" placeholder="Write a short description about your item" name="description" id="{{ product.id }}-description"></textarea>
               </div>
@@ -42,43 +46,6 @@
     <p *ngIf="products.length == 0">Hey add your first product!</p>
   </div>
   <div class="col-sm-6 margin-bottom-24">
-    <h1>Add product</h1>
-    <form [formGroup]="rForm" (ngSubmit)="onUpload()" enctype="multipart/form-data">
-      <div class="form-group">
-        <label>Name</label>
-        <input class="form-control" type="text" formControlName="name">
-        <div class="alert margin-top-9" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">
-          {{ errorName }}
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Description</label>
-        <textarea class="form-control" formControlName="description"></textarea>
-        <div class="alert margin-top-9" *ngIf="!rForm.controls['description'].valid && rForm.controls['description'].touched">
-          You must specify a description that's between 30 and 500 characters
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Price</label>
-        <input class="form-control" type="text" formControlName="price">
-        <div class="alert margin-top-9" *ngIf="!rForm.controls['price'].valid && rForm.controls['price'].touched">
-          You must specify a price.
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="thumbnail">Thumbnail</label>
-        <input type="file" formControlName="thumbnail" (change)="onFileSelected($event)" name="thumbnail[]" multiple>
-      </div>
-      <div class="form-group">
-        <label>Category</label>
-        <select class="form-control" formControlName="category">
-            <option *ngFor="let productCategory of productCategories" value="{{ productCategory.id }}">{{ productCategory.name }}</option>
-          </select>
-        <div class="alert margin-top-9" *ngIf="!rForm.controls['category'].valid && rForm.controls['category'].touched">
-          You must choose a category
-        </div>
-      </div>
-      <input type="submit" class="btn btn-primary" value="Save now" [disabled]="!rForm.valid">
-    </form>
+    <app-upload></app-upload>
   </div>
 </div>

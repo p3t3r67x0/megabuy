@@ -91,10 +91,6 @@ import { NgStringPipesModule } from 'angular-pipes';
       {
         path: 'search/:query',
         component: ProductsComponent
-      },
-      {
-        path: 'upload',
-        component: UploadComponent
       }
     ])
   ],

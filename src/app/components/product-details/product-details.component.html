@@ -1,23 +1,23 @@
 <div class="row margin-bottom-24">
   <div class="col-sm-8">
-    <div class="padding-12" style="background-color: #fff;">
-      <div class="row margin-bottom-24">
+    <div class="white">
+      <div class="row margin-bottom-12">
         <div class="col-xs-12 margin-bottom-12">
           <img width="100%" height="auto" src="data:image/jpg;base64,{{ product.image | split: ',': 1 }}">
         </div>
-        <div class="col-xs-12" style="display: flex;">
-          <div class="image-margin-left-12" *ngFor="let image of product.image | split: ','" >
+        <div *ngIf="imageLength > 1" class="col-xs-12 padding-left-24 padding-right-24" style="display: flex;">
+          <div class="image-margin-left-12" *ngFor="let image of product.image | split: ','">
             <img width="100%" height="auto" src="data:image/jpg;base64,{{ image }}">
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12 padding-left-24 padding-right-24">
           <h1 class="">{{ product.name }}</h1>
         </div>
       </div>
 
-      <ul class="nav nav-tabs">
+      <ul class="nav nav-tabs padding-left-12 padding-right-12">
         <li class="active"><a data-toggle="tab" href="#home">Description</a></li>
         <li><a data-toggle="tab" href="#menu3">Reviews</a></li>
         <li class="pull-right">
@@ -33,19 +33,17 @@
       </ul>
 
       <div class="tab-content">
-        <div id="home" class="padding-top-12 tab-pane fade in active">
-          <p>{{ product.description }}</p>
+        <div id="home" class="padding-12 tab-pane fade in active">
+          <p class="margin-bottom-0">{{ product.description }}</p>
         </div>
-        <div id="menu2" class="tab-pane fade">
-          <p>Der Verkäufer ist für dieses Angebot verantwortlich.</p>
-          <h4>Menu 2</h4>
-          <p>Some content in menu 2.</p>
+        <div id="menu3" class="padding-12 tab-pane fade">
+          <p class="margin-bottom-0">Der Verkäufer ist für dieses Angebot verantwortlich.</p>
         </div>
       </div>
     </div>
   </div>
   <div class="col-sm-4">
-    <div class="padding-12" style="background-color: #fff;">
+    <div class="padding-12 white">
       <h1>
         {{ product.price }}
       </h1>

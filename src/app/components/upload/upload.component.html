@@ -1,4 +1,4 @@
-<h1>Upload Form</h1>
+<h1>Add Product</h1>
 <form [formGroup]="rForm" enctype="multipart/form-data" (ngSubmit)="onUpload(rForm.value)">
   <div class="form-group">
     <label>Name</label>
@@ -7,14 +7,35 @@
   <div class="form-group">
     <label>Description</label>
     <textarea class="form-control" formControlName="description"></textarea>
+    <div class="alert margin-top-9" *ngIf="!rForm.controls['description'].valid && rForm.controls['description'].touched">
+      You must specify a description that's between 30 and 500 characters
+    </div>
   </div>
-  <div class="form-group">
+  <div class="form-group col-xs-6 padding-left-0 padding-right-0">
     <label>Price</label>
     <input class="form-control" formControlName="price" type="text">
+    <div class="alert margin-top-9" *ngIf="!rForm.controls['price'].valid && rForm.controls['price'].touched">
+      You must specify a price.
+    </div>
+  </div>
+  <div class="form-group col-xs-6 padding-right-0">
+    <label>Currency</label>
+    <select class="form-control" formControlName="currency">
+      <option *ngFor="let currency of currencies" value="{{ currency.id }}">{{ currency.name }} ({{ currency.unit_symbol }})</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Category</label>
+    <select class="form-control" formControlName="category">
+      <option *ngFor="let productCategory of productCategories" value="{{ productCategory.id }}">{{ productCategory.name }}</option>
+    </select>
+    <div class="alert margin-top-9" *ngIf="!rForm.controls['category'].valid && rForm.controls['category'].touched">
+      You must choose a category
+    </div>
   </div>
   <div class="form-group">
     <label for="thumbnail">Thumbnail</label>
-    <input type="file" (change)="onFileSelected($event)" multiple>
+    <input type="file" formControlName="thumbnail" (change)="onFileSelected($event)" multiple>
   </div>
-  <input class="btn btn-primary" value="Save now" type="submit">
+  <input type="submit" class="btn btn-primary" value="Save now" [disabled]="!rForm.valid">
 </form>

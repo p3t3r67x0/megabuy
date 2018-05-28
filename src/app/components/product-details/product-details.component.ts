@@ -16,6 +16,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   private sub: any;
   url: string;
   productId: string;
+  imageLength: string;
   userId: string;
   product: any = {};
   error: any = {};
@@ -28,7 +29,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     });
     this.url = environment.apiUrl;
     this.checkUserStatus();
-    this.getProduct();
+    this.getProductById();
   }
 
   ngOnDestroy() {
@@ -48,11 +49,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
-  getProduct() {
+  getProductById() {
     this.getOneProduct()
       .then((product) => {
         // console.log(product.json());
         this.product = product.json();
+        this.imageLength = this.product.image.split(',').length;
       })
       .catch((err) => {
         console.log(err.json());

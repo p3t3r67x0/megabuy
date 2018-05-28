@@ -18,7 +18,7 @@
             <div class="padding-right-12 padding-bottom-12 padding-left-12">
               <div class="pos-absolute pos-right-12">
                 <span class="tags">
-              	<span class="price-tag"><a href="javascript:void()">{{ product.price }}</a></span>
+              	<span class="price-tag"><a href="javascript:void()">{{ product.price }}{{ product.currency }}</a></span>
                 </span>
               </div>
               <p class="margin-bottom-0"><a routerLink="/product/{{ product.id }}" class="h4">{{ product.name }}</a></p>
