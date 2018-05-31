@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Headers, Http } from '@angular/http';
 import { SplitPipe } from 'angular-pipes';
@@ -16,12 +16,16 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   private sub: any;
   url: string;
   productId: string;
-  imageLength: string;
+  imageLength: number;
   userId: string;
   product: any = {};
   error: any = {};
 
-  constructor(private route: ActivatedRoute, private http: Http, private data: DataService, private auth: AuthService) { }
+  constructor(private route: ActivatedRoute,
+    private http: Http,
+    private element: ElementRef,
+    private data: DataService,
+    private auth: AuthService) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -50,7 +54,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   getProductById() {
-    this.getOneProduct()
+    this.getOneProductById()
       .then((product) => {
         // console.log(product.json());
         this.product = product.json();
@@ -62,7 +66,13 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
-  getOneProduct() {
+  imageClicked(event) {
+    const el = this.element.nativeElement.querySelector('div.col-xs-12.margin-bottom-12');
+    const src = event.target;
+    el.innerHTML = src.outerHTML;
+  }
+
+  getOneProductById() {
     let url: string;
     let headers: Headers;
 

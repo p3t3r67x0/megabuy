@@ -1,0 +1,32 @@
+<div class="row margin-bottom-12">
+  <div class="col-xs-12">
+    <button type="button" class="btn btn-default" routerLink="/inbox" data-toggle="tooltip" title="Back">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;&nbsp;</button>
+    <button type="button" class="btn btn-default" data-toggle="tooltip" title="Delete">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;&nbsp;</button>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">More <span class="caret"></span></button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Mark all as read</a></li>
+        <li class="divider"></li>
+        <li class="text-center"><small class="text-muted">Select messages to see more actions</small></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="row margin-bottom-24">
+  <div class="col-xs-12">
+    <div class="wrapper">
+      <h1 class="margin-bottom-9">{{ message.subject }}</h1>
+      <hr class="margin-top-9 margin-bottom-9">
+      <div style="float: left; width: 4%">
+        <img src="https://ssl.gstatic.com/ui/v1/icons/mail/profile_mask2.png">
+      </div>
+      <div style="float:left; width: 60%">
+        <div class="margin-bottom-24">
+          <strong>{{ message.user_name }}</strong><br>
+          <small>{{ message.created | date : 'dd. MM. y, HH:mm ' }}</small>
+        </div>
+        <p class="inbox-text">{{ message.message }}</p>
+      </div>
+    </div>
+  </div>
+</div>

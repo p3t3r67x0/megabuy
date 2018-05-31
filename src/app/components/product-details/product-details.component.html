@@ -7,7 +7,9 @@
         </div>
         <div *ngIf="imageLength > 1" class="col-xs-12 padding-left-24 padding-right-24" style="display: flex;">
           <div class="image-margin-left-12" *ngFor="let image of product.image | split: ','">
-            <img width="100%" height="auto" src="data:image/jpg;base64,{{ image }}">
+            <a (click)="imageClicked($event)">
+              <img width="100%" height="auto" src="data:image/jpg;base64,{{ image }}">
+            </a>
           </div>
         </div>
       </div>
@@ -22,10 +24,7 @@
         <li><a data-toggle="tab" href="#menu3">Reviews</a></li>
         <li class="pull-right">
           <div style="align-self: flex-end">
-            <button type="button" class="btn btn-success">
-              Add to cart
-            </button>
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="margin-bottom-12 btn btn-primary">
               Add to wishlist
             </button>
           </div>
@@ -43,10 +42,29 @@
     </div>
   </div>
   <div class="col-sm-4">
+    <div class="padding-12 margin-bottom-24 white">
+      <h1>{{ product.price }}{{ product.currency }}</h1>
+      <button class="full-width btn btn-success">Buy now</button>
+    </div>
     <div class="padding-12 white">
-      <h1>
-        {{ product.price }}
-      </h1>
+      <h2 class="margin-top-0">Contact User</h2>
+      <form class="padding-0">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="name" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Name</label>
+          <textarea class="form-control"></textarea>
+        </div>
+        <div class="">
+          <input type="submit" class="btn btn-primary" value="Send now">
+        </div>
+      </form>
     </div>
   </div>
 </div>

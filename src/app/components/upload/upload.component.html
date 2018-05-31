@@ -1,5 +1,5 @@
 <h1>Add Product</h1>
-<form [formGroup]="rForm" enctype="multipart/form-data" (ngSubmit)="onUpload(rForm.value)">
+<form [formGroup]="rForm" class="white padding-12" enctype="multipart/form-data" (ngSubmit)="onUpload(rForm.value)">
   <div class="form-group">
     <label>Name</label>
     <input class="form-control" formControlName="name" type="text">

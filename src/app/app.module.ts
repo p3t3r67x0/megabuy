@@ -20,6 +20,8 @@ import { ProductUserTagComponent } from './components/product-user-tag/product-u
 import { SearchComponent } from './components/search/search.component';
 import { CategoryComponent } from './components/category/category.component';
 import { UploadComponent } from './components/upload/upload.component';
+import { InboxComponent } from './components/inbox/inbox.component';
+import { InboxDetailComponent } from './components/inbox-detail/inbox-detail.component';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/ensure-authenticated.service';
@@ -77,6 +79,16 @@ import { NgStringPipesModule } from 'angular-pipes';
         canActivate: [AuthGuard]
       },
       {
+        path: 'inbox',
+        component: InboxComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'inbox/:id',
+        component: InboxDetailComponent,
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'product/:id',
         component: ProductDetailsComponent
       },
@@ -110,7 +122,9 @@ import { NgStringPipesModule } from 'angular-pipes';
     ProductUserTagComponent,
     SearchComponent,
     CategoryComponent,
-    UploadComponent
+    UploadComponent,
+    InboxComponent,
+    InboxDetailComponent
   ],
   providers: [
     AuthService,
