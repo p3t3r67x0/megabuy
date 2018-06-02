@@ -2,7 +2,7 @@
   <div class="col-sm-6 margin-bottom-24">
     <h1>Your categories</h1>
     <ul *ngIf="productCategories.length > 0" class="list-unstyled margin-bottom-0">
-      <li id="{{ productCategory.id }}" class="tender padding-12" *ngFor="let productCategory of productCategories">
+      <li id="{{ productCategory.id }}" class="tender padding-15" *ngFor="let productCategory of productCategories">
         <ng-container *ngIf="productCategory.user_id == userId">
           <button class="pull-right btn btn-primary btn-xs glyphicon glyphicon-edit" (click)="showUpdateForm(productCategory.id)"></button>
           <button class="pull-right btn btn-danger btn-xs glyphicon glyphicon-trash margin-right-6" (click)="removeProductCategory(productCategory.id)"></button>
@@ -26,7 +26,7 @@
 
   <div class="col-sm-6">
     <h1>Add category</h1>
-    <form [formGroup]="rForm" class="white padding-12" (ngSubmit)="addProductCategory(rForm.value)">
+    <form [formGroup]="rForm" class="white padding-15" (ngSubmit)="addProductCategory(rForm.value)">
       <div class="form-group">
         <label>Name</label>
         <input class="form-control" type="text" formControlName="name">

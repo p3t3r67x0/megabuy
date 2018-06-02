@@ -5,7 +5,7 @@
         <div class="col-xs-12 margin-bottom-12">
           <img width="100%" height="auto" src="data:image/jpg;base64,{{ product.image | split: ',': 1 }}">
         </div>
-        <div *ngIf="imageLength > 1" class="col-xs-12 padding-left-24 padding-right-24" style="display: flex;">
+        <div *ngIf="imageLength > 1" class="col-xs-12 padding-left-27 padding-right-27" style="display: flex;">
           <div class="image-margin-left-12" *ngFor="let image of product.image | split: ','">
             <a (click)="imageClicked($event)">
               <img width="100%" height="auto" src="data:image/jpg;base64,{{ image }}">
@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12 padding-left-24 padding-right-24">
+        <div class="col-xs-12 padding-left-27 padding-right-27">
           <h1 class="">{{ product.name }}</h1>
         </div>
       </div>
@@ -32,37 +32,47 @@
       </ul>
 
       <div class="tab-content">
-        <div id="home" class="padding-12 tab-pane fade in active">
+        <div id="home" class="padding-15 tab-pane fade in active">
           <p class="margin-bottom-0">{{ product.description }}</p>
         </div>
-        <div id="menu3" class="padding-12 tab-pane fade">
+        <div id="menu3" class="padding-15 tab-pane fade">
           <p class="margin-bottom-0">Der Verkäufer ist für dieses Angebot verantwortlich.</p>
         </div>
       </div>
     </div>
   </div>
   <div class="col-sm-4">
-    <div class="padding-12 margin-bottom-24 white">
+    <div class="padding-15 margin-bottom-24 white">
       <h1>{{ product.price }}{{ product.currency }}</h1>
       <button class="full-width btn btn-success">Buy now</button>
     </div>
-    <div class="padding-12 white">
+    <div class="padding-15 white">
       <h2 class="margin-top-0">Contact User</h2>
-      <form class="padding-0">
+      <p *ngIf="requestSubmited" class="text-success">Your message was sent!</p>
+      <form [formGroup]="rForm" class="padding-0" (ngSubmit)="submitContactForm(rForm.value)">
         <div class="form-group">
           <label>Name</label>
-          <input type="name" class="form-control">
+          <input formControlName="name" type="name" class="form-control">
+          <div class="alert margin-top-9" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">
+            {{ errorName }}
+          </div>
         </div>
         <div class="form-group">
-          <label>Email</label>
-          <input type="email" class="form-control">
+          <label>Subject</label>
+          <input formControlName="subject" type="subject" class="form-control">
+          <div class="alert margin-top-9" *ngIf="!rForm.controls['subject'].valid && rForm.controls['subject'].touched">
+            {{ errorSubject }}
+          </div>
         </div>
         <div class="form-group">
-          <label>Name</label>
-          <textarea class="form-control"></textarea>
+          <label>Message</label>
+          <textarea formControlName="message" class="form-control"></textarea>
+          <div class="alert margin-top-9" *ngIf="!rForm.controls['message'].valid && rForm.controls['message'].touched">
+            {{ errorMessage }}
+          </div>
         </div>
         <div class="">
-          <input type="submit" class="btn btn-primary" value="Send now">
+          <input type="submit" class="btn btn-primary" value="Send now" [disabled]="!rForm.valid">
         </div>
       </form>
     </div>

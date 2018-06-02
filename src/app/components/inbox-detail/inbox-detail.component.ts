@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { AuthService } from '../../services/auth.service';
 import { environment } from '../../../environments/environment';
@@ -21,6 +21,7 @@ export class InboxDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private http: Http,
+    private router: Router,
     private data: DataService,
     private auth: AuthService) {
     this.token = localStorage.getItem('token');
@@ -37,6 +38,47 @@ export class InboxDetailComponent implements OnInit {
     this.getMessageById();
   }
 
+  deleteMessageById() {
+    let url: string;
+    let headers: Headers;
+
+    url = `${this.url}/inbox/user/${this.userId}/${this.messageId}`;
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    return this.http.delete(url, { headers: headers })
+      .toPromise()
+      .then((message) => {
+        // console.log(message.json());
+        this.router.navigateByUrl('/inbox');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  updateMessageStatusById() {
+    let url: string;
+    let headers: Headers;
+
+    url = `${this.url}/inbox/user/${this.userId}/${this.messageId}`;
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    return this.http.put(url, { headers: headers })
+      .toPromise()
+      .then((message) => {
+        console.log(message.json());
+        // this.message = message.json();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   getMessageById() {
     let url: string;
@@ -51,7 +93,7 @@ export class InboxDetailComponent implements OnInit {
     return this.http.get(url, { headers: headers })
       .toPromise()
       .then((message) => {
-        console.log(message.json());
+        // console.log(message.json());
         this.message = message.json();
       })
       .catch((err) => {

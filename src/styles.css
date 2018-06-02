@@ -20,6 +20,16 @@ h4, .h4 {
   font-family: 'Muli';
 }
 
+.inbox-profil {
+  float: left;
+  width: 11%;
+}
+
+.inbox-message {
+  float: left;
+  width: 89%;
+}
+
 p.inbox-text {
   line-height: 24px;
   font-size: 16px;
@@ -93,64 +103,68 @@ div.image-margin-left-12+div.image-margin-left-12 {
   margin-top: 12px;
 }
 
-.padding-right-15 {
-  padding-right: 15px;
+.padding-bottom-12 {
+  padding-bottom: 12px
 }
 
 .padding-bottom-15 {
   padding-bottom: 15px
 }
 
-.padding-left-15 {
-  padding-left: 15px;
+.padding-right-0 {
+  padding-right: 0;
 }
 
 .padding-right-12 {
   padding-right: 12px;
 }
 
-.padding-right-24 {
-  padding-right: 24px;
-}
-
-.padding-left-24 {
-  padding-left: 24px;
-}
-
-.padding-bottom-12 {
-  padding-bottom: 12px
-}
-
-.padding-left-12 {
-  padding-left: 12px;
-}
-
-.padding-left-24 {
-  padding-left: 24px;
+.padding-right-15 {
+  padding-right: 15px;
 }
 
 .padding-right-24 {
   padding-right: 24px;
 }
 
-.padding-12 {
-  padding: 12px;
-}
-
-.padding-6 {
-  padding: 6px;
-}
-
-.padding-3 {
-  padding: 3px;
+.padding-right-27 {
+  padding-right: 27px;
 }
 
 .padding-left-0 {
   padding-left: 0;
 }
 
-.padding-right-0 {
-  padding-right: 0;
+.padding-left-12 {
+  padding-left: 12px;
+}
+
+.padding-left-15 {
+  padding-left: 15px;
+}
+
+.padding-left-24 {
+  padding-left: 24px;
+}
+
+.padding-left-27 {
+  padding-left: 27px;
+}
+
+.padding-3 {
+  padding: 3px;
+}
+
+.padding-6 {
+  padding: 6px;
+}
+
+.padding-12 {
+  padding: 12px;
+}
+
+.padding-15 {
+  padding: 15px;
 }
 
 .padding-0 {
@@ -165,8 +179,8 @@ div.image-margin-left-12+div.image-margin-left-12 {
   padding-top: 12px;
 }
 
-.padding-right-0 {
-  padding-right: 0;
+.padding-top-15 {
+  padding-top: 15px;
 }
 
 .pos-absolute {
@@ -185,6 +199,42 @@ div.image-margin-left-12+div.image-margin-left-12 {
   background: inherit;
 }
 
+.navbar-default {
+  background-color: #232f3e;
+  color: #fff;
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: #fff;
+}
+
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+  color: #efefef;
+}
+
+.navbar-default .navbar-brand {
+  color: #fff;
+}
+
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+  color: #efefef;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+  background-color: #232f3e;
+  color: #fff;
+}
+
+.btn-primary {
+  background-color: #3f546f;
+  border-color: #52657d;
+}
+
+.btn-primary.disabled.focus, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled].focus, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
+  background-color: #3f546f;
+  border-color: #52657d;
+}
+
 .alert {
   background-color: #f2edda;
   padding: 7px;
@@ -198,16 +248,6 @@ div.image-margin-left-12+div.image-margin-left-12 {
   padding-right: 15px;
   padding-bottom: 15px;
   padding-left: 15px;
-}
-
-@media (min-width: 992px) {
-  .box-product-image {
-    padding-bottom: 0;
-    padding-right: 0;
-  }
-  .box-product-text {
-    padding: 12px 12px 12px 0;
-  }
 }
 
 .white {
@@ -310,5 +350,42 @@ li.tender:nth-of-type(odd) {
     opacity: 1;
     margin-bottom: 12px;
     transform: translateY(0);
+  }
+}
+
+@media (min-width: 524px) {
+  .inbox-profil {
+    width: 8%;
+  }
+}
+
+@media (min-width: 768px) {
+  .inbox-profil {
+    width: 6%;
+  }
+}
+
+@media (min-width: 992px) {
+  .inbox-profil {
+    width: 5%;
+  }
+  .box-product-image {
+    padding-bottom: 0;
+    padding-right: 0;
+  }
+  .box-product-text {
+    padding: 12px 12px 12px 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inbox-profil {
+    width: 4.5%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .inbox-profil {
+    width: 4%;
   }
 }

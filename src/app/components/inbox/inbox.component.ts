@@ -44,9 +44,31 @@ export class InboxComponent implements OnInit {
   }
 
   deleteMessages() {
+    let url: string;
+    let headers: Headers;
+
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    });
+
     for (let i = 0; i < this.messages.length; i++) {
       if (this.messages[i].selected) {
-        console.log(this.messages[i].id);
+        url = `${this.url}/inbox/user/${this.userId}/${this.messages[i].id}`;
+
+        this.http.delete(url, { headers: headers })
+          .toPromise()
+          .then((message) => {
+            for (let j = 0; j < this.messages.length; j++) {
+              if (this.messages[j].id === this.messages[i].id) {
+                this.messages.splice(i, 1);
+              }
+            }
+            console.log(message.json());
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     }
   }

@@ -5,14 +5,14 @@
     <div class="col-xs-12 col-sm-5 margin-bottom-24">
       <ul class="list-unstyled">
         <li class="tender row" *ngFor="let user of users">
-          <div class="col-xs-12 padding-12">
+          <div class="col-xs-12 padding-15">
             <button *ngIf="isAdmin" class="pull-right btn btn-primary btn-xs glyphicon glyphicon-edit" (click)="showInputField(user.public_id)"></button>
             <strong>
               {{ user.name }}
             </strong>
             <br> {{ user.email }}
           </div>
-          <div class="col-xs-12 padding-12" id="{{ user.public_id }}">
+          <div class="col-xs-12 padding-15" id="{{ user.public_id }}">
             <div *ngIf="editField == user.public_id" class="row">
               <div class="col-xs-12">
                 <label for="{{ user.public_id }}-name">Name</label><br>
