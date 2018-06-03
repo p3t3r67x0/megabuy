@@ -61,10 +61,10 @@ export class InboxComponent implements OnInit {
           .then((message) => {
             for (let j = 0; j < this.messages.length; j++) {
               if (this.messages[j].id === this.messages[i].id) {
+                // console.log(message.json());
                 this.messages.splice(i, 1);
               }
             }
-            console.log(message.json());
           })
           .catch((err) => {
             console.log(err);

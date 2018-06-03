@@ -61,19 +61,20 @@ export class InboxDetailComponent implements OnInit {
 
   updateMessageStatusById() {
     let url: string;
+    let read: boolean;
     let headers: Headers;
 
+    read = true;
     url = `${this.url}/inbox/user/${this.userId}/${this.messageId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.token}`
     });
 
-    return this.http.put(url, { headers: headers })
+    return this.http.put(url, read, { headers: headers })
       .toPromise()
       .then((message) => {
-        console.log(message.json());
-        // this.message = message.json();
+        // console.log(message.json());
       })
       .catch((err) => {
         console.log(err);
@@ -95,6 +96,10 @@ export class InboxDetailComponent implements OnInit {
       .then((message) => {
         // console.log(message.json());
         this.message = message.json();
+
+        if (!this.message.read) {
+          this.updateMessageStatusById();
+        }
       })
       .catch((err) => {
         console.log(err);
