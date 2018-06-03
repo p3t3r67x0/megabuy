@@ -70,7 +70,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       'Authorization': `Bearer ${this.token}`
     });
 
-    value.user_id = this.userId;
+    value.user_id = this.product.user_id;
     value.parent_id = '';
 
     return this.http.post(url, value, { headers: headers })
