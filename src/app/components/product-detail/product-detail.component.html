@@ -15,7 +15,7 @@
       </div>
       <div class="row">
         <div class="col-xs-12 padding-left-27 padding-right-27">
-          <h1 class="">{{ product.name }}</h1>
+          <h1>{{ product.name }}</h1>
         </div>
       </div>
 
@@ -46,8 +46,8 @@
       <h1>{{ product.price }}{{ product.currency }}</h1>
       <button class="full-width btn btn-success">Buy now</button>
     </div>
-    <div class="padding-15 white">
-      <h2 class="margin-top-0">Contact User</h2>
+    <div class="padding-15 margin-bottom-24 white">
+      <h2 class="margin-top-0">Contact Seller</h2>
       <p *ngIf="requestSubmited" class="text-success">Your message was sent!</p>
       <form [formGroup]="rForm" class="padding-0" (ngSubmit)="submitContactForm(rForm.value)">
         <div class="form-group">
@@ -75,6 +75,10 @@
           <input type="submit" class="btn btn-primary" value="Send now" [disabled]="!rForm.valid">
         </div>
       </form>
+    </div>
+    <div class="padding-15 margin-bottom-24 white">
+       <h4 class="margin-top-0">Seller information</h4>
+       <p class="margin-bottom-0">By <a routerLink="/user/{{ product.user_id }}">{{ product.user_name }}</a> in <a routerLink="/category/{{ product.category_id }}">{{ product.category }}</a></p>
     </div>
   </div>
 </div>
