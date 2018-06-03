@@ -47,6 +47,10 @@ a.inbox-links:hover {
   background-color: #ffc;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .wrapper {
   display: block;
   float: left;

@@ -14,7 +14,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { ProductCategoryComponent } from './components/product-category/product-category.component';
-import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { ProductCategoryTagComponent } from './components/product-category-tag/product-category-tag.component';
 import { ProductUserTagComponent } from './components/product-user-tag/product-user-tag.component';
 import { SearchComponent } from './components/search/search.component';
@@ -90,7 +90,7 @@ import { NgStringPipesModule } from 'angular-pipes';
       },
       {
         path: 'product/:id',
-        component: ProductDetailsComponent
+        component: ProductDetailComponent
       },
       {
         path: 'category/:id',
@@ -117,7 +117,7 @@ import { NgStringPipesModule } from 'angular-pipes';
     ProductsComponent,
     ProductCategoryComponent,
     SettingsComponent,
-    ProductDetailsComponent,
+    ProductDetailComponent,
     ProductCategoryTagComponent,
     ProductUserTagComponent,
     SearchComponent,

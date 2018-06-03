@@ -73,6 +73,32 @@ export class InboxComponent implements OnInit {
     }
   }
 
+  updateAllMessageStatusById() {
+    let url: string;
+    let read: boolean;
+    let headers: Headers;
+
+    read = true;
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    for (let j = 0; j < this.messages.length; j++) {
+      url = `${this.url}/inbox/user/${this.userId}/${this.messages[j].id}`;
+
+      this.http.put(url, read, { headers: headers })
+        .toPromise()
+        .then((message) => {
+          // console.log(this.messages[j].id);
+          this.messages[j].read = true;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
+
   checkUserStatus() {
     this.auth.loginStatus(this.token)
       .then((user) => {
