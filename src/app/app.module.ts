@@ -41,7 +41,7 @@ import { NgStringPipesModule } from 'angular-pipes';
     RouterModule.forRoot([
       {
         path: '',
-        component: ProductsComponent,
+        component: ProductsComponent
       },
       {
         path: 'login',
@@ -61,11 +61,6 @@ import { NgStringPipesModule } from 'angular-pipes';
       {
         path: 'product',
         component: ProductComponent,
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'products',
-        component: ProductsComponent,
         canActivate: [AuthGuard]
       },
       {

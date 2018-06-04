@@ -59,10 +59,6 @@ a.inbox-links:hover {
   background-color: #fff;
 }
 
-div.image-margin-left-12+div.image-margin-left-12 {
-  margin-left: 12px;
-}
-
 .margin-bottom-0 {
   margin-bottom: 0;
 }
@@ -205,6 +201,10 @@ div.image-margin-left-12+div.image-margin-left-12 {
 
 .full-width {
   width: 100%;
+}
+
+.full-height {
+  height: 100%
 }
 
 .navbar-form {

@@ -5,7 +5,14 @@
       <li class="tender margin-bottom-24" *ngFor="let product of products">
         <div class="row">
           <div class="col-xs-12">
-            <img class="" width="100%" height="auto" src="data:image/jpg;base64,{{ product.thumbnail | split: ',': 1 }}">
+            <img id="image-{{ product.id }}" width="100%" height="auto" src="data:image/jpg;base64,{{ product.thumbnail | split: ',': 1 }}">
+            <div id="thumbnail-{{ product.id }}" class="margin-right-12" style="display: flex;">
+              <ng-container *ngIf="product.image.length > 1">
+                <div class="margin-top-12 margin-left-12" *ngFor="let image of product.image">
+                  <img class="full-height" width="100%" height="auto" src="data:image/jpg;base64,{{ image.image }}">
+                </div>
+              </ng-container>
+            </div>
           </div>
           <div class="col-xs-12 padding-top-12 padding-left-27 padding-right-27">
             <button class="pull-right btn btn-primary btn-xs glyphicon glyphicon-edit" (click)="showUpdateForm(product.id)"></button>
@@ -34,9 +41,13 @@
                     <option *ngFor="let productCategory of productCategories" [ngValue]="productCategory.id">{{ productCategory.name }}</option>
                   </select>
               </div>
-              <div class="margin-bottom-12">
+              <div class="form-group">
                 <label for="{{ product.id }}-description">Description</label><br>
                 <textarea class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.description" type="text" placeholder="Write a short description about your item" name="description" id="{{ product.id }}-description"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="thumbnail">Thumbnail</label>
+                <input type="file" name="thumbnail" (change)="onFileSelected($event, 'image-' + product.id, product.id)" multiple>
               </div>
             </div>
           </div>
