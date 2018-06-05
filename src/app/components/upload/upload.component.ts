@@ -68,10 +68,10 @@ export class UploadComponent implements OnInit {
     fd.append('price', value.price);
 
     for (file of this.selectedFile) {
-      fd.append('thumbnail', file, file.name);
+      fd.append('image', file, file.name);
     }
 
-    url = `${this.url}/upload`;
+    url = `${this.url}/product`;
     headers = new Headers({
       'Authorization': `Bearer ${this.token}`
     });

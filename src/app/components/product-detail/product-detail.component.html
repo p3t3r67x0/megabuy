@@ -3,12 +3,12 @@
     <div class="white">
       <div class="row margin-bottom-12">
         <div class="col-xs-12 margin-bottom-12">
-          <img width="100%" height="auto" src="data:image/jpg;base64,{{ product.image | split: ',': 1 }}">
+          <img width="100%" height="auto" src="{{ url }}/{{ product.image | split: ',': 1 }}">
         </div>
         <div *ngIf="imageLength > 1" class="col-xs-12 padding-left-15 padding-right-27" style="display: flex;">
           <div class="margin-left-12" *ngFor="let image of product.image | split: ','">
             <a (click)="imageClicked($event)">
-              <img width="100%" height="auto" src="data:image/jpg;base64,{{ image }}">
+              <img width="100%" height="auto" src="{{ url }}/{{ image }}">
             </a>
           </div>
         </div>
