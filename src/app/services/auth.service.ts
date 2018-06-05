@@ -20,7 +20,7 @@ export class AuthService {
     let headers: Headers;
 
     headers = new Headers();
-    url = `${this.url}/login`;
+    url = `${this.url}/api/login`;
     headers.append('Authorization', 'Basic ' + btoa(user.email + ':' + user.password));
     return this.http.post(url, user, { headers: headers }).toPromise();
   }
@@ -29,7 +29,7 @@ export class AuthService {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/logout`;
+    url = `${this.url}/api/logout`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
@@ -40,7 +40,7 @@ export class AuthService {
 
   register(user): Promise<any> {
     let url: string;
-    url = `${this.url}/user`;
+    url = `${this.url}/api/user`;
     return this.http.post(url, user, { headers: this.headers }).toPromise();
   }
 
@@ -48,7 +48,7 @@ export class AuthService {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/status`;
+    url = `${this.url}/api/status`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

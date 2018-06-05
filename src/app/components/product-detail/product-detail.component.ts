@@ -64,7 +64,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/inbox`;
+    url = `${this.url}/api/inbox`;
     headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.token}`
@@ -122,7 +122,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/product/${this.productId}`;
+    url = `${this.url}/api/product/${this.productId}`;
     headers = new Headers({
       'Content-Type': 'application/json'
     });

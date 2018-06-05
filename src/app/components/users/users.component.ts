@@ -106,7 +106,7 @@ export class UsersComponent implements OnInit {
     let headers: Headers;
     const params = new URLSearchParams();
 
-    url = `${this.url}/user`;
+    url = `${this.url}/api/user`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
@@ -122,7 +122,7 @@ export class UsersComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/user/${user.public_id}`;
+    url = `${this.url}/api/user/${user.public_id}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`

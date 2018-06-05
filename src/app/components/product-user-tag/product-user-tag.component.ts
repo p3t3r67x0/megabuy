@@ -70,7 +70,7 @@ export class ProductUserTagComponent implements OnInit, OnDestroy {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/product/user/${userId}`;
+    url = `${this.url}/api/product/user/${userId}`;
     headers = new Headers({
       'Content-Type': 'application/json'
     });

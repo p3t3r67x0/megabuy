@@ -214,7 +214,7 @@ export class ProductComponent implements OnInit {
   }
 
   getAllCurrencies() {
-    this.http.get(`${this.url}/currencies`).subscribe(res => {
+    this.http.get(`${this.url}/api/currencies`).subscribe(res => {
       // console.log(res.json());
       this.currencies = res.json().currencies;
     });
@@ -240,7 +240,7 @@ export class ProductComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/product/${product.id}`;
+    url = `${this.url}/api/product/${product.id}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -274,7 +274,7 @@ export class ProductComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/image/product/${productId}`;
+    url = `${this.url}/api/image/product/${productId}`;
     headers = new Headers({
       'Content-Type': 'application/json'
     });
@@ -312,7 +312,7 @@ export class ProductComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/product/user/${this.userId}`;
+    url = `${this.url}/api/product/user/${this.userId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
@@ -343,7 +343,7 @@ export class ProductComponent implements OnInit {
     let headers: Headers;
     const params = new URLSearchParams();
 
-    url = `${this.url}/product-categories`;
+    url = `${this.url}/api/product-categories`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
@@ -359,7 +359,7 @@ export class ProductComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/product/${productId}`;
+    url = `${this.url}/api/product/${productId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

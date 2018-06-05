@@ -76,7 +76,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     let headers: Headers;
     const params = new URLSearchParams();
 
-    url = `${this.url}/products`;
+    url = `${this.url}/api/products`;
     headers = new Headers({
       'Content-Type': 'application/json'
     });
@@ -104,7 +104,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     let headers: Headers;
     const params = new URLSearchParams();
 
-    url = `${this.url}/search/${this.query}`;
+    url = `${this.url}/api/search/${this.query}`;
     headers = new Headers({
       'Content-Type': 'application/json'
     });

@@ -72,7 +72,7 @@ export class SettingsComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/user/${userId}`;
+    url = `${this.url}/api/user/${userId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -108,7 +108,7 @@ export class SettingsComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/user/${userId}`;
+    url = `${this.url}/api/user/${userId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

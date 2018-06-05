@@ -65,7 +65,7 @@ export class ProductCategoryTagComponent implements OnInit, OnDestroy {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/product/category/${categoryId}`;
+    url = `${this.url}/api/product/category/${categoryId}`;
     headers = new Headers({
       'Content-Type': 'application/json'
     });

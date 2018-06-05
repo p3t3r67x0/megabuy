@@ -49,7 +49,7 @@ export class UploadComponent implements OnInit {
   }
 
   getAllCurrencies() {
-    this.http.get(`${this.url}/currencies`).subscribe(res => {
+    this.http.get(`${this.url}/api/currencies`).subscribe(res => {
       // console.log(res.json());
       this.currencies = res.json().currencies;
     });
@@ -71,7 +71,7 @@ export class UploadComponent implements OnInit {
       fd.append('image', file, file.name);
     }
 
-    url = `${this.url}/product`;
+    url = `${this.url}/api/product`;
     headers = new Headers({
       'Authorization': `Bearer ${this.token}`
     });
@@ -110,7 +110,7 @@ export class UploadComponent implements OnInit {
     let headers: Headers;
     const params = new URLSearchParams();
 
-    url = `${this.url}/product-categories`;
+    url = `${this.url}/api/product-categories`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

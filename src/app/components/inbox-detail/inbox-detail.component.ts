@@ -42,7 +42,7 @@ export class InboxDetailComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/inbox/user/${this.userId}/${this.messageId}`;
+    url = `${this.url}/api/inbox/user/${this.userId}/${this.messageId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.token}`
@@ -65,7 +65,7 @@ export class InboxDetailComponent implements OnInit {
     let headers: Headers;
 
     read = true;
-    url = `${this.url}/inbox/user/${this.userId}/${this.messageId}`;
+    url = `${this.url}/api/inbox/user/${this.userId}/${this.messageId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.token}`
@@ -85,7 +85,7 @@ export class InboxDetailComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/inbox/user/${this.userId}/${this.messageId}`;
+    url = `${this.url}/api/inbox/user/${this.userId}/${this.messageId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.token}`

@@ -48,7 +48,7 @@ export class CategoryComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/product-categories`;
+    url = `${this.url}/api/product-categories`;
     headers = new Headers({ 'Content-Type': 'application/json' });
 
     return this.http.get(url, { headers: headers }).toPromise();

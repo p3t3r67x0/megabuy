@@ -126,7 +126,7 @@ export class ProductCategoryComponent implements OnInit {
     let headers: Headers;
     const params = new URLSearchParams();
 
-    url = `${this.url}/product-categories/user`;
+    url = `${this.url}/api/product-categories/user`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
@@ -142,7 +142,7 @@ export class ProductCategoryComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/product-category/${productCategory.id}`;
+    url = `${this.url}/api/product-category/${productCategory.id}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -155,7 +155,7 @@ export class ProductCategoryComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/product-category/${productCategoryId}`;
+    url = `${this.url}/api/product-category/${productCategoryId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
@@ -168,7 +168,7 @@ export class ProductCategoryComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/product-category`;
+    url = `${this.url}/api/product-category`;
     headers = new Headers({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

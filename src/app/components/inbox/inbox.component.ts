@@ -54,7 +54,7 @@ export class InboxComponent implements OnInit {
 
     for (let i = 0; i < this.messages.length; i++) {
       if (this.messages[i].selected) {
-        url = `${this.url}/inbox/user/${this.userId}/${this.messages[i].id}`;
+        url = `${this.url}/api/inbox/user/${this.userId}/${this.messages[i].id}`;
 
         this.http.delete(url, { headers: headers })
           .toPromise()
@@ -85,7 +85,7 @@ export class InboxComponent implements OnInit {
     });
 
     for (let j = 0; j < this.messages.length; j++) {
-      url = `${this.url}/inbox/user/${this.userId}/${this.messages[j].id}`;
+      url = `${this.url}/api/inbox/user/${this.userId}/${this.messages[j].id}`;
 
       this.http.put(url, read, { headers: headers })
         .toPromise()
@@ -117,7 +117,7 @@ export class InboxComponent implements OnInit {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/inbox/user/${this.userId}`;
+    url = `${this.url}/api/inbox/user/${this.userId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.token}`
