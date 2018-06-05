@@ -18,7 +18,7 @@
             <button class="pull-right btn btn-primary btn-xs glyphicon glyphicon-edit" (click)="showUpdateForm(product.id)"></button>
             <button class="pull-right btn btn-danger btn-xs glyphicon glyphicon-trash margin-right-6" (click)="removeProductById(product.id)"></button>
             <h4>{{ product.name }}</h4>
-            <p><strong>Preis {{ product.price }}</strong></p>
+            <p><strong>Preis {{ product.price }} {{ product.currency }}</strong></p>
             <p>{{ product.description }}</p>
             <div *ngIf="editField == product.id" id="{{ product.id }}">
               <div class="form-group">
@@ -47,7 +47,7 @@
               </div>
               <div class="form-group">
                 <label for="thumbnail">Thumbnail</label>
-                <input type="file" name="thumbnail" (change)="onFileSelected($event, 'image-' + product.id, product.id)" multiple>
+                <input id="imageFile" type="file" name="thumbnail" (change)="onFileSelected($event, product.id)" multiple>
               </div>
             </div>
           </div>
@@ -55,8 +55,9 @@
       </li>
     </ul>
     <p *ngIf="products.length == 0">Hey add your first product!</p>
+    <canvas class="hidden" id="canvas" width="800" height="500"></canvas>
   </div>
   <div class="col-sm-6 margin-bottom-24">
-    <app-upload></app-upload>
+    <app-upload (uploaded)="getAllProductsByUser()"></app-upload>
   </div>
 </div>

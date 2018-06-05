@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,6 +18,8 @@ export class UploadComponent implements OnInit {
   selectedFile: any = [];
   rForm: FormGroup;
   productCategories: string[];
+
+  @Output() uploaded = new EventEmitter<string>();
 
   constructor(private http: Http, private fb: FormBuilder, private router: Router) {
     this.token = localStorage.getItem('token');
@@ -69,13 +71,21 @@ export class UploadComponent implements OnInit {
       fd.append('thumbnail', file, file.name);
     }
 
-    console.log(fd);
     url = `${this.url}/upload`;
     headers = new Headers({
       'Authorization': `Bearer ${this.token}`
     });
 
-    return this.http.post(url, fd, { headers: headers }).toPromise();
+    return this.http.post(url, fd, { headers: headers })
+      .toPromise()
+      .then(res => {
+        // console.log(res.json());
+        this.rForm.reset();
+        this.uploaded.emit();
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   getAllProductCategories() {

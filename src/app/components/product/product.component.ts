@@ -2,6 +2,14 @@ interface FormData {
   entries(): Iterator<[USVString, USVString | Blob]>;
 }
 
+interface FileReaderEventTarget extends EventTarget {
+  result: string;
+}
+
+interface FileReaderEvent extends Event {
+  target: FileReaderEventTarget;
+}
+
 import { Component, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Router } from '@angular/router';
@@ -60,42 +68,142 @@ export class ProductComponent implements OnInit {
     this.getAllCurrencies();
   }
 
-  onFileSelected(event, imageId, productId) {
-    let url: string;
-    let file: any = '';
-    let headers: Headers;
-    const fd = new FormData;
+  /**
+   * By Ken Fyrstenberg Nilsen
+   *
+   * drawImageProp(context, image [, x, y, width, height [,offsetX, offsetY]])
+   *
+   * If image and context are only arguments rectangle will equal canvas
+  */
+  drawImageProp(ctx, img, x, y, w, h, offsetX, offsetY) {
+    if (arguments.length === 2) {
+      x = y = 0;
+      w = ctx.canvas.width;
+      h = ctx.canvas.height;
+    }
 
-    url = `${this.url}/image`;
-    headers = new Headers({
-      'Authorization': `Bearer ${this.token}`
-    });
+    /// default offset is center
+    offsetX = typeof offsetX === 'number' ? offsetX : 0.5;
+    offsetY = typeof offsetY === 'number' ? offsetY : 0.5;
 
-    fd.append('product_id', productId);
+    /// keep bounds [0.0, 1.0]
+    if (offsetX < 0) {
+      offsetX = 0;
+    }
 
-    for (file of event.target.files) {
+    if (offsetY < 0) {
+      offsetY = 0;
+    }
+
+    if (offsetX > 1) {
+      offsetX = 1;
+    }
+
+    if (offsetY > 1) {
+      offsetY = 1;
+    }
+
+    const iw = img.width;
+    const ih = img.height;
+    const r = Math.min(w / iw, h / ih);
+    let nw = iw * r;  /// new prop. width
+    let nh = ih * r;  /// new prop. height
+    let cx, cy, cw, ch, ar = 1;
+
+    /// decide which gap to fill
+    if (nw < w) {
+      ar = w / nw;
+    }
+
+    if (nh < h) {
+      ar = h / nh;
+    }
+
+    nw *= ar;
+    nh *= ar;
+
+    /// calc source rectangle
+    cw = iw / (nw / w);
+    ch = ih / (nh / h);
+
+    cx = (iw - cw) * offsetX;
+    cy = (ih - ch) * offsetY;
+
+    /// make sure source rectangle is valid
+    if (cx < 0) {
+      cx = 0;
+    }
+
+    if (cy < 0) {
+      cy = 0;
+    }
+
+    if (cw > iw) {
+      cw = iw;
+    }
+
+    if (ch > ih) {
+      ch = ih;
+    }
+
+    /// fill image in dest. rectangle
+    ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
+  }
+
+
+  onFileSelected(event, productId) {
+    const self = this;
+    for (const file of event.target.files) {
       if (file) {
         const reader = new FileReader();
 
-        fd.append('thumbnail', file, file.name);
-        reader.onload = function(e: any) {
-          const image = '<img width="100%" height="auto" src="' + e.target.result + '">';
-          const imageWrapper = '<div class="margin-top-12 margin-left-12">' + image + '</div>';
-          $('#thumbnail-' + productId).prepend(imageWrapper);
+        reader.onload = function(e: FileReaderEvent) {
+          const canvas = <HTMLCanvasElement>document.getElementById('canvas');
+          const ctx = canvas.getContext('2d');
+          const img = new Image;
+
+          img.onload = draw;
+
+          function draw() {
+            self.drawImageProp(ctx, img, 0, 0, canvas.width, canvas.height, 0.5, 0.5);
+            const wrapperDiv = document.createElement('div');
+            wrapperDiv.setAttribute('class', 'margin-top-12 margin-left-12');
+
+            const g = document.createElement('img');
+            g.setAttribute('src', canvas.toDataURL());
+            g.setAttribute('width', '100%');
+            g.setAttribute('height', 'auto');
+
+            wrapperDiv.appendChild(g);
+            document.body.appendChild(wrapperDiv);
+
+            const selectorId = 'thumbnail-' + productId;
+            document.getElementById(selectorId).appendChild(wrapperDiv);
+
+            canvas.toBlob(function(blob) {
+              const form = new FormData();
+              let headers: Headers;
+              let url: string;
+
+              form.append('image', blob, 'moody.jpg');
+              form.append('product_id', productId);
+              url = `${self.url}/image`;
+
+              headers = new Headers({
+                'Authorization': `Bearer ${self.token}`
+              });
+
+              self.http.put(url, form, { headers: headers }).toPromise();
+            });
+          }
+          img.src = e.target.result;
         };
 
         reader.readAsDataURL(file);
-
-        this.http.put(url, fd, { headers: headers }).toPromise();
-
-        for (const pair of fd.entries()) {
-          console.log(pair);
-          fd.delete(pair[0]);
-        }
       }
     }
-    // $('#' + imageId).attr('src', $('#thumbnail-images'));
   }
+
 
   showUpdateForm(productId) {
     if (!this.editField || this.editField !== productId) {
@@ -180,7 +288,7 @@ export class ProductComponent implements OnInit {
         this.products = products.json().products;
 
         for (let i = 0; i < this.products.length; i++) {
-          console.log(this.products[i].id);
+          this.products[i].image = '';
           this.getAllImagesById(this.products[i].id)
             .then(res => {
               this.products[i].image = res.json().images;
@@ -189,7 +297,6 @@ export class ProductComponent implements OnInit {
               console.log(err);
             });
         }
-        console.log(this.products);
       })
       .catch((err) => {
         console.log(err);
