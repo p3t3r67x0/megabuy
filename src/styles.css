@@ -191,8 +191,16 @@ a.inbox-links:hover {
   padding-top: 15px;
 }
 
+.pos-relative {
+  position: relative;
+}
+
 .pos-absolute {
   position: absolute;
+}
+
+.pos-top-12 {
+  top: 12px;
 }
 
 .pos-right-12 {

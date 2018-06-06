@@ -10,6 +10,16 @@ interface FileReaderEvent extends Event {
   target: FileReaderEventTarget;
 }
 
+interface Product {
+  name: string;
+  description: string;
+}
+
+interface Error {
+  status: string;
+  message: string;
+}
+
 import { Component, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Router } from '@angular/router';
@@ -166,20 +176,8 @@ export class ProductComponent implements OnInit {
 
           function draw() {
             self.drawImageProp(ctx, img, 0, 0, canvas.width, canvas.height, 0.5, 0.5);
-            const wrapperDiv = document.createElement('div');
-            wrapperDiv.setAttribute('class', 'margin-top-12 margin-left-12');
 
-            const g = document.createElement('img');
-            g.setAttribute('src', canvas.toDataURL());
-            g.setAttribute('width', '100%');
-            g.setAttribute('height', 'auto');
-
-            wrapperDiv.appendChild(g);
-            document.body.appendChild(wrapperDiv);
-
-            const selectorId = 'thumbnail-' + productId;
-            document.getElementById(selectorId).appendChild(wrapperDiv);
-
+            const dataUrl = canvas.toDataURL();
             canvas.toBlob(function(blob) {
               const form = new FormData();
               let headers: Headers;
@@ -187,13 +185,42 @@ export class ProductComponent implements OnInit {
 
               form.append('image', blob, 'moody.jpg');
               form.append('product_id', productId);
-              url = `${self.url}/image`;
+              url = `${self.url}/api/image`;
 
               headers = new Headers({
                 'Authorization': `Bearer ${self.token}`
               });
 
-              self.http.put(url, form, { headers: headers }).toPromise();
+              self.http.put(url, form, { headers: headers })
+                .toPromise()
+                .then(res => {
+                  const imageId = res.json().id;
+                  const selectorId = 'thumbnail-' + productId;
+                  const wrapperDiv = document.createElement('div');
+                  wrapperDiv.setAttribute('class', 'pos-relative margin-top-12 margin-left-12');
+
+                  const imageElement = document.createElement('img');
+                  imageElement.setAttribute('src', dataUrl);
+                  imageElement.setAttribute('width', '100%');
+                  imageElement.setAttribute('height', 'auto');
+                  imageElement.setAttribute('id', 'image-' + imageId);
+
+                  const buttonElement = document.createElement('button');
+                  const buttonClass = 'pos-absolute pos-right-12 pos-top-12 btn btn-danger btn-xs glyphicon glyphicon-trash';
+                  buttonElement.setAttribute('class', buttonClass);
+                  buttonElement.addEventListener('click', function() {
+                    self.removeImageById(imageId);
+                  });
+
+                  const documentFragment = document.createDocumentFragment();
+                  documentFragment.appendChild(wrapperDiv);
+                  wrapperDiv.appendChild(imageElement);
+                  wrapperDiv.appendChild(buttonElement);
+                  document.getElementById(selectorId).appendChild(documentFragment);
+                })
+                .catch(err => {
+                  // **
+                });
             });
           }
           img.src = e.target.result;
@@ -368,14 +395,31 @@ export class ProductComponent implements OnInit {
     return this.http.delete(url, { headers: headers }).toPromise();
   }
 
-}
+  removeImageById(imageId) {
+    let url: string;
+    let headers: Headers;
 
-interface Product {
-  name: string;
-  description: string;
-}
+    url = `${this.url}/api/image/${imageId}`;
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.token}`
+    });
 
-interface Error {
-  status: string;
-  message: string;
+    return this.http.delete(url, { headers: headers })
+      .toPromise()
+      .then(res => {
+        console.log(res.json());
+        const imageElement = <any>document.getElementById('image-' + imageId);
+        imageElement.parentNode.remove();
+      })
+      .catch(err => {
+        console.log(err);
+
+        if (err.status === 401) {
+          localStorage.removeItem('token');
+          this.router.navigateByUrl('/login');
+        }
+      });
+  }
+
 }

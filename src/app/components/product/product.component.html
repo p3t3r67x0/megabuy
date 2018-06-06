@@ -8,8 +8,9 @@
             <img id="image-{{ product.id }}" width="100%" height="auto" src="{{ url }}/{{ product.thumbnail }}">
             <div id="thumbnail-{{ product.id }}" class="margin-right-12" style="display: flex;">
               <ng-container *ngIf="product.image.length > 1">
-                <div class="margin-top-12 margin-left-12" *ngFor="let image of product.image">
-                  <img class="full-height" width="100%" height="auto" src="{{ url }}/{{ image.image }}">
+                <div class="pos-relative margin-top-12 margin-left-12" *ngFor="let image of product.image">
+                  <button class="pos-absolute pos-right-12 pos-top-12 btn btn-danger btn-xs glyphicon glyphicon-trash" (click)="removeImageById(image.id)"></button>
+                  <img id="image-{{ image.id }}" class="full-height" width="100%" height="auto" src="{{ url }}/{{ image.image }}">
                 </div>
               </ng-container>
             </div>
