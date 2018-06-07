@@ -1,0 +1,91 @@
+<div class="col-xs-12 col-sm-6 margin-bottom-24">
+  <h1 [style.color]="headlineColor">Layout</h1>
+  <form>
+    <div class="col-xs-12 padding-top-12 padding-left-0 padding-right-0 white">
+      <div class="col-xs-6 col-md-4 margin-bottom-12">
+        <label [style.color]="textColor">Background</label>
+        <div class="input-group">
+          <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="backgroundColor" name="backgroundColor" placeholder="#de2342">
+          <span [style.background]="backgroundColor" [style.border-color]="backgroundColor" class="input-group-addon">&nbsp;&nbsp;</span>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-4 margin-bottom-12">
+        <label [style.color]="textColor">Text</label>
+        <div class="input-group">
+          <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="textColor" name="textColor" placeholder="#de2342">
+          <span [style.background]="textColor" [style.border-color]="textColor" class="input-group-addon">&nbsp;&nbsp;</span>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-4 margin-bottom-12">
+        <label [style.color]="textColor">Headline</label>
+        <div class="input-group">
+          <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="headlineColor" name="headlineColor" placeholder="#de2342">
+          <span [style.background]="headlineColor" [style.border-color]="headlineColor" class="input-group-addon">&nbsp;&nbsp;</span>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-4 margin-bottom-12">
+        <label [style.color]="textColor">Success</label>
+        <div class="input-group">
+          <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="successColor" name="successColor" placeholder="#de2342">
+          <span [style.background]="successColor" [style.border-color]="successColor" class="input-group-addon">&nbsp;&nbsp;</span>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-4 margin-bottom-12">
+        <label [style.color]="textColor">Error</label>
+        <div class="input-group">
+          <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="errorColor" name="errorColor" placeholder="#de2342">
+          <span [style.background]="errorColor" [style.border-color]="errorColor" class="input-group-addon">&nbsp;&nbsp;</span>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-4 margin-bottom-12">
+        <label [style.color]="textColor">Info</label>
+        <div class="input-group">
+          <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="infoColor" name="infoColor" placeholder="#de2342">
+          <span [style.background]="infoColor" [style.border-color]="infoColor" class="input-group-addon">&nbsp;&nbsp;</span>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-4 margin-bottom-12">
+        <label [style.color]="textColor">Link</label>
+        <div class="input-group">
+          <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="linkColor" name="linkColor" placeholder="#de2342">
+          <span [style.background]="linkColor" [style.border-color]="linkColor" class="input-group-addon">&nbsp;&nbsp;</span>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-4 margin-bottom-12">
+        <label [style.color]="textColor">Alert</label>
+        <div class="input-group">
+          <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="alertColor" name="alertColor" placeholder="#de2342">
+          <span [style.background]="alertColor" [style.border-color]="alertColor" class="input-group-addon">&nbsp;&nbsp;</span>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-4 margin-bottom-12">
+        <label [style.color]="textColor">Warning</label>
+        <div class="input-group">
+          <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="warningColor" name="warningColor" placeholder="#de2342">
+          <span [style.background]="warningColor" [style.border-color]="warningColor" class="input-group-addon">&nbsp;&nbsp;</span>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-4 margin-bottom-12">
+        <label [style.color]="textColor">Button</label>
+        <div class="input-group">
+          <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="buttonColor" name="buttonColor" placeholder="#de2342">
+          <span [style.background]="buttonColor" [style.border-color]="buttonColor" class="input-group-addon">&nbsp;&nbsp;</span>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-4 margin-bottom-12">
+        <label [style.color]="textColor">Teaser</label>
+        <div class="input-group">
+          <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="teaserColor" name="teaserColor" placeholder="#de2342">
+          <span [style.background]="teaserColor" [style.border-color]="teaserColor" class="input-group-addon">&nbsp;&nbsp;</span>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-4 margin-bottom-12">
+        <label [style.color]="textColor">Navbar</label>
+        <div class="input-group">
+          <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="navbarColor" name="navbarColor" placeholder="#de2342">
+          <span [style.background]="navbarColor" [style.border-color]="navbarColor" class="input-group-addon">&nbsp;&nbsp;</span>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
