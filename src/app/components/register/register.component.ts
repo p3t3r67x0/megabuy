@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit {
   errorEmail: string;
   errorPassword: string;
   rForm: FormGroup;
+  hover: boolean;
   post: any;
 
   user: User = new User();

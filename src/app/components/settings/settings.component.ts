@@ -30,6 +30,7 @@ export class SettingsComponent implements OnInit {
   textColor: string;
 
   rForm: FormGroup;
+  hover: boolean;
   token: string;
   userId: string;
   error: any = {};

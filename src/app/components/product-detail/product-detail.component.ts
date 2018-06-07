@@ -31,6 +31,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   private sub: any;
   rForm: FormGroup;
   url: string;
+  hover: boolean;
   errorName: string;
   errorSubject: string;
   errorMessage: string;

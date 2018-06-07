@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
   errorEmail: string;
   errorPassword: string;
   rForm: FormGroup;
+  hover: boolean;
   post: any;
 
   userId: string;
