@@ -1,31 +1,31 @@
 <div class="row">
   <div class="col-sm-6 col-md-4">
     <form [formGroup]="rForm" class="white padding-15" (ngSubmit)="onRegister(rForm.value)">
-      <h1>Join <span style="color: #ff0055;">Megabuy</span>!</h1>
+      <h1 [style.color]="headlineColor">Join <span [style.color]="teaserColor">Megabuy</span>!</h1>
       <hr>
-      <p>Already have a Megabuy account? <a routerLink="/login">Log In</a></p>
+      <p [style.color]="textColor">Already have a Megabuy account? <a [style.color]="linkColor" routerLink="/login">Log In</a></p>
       <div class="form-group">
-        <label for="name">Name</label>
+        <label [style.color]="textColor" for="name">Name</label>
         <input type="text" class="form-control" id="name" placeholder="Name" formControlName="name">
-        <div class="alert margin-top-9" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">
+        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">
           {{ errorName }}
         </div>
       </div>
       <div class="form-group">
-        <label for="email">Email</label>
+        <label [style.color]="textColor" for="email">Email</label>
         <input type="email" class="form-control" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Email address" formControlName="email">
-        <div class="alert margin-top-9" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">
+        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">
           {{ errorEmail }}
         </div>
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
+        <label [style.color]="textColor" for="password">Password</label>
         <input type="password" class="form-control" id="password" placeholder="New password" formControlName="password">
-        <div class="alert margin-top-9" *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">
+        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">
           {{ errorPassword }}
         </div>
       </div>
-      <button type="submit" class="btn btn-primary" [disabled]="!rForm.valid">Sign Up</button>
+      <button [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary" [disabled]="!rForm.valid">Sign Up</button>
     </form>
   </div>
 </div>

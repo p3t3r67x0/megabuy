@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SplitPipe } from 'angular-pipes';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
+import { LayoutService } from '../../services/layout.service';
 import { environment } from '../../../environments/environment';
 
 
@@ -14,6 +15,19 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit, OnDestroy {
+  backgroundColor: string;
+  headlineColor: string;
+  warningColor: string;
+  successColor: string;
+  navbarColor: string;
+  teaserColor: string;
+  buttonColor: string;
+  errorColor: string;
+  alertColor: string;
+  infoColor: string;
+  linkColor: string;
+  textColor: string;
+
   private sub: any;
   rForm: FormGroup;
   url: string;
@@ -32,9 +46,23 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
     private fb: FormBuilder,
     private http: Http,
+    private layout: LayoutService,
     private element: ElementRef,
     private data: DataService,
     private auth: AuthService) {
+    this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
+    this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
+    this.layout.currentWarningColor.subscribe(warningColor => this.warningColor = warningColor);
+    this.layout.currentSuccessColor.subscribe(successColor => this.successColor = successColor);
+    this.layout.currentNavbarColor.subscribe(navbarColor => this.navbarColor = navbarColor);
+    this.layout.currentTeaserColor.subscribe(teaserColor => this.teaserColor = teaserColor);
+    this.layout.currentButtonColor.subscribe(buttonColor => this.buttonColor = buttonColor);
+    this.layout.currentAlertColor.subscribe(alertColor => this.alertColor = alertColor);
+    this.layout.currentErrorColor.subscribe(errorColor => this.errorColor = errorColor);
+    this.layout.currentTextColor.subscribe(textColor => this.textColor = textColor);
+    this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
+    this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
+
     this.errorName = 'What\'s your name?';
     this.errorSubject = 'Tell the seller where they can contact you';
     this.errorMessage = 'You may want to descripe your question more detailed';

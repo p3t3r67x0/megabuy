@@ -22,13 +22,15 @@ import { CategoryComponent } from './components/category/category.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { InboxComponent } from './components/inbox/inbox.component';
 import { InboxDetailComponent } from './components/inbox-detail/inbox-detail.component';
+import { LayoutComponent } from './components/layout/layout.component';
 
 import { AuthService } from './services/auth.service';
+import { DataService } from './services/data.service';
+import { LayoutService } from './services/layout.service';
 import { AuthGuard } from './services/ensure-authenticated.service';
 import { LoginRedirectService } from './services/login-redirect.service';
-import { DataService } from './services/data.service';
-import { ImageCropperModule } from 'ngx-image-cropper';
 import { NgStringPipesModule } from 'angular-pipes';
+import { ColorPipe } from './color.pipe';
 
 @NgModule({
   imports: [
@@ -36,7 +38,6 @@ import { NgStringPipesModule } from 'angular-pipes';
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    ImageCropperModule,
     NgStringPipesModule,
     RouterModule.forRoot([
       {
@@ -119,11 +120,14 @@ import { NgStringPipesModule } from 'angular-pipes';
     CategoryComponent,
     UploadComponent,
     InboxComponent,
-    InboxDetailComponent
+    InboxDetailComponent,
+    LayoutComponent,
+    ColorPipe
   ],
   providers: [
     AuthService,
     AuthGuard,
+    LayoutService,
     LoginRedirectService,
     DataService
   ],

@@ -1,46 +1,47 @@
 <div class="row">
-  <div class="col-sm-6">
-    <h1>Settings</h1>
+  <div class="col-sm-6 margin-bottom-24">
+    <h1 [style.color]="headlineColor">Settings</h1>
     <form class="padding-15 white" [formGroup]="rForm" (ngSubmit)="updateForm(rForm.value)">
       <div class="form-group">
-        <label for="user-name">Name</label>
+        <label [style.color]="textColor" for="user-name">Name</label>
         <input class="form-control" type="text" placeholder="Mr. Example" formControlName="name" id="user-name">
-        <div class="alert margin-top-9" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">
+        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">
           {{ errorName }}
         </div>
       </div>
       <div class="form-group">
-        <label for="user-email">E-Mail</label>
+        <label [style.color]="textColor" for="user-email">E-Mail</label>
         <input class="form-control" type="text" placeholder="max@example.com" formControlName="email" id="user-email">
-        <div class="alert margin-top-9" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">
+        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">
           {{ errorEmail }}
         </div>
       </div>
       <div class="form-group">
-        <label for="user-username">Username</label>
+        <label [style.color]="textColor" for="user-username">Username</label>
         <input class="form-control" type="text" placeholder="@username" formControlName="username" id="user-username">
-        <div class="alert margin-top-9" *ngIf="!rForm.controls['username'].valid && rForm.controls['username'].touched">
+        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['username'].valid && rForm.controls['username'].touched">
           {{ errorUsername }}
         </div>
       </div>
       <div class="form-group">
-        <label for="user-phone">Phone</label>
+        <label [style.color]="textColor" for="user-phone">Phone</label>
         <input class="form-control" type="text" placeholder="040 1233432" formControlName="phone" id="user-phone">
-        <div class="alert margin-top-9" *ngIf="!rForm.controls['phone'].valid && rForm.controls['phone'].touched">
+        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['phone'].valid && rForm.controls['phone'].touched">
           {{ errorPhone }}
         </div>
       </div>
       <div class="form-group">
-        <label for="user-website">Website</label>
+        <label [style.color]="textColor" for="user-website">Website</label>
         <input class="form-control" type="text" placeholder="example.com" formControlName="website" id="user-website">
-        <div class="alert margin-top-9" *ngIf="!rForm.controls['website'].valid && rForm.controls['website'].touched">
+        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['website'].valid && rForm.controls['website'].touched">
           {{ errorWebsite }}
         </div>
       </div>
 
-      <input type="submit" class="btn btn-primary" value="Save now" [disabled]="!rForm.valid">
+      <input [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary" value="Save now" [disabled]="!rForm.valid">
     </form>
   </div>
+  <app-layout></app-layout>
 </div>
 
 <app-modal [error]="error"></app-modal>

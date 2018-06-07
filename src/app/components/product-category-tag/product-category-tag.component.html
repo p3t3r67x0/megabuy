@@ -21,9 +21,9 @@
               	<span class="price-tag"><a href="javascript:void()">{{ product.price }}{{ product.currency }}</a></span>
                 </span>
               </div>
-              <p class="margin-bottom-0"><a routerLink="/product/{{ product.id }}" class="h4">{{ product.name }}</a></p>
-              <p class="margin-bottom-12"><small>By <a routerLink="/user/{{ product.user_id }}">{{ product.user_name }}</a> in <a routerLink="/category/{{ product.category_id }}">{{ product.category }}</a></small></p>
-              <p class="margin-bottom-0">{{ (product.description.length > 300) ? (product.description | slice: 0: 300) + '...' : product.description }}</p>
+              <p class="margin-bottom-0"><a [style.color]="headlineColor" routerLink="/product/{{ product.id }}" class="h4">{{ product.name }}</a></p>
+              <p [style.color]="textColor" class="margin-bottom-12"><small>By <a [style.color]="linkColor" routerLink="/user/{{ product.user_id }}">{{ product.user_name }}</a> in <a [style.color]="linkColor" routerLink="/category/{{ product.category_id }}">{{ product.category }}</a></small></p>
+              <p [style.color]="textColor" class="margin-bottom-0">{{ (product.description.length > 300) ? (product.description | slice: 0: 300) + '...' : product.description }}</p>
             </div>
           </div>
         </div>
