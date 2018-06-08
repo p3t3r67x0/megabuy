@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Headers, Http } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SplitPipe } from 'angular-pipes';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { LayoutService } from '../../services/layout.service';

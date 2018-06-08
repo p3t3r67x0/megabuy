@@ -4,6 +4,7 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { AuthService } from './services/auth.service';
 import { DataService } from './services/data.service';
 import { LayoutService } from './services/layout.service';
+import { TranslateService } from '@ngx-translate/core';
 import { User } from './models/user';
 
 
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit {
   token: string;
 
   constructor(private router: Router,
+    public translate: TranslateService,
     private layout: LayoutService,
     private data: DataService,
     private auth: AuthService,
@@ -51,6 +53,12 @@ export class AppComponent implements OnInit {
     this.layout.currentTextColor.subscribe(textColor => this.textColor = textColor);
     this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
+
+    translate.addLangs(['en', 'de']);
+    translate.setDefaultLang('en');
+
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|de/) ? browserLang : 'en');
   }
 
   ngOnInit() { }

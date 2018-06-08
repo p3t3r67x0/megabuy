@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { LayoutService } from '../../services/layout.service';

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Headers, Http } from '@angular/http';
 import { SplitPipe } from 'angular-pipes';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { LayoutService } from '../../services/layout.service';

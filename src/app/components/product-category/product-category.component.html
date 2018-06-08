@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-6 margin-bottom-24">
-    <h1 [style.color]="headlineColor">Your categories</h1>
+    <h1 [style.color]="headlineColor">{{ 'term_your_categories' | translate }}</h1>
     <ul *ngIf="productCategories.length > 0" class="list-unstyled margin-bottom-0">
       <li id="{{ productCategory.id }}" class="tender padding-15" *ngFor="let productCategory of productCategories">
         <ng-container *ngIf="productCategory.user_id == userId">
@@ -15,13 +15,13 @@
             <input class="form-control" (blur)="updateEntry(productCategory)" [(ngModel)]="productCategory.name" type="text" placeholder="Mr. Example" name="name" id="{{ productCategory.id }}-name">
           </div>
           <div class="col-xs-12">
-            <label [style.color]="textColor" for="{{ productCategory.id }}-description">Description</label><br>
+            <label [style.color]="textColor" for="{{ productCategory.id }}-description">{{ 'term_description' | translate }}</label><br>
             <textarea class="form-control" (blur)="updateEntry(productCategory)" [(ngModel)]="productCategory.description" type="text" placeholder="example.com" name="description" id="{{ productCategory.id }}-description"></textarea>
           </div>
         </div>
       </li>
     </ul>
-    <p [style.color]="textColor" *ngIf="productCategories.length == 0" >Hey add your first product category!</p>
+    <div [style.color]="textColor" [style.background-color]="infoColor" class="alert" *ngIf="productCategories.length == 0">Hey add your first product category!</div>
   </div>
 
   <div class="col-sm-6">
@@ -31,17 +31,17 @@
         <label [style.color]="textColor">Name</label>
         <input class="form-control" type="text" formControlName="name">
         <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">
-          {{ errorName }}
+          You mus specify a unique category name
         </div>
       </div>
       <div class="form-group">
-        <label [style.color]="textColor">Description</label>
+        <label [style.color]="textColor">{{ 'term_description' | translate }}</label>
         <textarea class="form-control" formControlName="description"></textarea>
         <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['description'].valid && rForm.controls['description'].touched">
           You must specify a description that's between 30 and 500 characters
         </div>
       </div>
 
-      <input type="submit" class="btn btn-primary" value="Save now" [disabled]="!rForm.valid">
+      <input [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary" value="{{ 'term_save_now' | translate }}" [disabled]="!rForm.valid">
     </form>
   </div>

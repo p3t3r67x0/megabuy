@@ -1,10 +1,10 @@
 <div class="row">
   <div class="col-sm-6 margin-bottom-24">
-    <h1 [style.color]="headlineColor">Settings</h1>
+    <h1 [style.color]="headlineColor">{{ 'term_profile' | translate }}</h1>
     <form class="padding-15 white" [formGroup]="rForm" (ngSubmit)="updateForm(rForm.value)">
       <div class="form-group">
         <label [style.color]="textColor" for="user-name">Name</label>
-        <input class="form-control" type="text" placeholder="Mr. Example" formControlName="name" id="user-name">
+        <input class="form-control" type="text" placeholder="{{ 'placeholder_name' | translate }}" formControlName="name" id="user-name">
         <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">
           {{ errorName }}
         </div>
@@ -17,28 +17,29 @@
         </div>
       </div>
       <div class="form-group">
-        <label [style.color]="textColor" for="user-username">Username</label>
+        <label [style.color]="textColor" for="user-username">{{ 'term_username' | translate }}</label>
         <input class="form-control" type="text" placeholder="@username" formControlName="username" id="user-username">
         <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['username'].valid && rForm.controls['username'].touched">
           {{ errorUsername }}
         </div>
       </div>
       <div class="form-group">
-        <label [style.color]="textColor" for="user-phone">Phone</label>
+        <label [style.color]="textColor" for="user-phone">{{ 'term_phone' | translate }}</label>
         <input class="form-control" type="text" placeholder="040 1233432" formControlName="phone" id="user-phone">
         <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['phone'].valid && rForm.controls['phone'].touched">
           {{ errorPhone }}
         </div>
       </div>
       <div class="form-group">
-        <label [style.color]="textColor" for="user-website">Website</label>
+        <label [style.color]="textColor" for="user-website">{{ 'term_website' | translate }}</label>
         <input class="form-control" type="text" placeholder="example.com" formControlName="website" id="user-website">
         <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['website'].valid && rForm.controls['website'].touched">
           {{ errorWebsite }}
         </div>
       </div>
 
-      <input [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary" value="Save now" [disabled]="!rForm.valid">
+      <input [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary" value="{{ 'term_save_now' | translate }}"
+        [disabled]="!rForm.valid">
     </form>
   </div>
   <app-layout></app-layout>

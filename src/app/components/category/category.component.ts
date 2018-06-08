@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../environments/environment';
 
 

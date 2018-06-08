@@ -3,7 +3,7 @@
     <form [formGroup]="rForm" class="white padding-15" (ngSubmit)="onRegister(rForm.value)">
       <h1 [style.color]="headlineColor">Join <span [style.color]="teaserColor">Megabuy</span>!</h1>
       <hr>
-      <p [style.color]="textColor">Already have a Megabuy account? <a [style.color]="linkColor" routerLink="/login">Log In</a></p>
+      <p [style.color]="textColor">{{ 'signup_navigate_to_login' | translate }} <a [style.color]="linkColor" routerLink="/login">{{ 'term_login' | translate }}</a></p>
       <div class="form-group">
         <label [style.color]="textColor" for="name">Name</label>
         <input type="text" class="form-control" id="name" placeholder="Name" formControlName="name">
@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label [style.color]="textColor" for="password">Password</label>
+        <label [style.color]="textColor" for="password">{{ 'term_password' | translate }}</label>
         <input type="password" class="form-control" id="password" placeholder="New password" formControlName="password">
         <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">
           {{ errorPassword }}

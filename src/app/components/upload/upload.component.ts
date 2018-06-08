@@ -2,6 +2,8 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { LayoutService } from '../../services/layout.service';
 import { environment } from '../../../environments/environment';
 
 
@@ -11,9 +13,23 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./upload.component.css']
 })
 export class UploadComponent implements OnInit {
+  backgroundColor: string;
+  headlineColor: string;
+  warningColor: string;
+  successColor: string;
+  navbarColor: string;
+  teaserColor: string;
+  buttonColor: string;
+  errorColor: string;
+  alertColor: string;
+  infoColor: string;
+  linkColor: string;
+  textColor: string;
+
   url: string;
   error: string;
   token: string;
+  hover: boolean;
   currencies: string[];
   selectedFile: any = [];
   rForm: FormGroup;
@@ -21,7 +37,23 @@ export class UploadComponent implements OnInit {
 
   @Output() uploaded = new EventEmitter<string>();
 
-  constructor(private http: Http, private fb: FormBuilder, private router: Router) {
+  constructor(private http: Http,
+    private layout: LayoutService,
+    private fb: FormBuilder,
+    private router: Router) {
+    this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
+    this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
+    this.layout.currentWarningColor.subscribe(warningColor => this.warningColor = warningColor);
+    this.layout.currentSuccessColor.subscribe(successColor => this.successColor = successColor);
+    this.layout.currentNavbarColor.subscribe(navbarColor => this.navbarColor = navbarColor);
+    this.layout.currentTeaserColor.subscribe(teaserColor => this.teaserColor = teaserColor);
+    this.layout.currentButtonColor.subscribe(buttonColor => this.buttonColor = buttonColor);
+    this.layout.currentAlertColor.subscribe(alertColor => this.alertColor = alertColor);
+    this.layout.currentErrorColor.subscribe(errorColor => this.errorColor = errorColor);
+    this.layout.currentTextColor.subscribe(textColor => this.textColor = textColor);
+    this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
+    this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
+
     this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
     this.getAllProductCategories();

@@ -20,12 +20,12 @@
       </div>
 
       <ul class="nav nav-tabs padding-left-12 padding-right-12">
-        <li class="active"><a [style.color]="linkColor" data-toggle="tab" href="#home">Description</a></li>
-        <li><a [style.color]="linkColor" data-toggle="tab" href="#menu3">Reviews</a></li>
+        <li class="active"><a [style.color]="linkColor" data-toggle="tab" href="#home">{{ 'term_description' | translate }}</a></li>
+        <li><a [style.color]="linkColor" data-toggle="tab" href="#menu3">{{ 'term_reviews' | translate }}</a></li>
         <li class="pull-right">
           <div style="align-self: flex-end">
             <button [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="button" class="margin-bottom-12 btn btn-primary">
-              Add to wishlist
+              {{ 'term_add_wishlist' | translate }}
             </button>
           </div>
         </li>
@@ -44,10 +44,10 @@
   <div class="col-sm-4">
     <div class="padding-15 margin-bottom-24 white">
       <h1 [style.color]="headlineColor">{{ product.price }}{{ product.currency }}</h1>
-      <button [style.border-color]="successColor" [ngStyle]="hover ? { 'background-color': successColor | color: -0.1 } : { 'background-color': successColor }" (mouseover)="hover=true" (mouseleave)="hover=false" class="full-width btn btn-success">Buy now</button>
+      <button [style.border-color]="successColor" [ngStyle]="hover ? { 'background-color': successColor | color: -0.1 } : { 'background-color': successColor }" (mouseover)="hover=true" (mouseleave)="hover=false" class="full-width btn btn-success">{{ 'term_buy_now' | translate }}</button>
     </div>
     <div class="padding-15 margin-bottom-24 white">
-      <h2 class="margin-top-0">Contact Seller</h2>
+      <h2 [style.color]="headlineColor" class="margin-top-0">{{ 'term_contact_seller' | translate }}</h2>
       <p [style.color]="successColor" *ngIf="requestSubmited" class="text-success">Your message was sent!</p>
       <form [formGroup]="rForm" class="padding-0" (ngSubmit)="submitContactForm(rForm.value)">
         <div class="form-group">
@@ -58,21 +58,21 @@
           </div>
         </div>
         <div class="form-group">
-          <label [style.color]="textColor">Subject</label>
+          <label [style.color]="textColor">{{ 'term_subject' | translate }}</label>
           <input formControlName="subject" type="subject" class="form-control">
           <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['subject'].valid && rForm.controls['subject'].touched">
             {{ errorSubject }}
           </div>
         </div>
         <div class="form-group">
-          <label [style.color]="textColor">Message</label>
+          <label [style.color]="textColor">{{ 'term_message' | translate }}</label>
           <textarea formControlName="message" class="form-control"></textarea>
           <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['message'].valid && rForm.controls['message'].touched">
             {{ errorMessage }}
           </div>
         </div>
         <div>
-          <input [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary" value="Send now" [disabled]="!rForm.valid">
+          <input [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary" value="{{ 'term_send_now' | translate }}" [disabled]="!rForm.valid">
         </div>
       </form>
     </div>

@@ -1,13 +1,13 @@
 <div class="row margin-bottom-12">
   <div class="col-xs-12">
     <button type="button" class="btn btn-default" routerLink="/inbox" data-toggle="tooltip" title="Back">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;&nbsp;</button>
-    <button type="button" class="btn btn-default" (click)="deleteMessageById()" data-toggle="tooltip" title="Delete">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;&nbsp;</button>
+    <button type="button" class="btn btn-default" (click)="deleteMessageById()" data-toggle="tooltip" title="{{ 'term_delete_message' | translate }}">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;&nbsp;</button>
     <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">More <span class="caret"></span></button>
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{ 'term_more' | translate }} <span class="caret"></span></button>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="#">Mark all as read</a></li>
+        <li><a href="#">{{ 'term_mark_all_as_read' | translate }}</a></li>
         <li class="divider"></li>
-        <li class="text-center"><small class="text-muted">Select messages to see more actions</small></li>
+        <li class="text-center"><small class="text-muted">{{ 'term_select_more_for_action' | translate }}</small></li>
       </ul>
     </div>
   </div>

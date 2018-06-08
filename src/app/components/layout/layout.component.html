@@ -3,7 +3,7 @@
   <form>
     <div class="col-xs-12 padding-top-12 padding-left-0 padding-right-0 white">
       <div class="col-xs-6 col-md-4 margin-bottom-12">
-        <label [style.color]="textColor">Background</label>
+        <label [style.color]="textColor">{{ 'term_background' | translate }}</label>
         <div class="input-group">
           <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="backgroundColor" name="backgroundColor" placeholder="#de2342">
           <span [style.background]="backgroundColor" [style.border-color]="backgroundColor" class="input-group-addon">&nbsp;&nbsp;</span>
@@ -17,21 +17,21 @@
         </div>
       </div>
       <div class="col-xs-6 col-md-4 margin-bottom-12">
-        <label [style.color]="textColor">Headline</label>
+        <label [style.color]="textColor">{{ 'term_headline' | translate }}</label>
         <div class="input-group">
           <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="headlineColor" name="headlineColor" placeholder="#de2342">
           <span [style.background]="headlineColor" [style.border-color]="headlineColor" class="input-group-addon">&nbsp;&nbsp;</span>
         </div>
       </div>
       <div class="col-xs-6 col-md-4 margin-bottom-12">
-        <label [style.color]="textColor">Success</label>
+        <label [style.color]="textColor">{{ 'term_success' | translate }}</label>
         <div class="input-group">
           <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="successColor" name="successColor" placeholder="#de2342">
           <span [style.background]="successColor" [style.border-color]="successColor" class="input-group-addon">&nbsp;&nbsp;</span>
         </div>
       </div>
       <div class="col-xs-6 col-md-4 margin-bottom-12">
-        <label [style.color]="textColor">Error</label>
+        <label [style.color]="textColor">{{ 'term_error' | translate }}</label>
         <div class="input-group">
           <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="errorColor" name="errorColor" placeholder="#de2342">
           <span [style.background]="errorColor" [style.border-color]="errorColor" class="input-group-addon">&nbsp;&nbsp;</span>
@@ -52,14 +52,14 @@
         </div>
       </div>
       <div class="col-xs-6 col-md-4 margin-bottom-12">
-        <label [style.color]="textColor">Alert</label>
+        <label [style.color]="textColor">{{ 'term_alert' | translate }}</label>
         <div class="input-group">
           <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="alertColor" name="alertColor" placeholder="#de2342">
           <span [style.background]="alertColor" [style.border-color]="alertColor" class="input-group-addon">&nbsp;&nbsp;</span>
         </div>
       </div>
       <div class="col-xs-6 col-md-4 margin-bottom-12">
-        <label [style.color]="textColor">Warning</label>
+        <label [style.color]="textColor">{{ 'term_warning' | translate }}</label>
         <div class="input-group">
           <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="warningColor" name="warningColor" placeholder="#de2342">
           <span [style.background]="warningColor" [style.border-color]="warningColor" class="input-group-addon">&nbsp;&nbsp;</span>
@@ -80,7 +80,7 @@
         </div>
       </div>
       <div class="col-xs-6 col-md-4 margin-bottom-12">
-        <label [style.color]="textColor">Navbar</label>
+        <label [style.color]="textColor">{{ 'term_navbar' | translate }}</label>
         <div class="input-group">
           <input type="text" class="form-control" (keyup)="onColorChange()" [(ngModel)]="navbarColor" name="navbarColor" placeholder="#de2342">
           <span [style.background]="navbarColor" [style.border-color]="navbarColor" class="input-group-addon">&nbsp;&nbsp;</span>

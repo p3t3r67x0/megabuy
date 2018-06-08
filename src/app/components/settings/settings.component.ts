@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Headers, Http, URLSearchParams } from '@angular/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { DataService } from '../../services/data.service';
 import { environment } from '../../../environments/environment';
 import { LayoutService } from '../../services/layout.service';

@@ -24,6 +24,7 @@ import { Component, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { SplitPipe } from 'angular-pipes';
+import { TranslateService } from '@ngx-translate/core';
 import { DataService } from '../../services/data.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';

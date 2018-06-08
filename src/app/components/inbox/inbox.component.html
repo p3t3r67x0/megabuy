@@ -6,20 +6,20 @@
       </label>
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>
       <ul class="dropdown-menu" role="menu">
-        <li><a class="pointer" (click)="deleteMessages()">Delete Messages</a></li>
+        <li><a class="pointer" (click)="deleteMessages()">{{ 'term_delete_messages' | translate }}</a></li>
       </ul>
     </div>
-    <button type="button" class="btn btn-default" (click)="reloadInbox()" data-toggle="tooltip" title="Refresh">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;&nbsp;</button>
+    <button type="button" class="btn btn-default" (click)="reloadInbox()" data-toggle="tooltip" title="{{ 'term_refresh' | translate }}">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;&nbsp;</button>
     <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">More <span class="caret"></span></button>
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">{{ 'term_more' | translate }} <span class="caret"></span></button>
       <ul class="dropdown-menu" role="menu">
-        <li><a class="pointer" (click)="updateAllMessageStatusById()">Mark all as read</a></li>
+        <li><a class="pointer" (click)="updateAllMessageStatusById()">{{ 'term_mark_all_as_read' | translate }}</a></li>
         <li class="divider"></li>
-        <li class="text-center"><small class="text-muted">Select messages to see more actions</small></li>
+        <li class="text-center"><small class="text-muted">{{ 'term_select_more_for_action' | translate }}</small></li>
       </ul>
     </div>
     <div class="pull-right">
-      <span class="text-muted"><b>1</b>–<b>50</b> of <b>160</b></span>
+      <span class="text-muted"><b>1</b>–<b>15</b> of <b>100</b></span>
       <div class="btn-group btn-group-sm">
         <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span></button>
         <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-chevron-right"></span></button>
@@ -44,4 +44,8 @@
   </div>
 </div>
 
-<ng-template #alert>You have no messages</ng-template>
+<ng-template #alert>
+  <div [style.color]="textColor" [style.background-color]="infoColor" class="alert">
+    You have no messages
+  </div>
+</ng-template>

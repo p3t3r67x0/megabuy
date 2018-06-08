@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-xs-12">
     <form class="padding-0">
-      <label>Category</label>
+      <label>{{ 'term_category' | translate }}</label>
       <select class="form-control" [(ngModel)]="categoryId" name="category" (change)="category(categoryId)">
         <option *ngFor="let productCategory of productCategories" [ngValue]="productCategory.id">{{ productCategory.name }}</option>
       </select>

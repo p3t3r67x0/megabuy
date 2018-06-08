@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Headers, Http, URLSearchParams } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { LayoutService } from '../../services/layout.service';

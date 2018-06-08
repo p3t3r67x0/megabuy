@@ -4,6 +4,10 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -32,6 +36,11 @@ import { LoginRedirectService } from './services/login-redirect.service';
 import { NgStringPipesModule } from 'angular-pipes';
 import { ColorPipe } from './color.pipe';
 
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -39,6 +48,14 @@ import { ColorPipe } from './color.pipe';
     FormsModule,
     ReactiveFormsModule,
     NgStringPipesModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     RouterModule.forRoot([
       {
         path: '',

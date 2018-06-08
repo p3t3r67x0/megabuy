@@ -29,6 +29,6 @@
         </div>
       </li>
     </ul>
-    <div [style.color]="textColor" [style.background-color]="infoColor" *ngIf="products.length == 0">There were no products found!</div>
+    <div [style.color]="textColor" [style.background-color]="infoColor" class="alert" *ngIf="products.length == 0">Sorry there are no products listed!</div>
   </div>
 </div>
