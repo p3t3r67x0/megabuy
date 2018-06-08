@@ -2,9 +2,8 @@
 
 ## Installation
 
-Clone this repository and run `npm install` to fetch the dependencies
-Next update the enviroment files under `/src/environments/*`
-Run `ng serve --watch` for a dev server. Navigate to `http://localhost:4200/`.
+Clone this repository and run `npm install` to fetch the dependencies. Next update the enviroment files under `/src/environments/*`. Now run `ng serve --watch` for a dev server. Navigate to `http://localhost:4200/`. Now setup the backend, clone this repo `https://github.com/webtobesocial/megabuy_api.git` and follow the README.md.
+
 
 ## Build
 
