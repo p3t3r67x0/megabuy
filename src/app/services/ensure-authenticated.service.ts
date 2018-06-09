@@ -14,9 +14,9 @@ export class AuthGuard {
     return this.auth.loginStatus(localStorage.getItem('token'))
       .then((user) => {
         // console.log(user.json());
-        this.changeStatus();
-        this.changeUserId(user.json().user_id);
-        this.changeUserName(user.json().name);
+        this.data.changeStatus(true);
+        this.data.changeUserId(user.json().user_id);
+        this.data.changeUserName(user.json().name);
         return true;
       })
       .catch((err) => {
@@ -25,17 +25,5 @@ export class AuthGuard {
         this.router.navigateByUrl('/login');
         return false;
       });
-  }
-
-  changeUserId(userId) {
-    this.data.changeUserId(userId);
-  }
-
-  changeUserName(userName) {
-    this.data.changeUserName(userName);
-  }
-
-  changeStatus() {
-    this.data.changeStatus(true);
   }
 }
