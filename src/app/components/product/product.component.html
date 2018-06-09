@@ -55,7 +55,8 @@
         </div>
       </li>
     </ul>
-    <p *ngIf="products.length == 0">Hey add your first product!</p>
+    <div [style.color]="textColor" [style.background-color]="infoColor" class="alert" *ngIf="products.length == 0">Hey add your first product!</div>
+
     <canvas class="hidden" id="canvas" width="800" height="500"></canvas>
   </div>
   <div class="col-sm-6 margin-bottom-24">
