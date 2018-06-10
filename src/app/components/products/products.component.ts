@@ -85,6 +85,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.changeStatus();
         this.changeUserId(user.json().user_id);
         this.changeUserName(user.json().name);
+        this.data.changeUserConfirmed(user.json().confirmed);
       })
       .catch((err) => {
         console.log(err.json());

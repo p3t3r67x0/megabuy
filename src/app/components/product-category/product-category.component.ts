@@ -43,6 +43,8 @@ export class ProductCategoryComponent implements OnInit {
     private layout: LayoutService,
     private fb: FormBuilder,
     private data: DataService) {
+    this.data.currentUserId.subscribe(userId => this.userId = userId);
+
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
     this.layout.currentWarningColor.subscribe(warningColor => this.warningColor = warningColor);
@@ -57,15 +59,15 @@ export class ProductCategoryComponent implements OnInit {
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
 
     this.rForm = fb.group({
-      'name': [null, Validators.compose([Validators.required, Validators.minLength(5)])],
+      'name': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
       'description': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(500)])],
     });
+
+    this.token = localStorage.getItem('token');
+    this.url = environment.apiUrl;
   }
 
   ngOnInit() {
-    this.data.currentUserId.subscribe(userId => this.userId = userId);
-    this.token = localStorage.getItem('token');
-    this.url = environment.apiUrl;
     this.limit = -1;
     this.page = 1;
     this.getProductCategories();
@@ -82,7 +84,7 @@ export class ProductCategoryComponent implements OnInit {
   addProductCategory(value) {
     this.postProductCategory(value, this.token)
       .then((user) => {
-        console.log(user.json());
+        // console.log(user.json());
 
         if (user.json().status === 'success') {
           this.rForm.reset();
@@ -103,7 +105,7 @@ export class ProductCategoryComponent implements OnInit {
   updateEntry(productCategory) {
     this.updateProductCategory(productCategory, this.token)
       .then((res) => {
-        console.log(res.json());
+        // console.log(res.json());
       })
       .catch((err) => {
         console.log(err.json());
@@ -119,7 +121,7 @@ export class ProductCategoryComponent implements OnInit {
   removeProductCategory(productCategoryId) {
     this.deleteProductCategory(this.token, productCategoryId)
       .then((productCategory) => {
-        console.log(productCategory.json());
+        // console.log(productCategory.json());
         for (let i = 0; i < this.productCategories.length; i++) {
           if (this.productCategories[i]['id'] === productCategoryId) {
             this.productCategories.splice(i, 1);
@@ -140,7 +142,7 @@ export class ProductCategoryComponent implements OnInit {
   getProductCategories() {
     this.loadProductCategories(this.token, this.limit, this.page)
       .then((productCategories) => {
-        console.log(productCategories.json());
+        // console.log(productCategories.json());
         this.productCategories = productCategories.json()['product-categories'];
       })
       .catch((err) => {

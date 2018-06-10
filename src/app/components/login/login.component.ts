@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
 
   userId: string;
   userName: string;
+  userConfirmed: boolean;
   isAdmin: string;
   error: any = {};
   token: string;
@@ -47,6 +48,11 @@ export class LoginComponent implements OnInit {
     private layout: LayoutService,
     private data: DataService,
     private auth: AuthService) {
+    this.data.currentUserConfirmed.subscribe(userConfirmed => this.userConfirmed = userConfirmed);
+    this.data.currentAdminStatus.subscribe(isAdmin => this.isAdmin = isAdmin);
+    this.data.currentUserName.subscribe(userName => this.userName = userName);
+    this.data.currentUserId.subscribe(userId => this.userId = userId);
+
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
     this.layout.currentWarningColor.subscribe(warningColor => this.warningColor = warningColor);
@@ -68,31 +74,20 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.data.currentAdminStatus.subscribe(isAdmin => this.isAdmin = isAdmin);
-    this.data.currentUserName.subscribe(userName => this.userName = userName);
-    this.data.currentUserId.subscribe(userId => this.userId = userId);
-  }
-
-  changeUserId(userId) {
-    this.data.changeUserId(userId);
-  }
-
-  changeAdminStatus() {
-    this.data.changeAdminStatus(true);
-  }
+  ngOnInit() { }
 
   onLogin(value): void {
     this.auth.login(value)
       .then((user) => {
         // console.log(user.json());
 
-        if (user.json().admin) {
-          this.changeAdminStatus();
-          localStorage.setItem('admin', user.json().admin);
+        if (user.json().user.admin) {
+          this.data.changeAdminStatus(true);
+          localStorage.setItem('admin', user.json().user.admin);
         }
 
-        this.changeUserId(user.json().user_id);
+        this.data.changeUserConfirmed(user.json().user.confirmed);
+        this.data.changeUserId(user.json().user.public_id);
         localStorage.setItem('token', user.json().token);
         this.router.navigateByUrl('/product');
       })

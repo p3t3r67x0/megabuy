@@ -39,6 +39,8 @@ export class InboxDetailComponent implements OnInit {
     private router: Router,
     private data: DataService,
     private auth: AuthService) {
+    this.data.currentUserId.subscribe(userId => this.userId = userId);
+
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
     this.layout.currentWarningColor.subscribe(warningColor => this.warningColor = warningColor);
@@ -62,7 +64,6 @@ export class InboxDetailComponent implements OnInit {
 
   ngOnInit() {
     this.checkUserStatus();
-    this.data.currentUserId.subscribe(userId => this.userId = userId);
     this.getMessageById();
   }
 
@@ -138,24 +139,13 @@ export class InboxDetailComponent implements OnInit {
     this.auth.loginStatus(this.token)
       .then((user) => {
         // console.log(user.json());
-        this.changeStatus(true);
-        this.changeUserId(user.json().user_id);
-        this.changeUserName(user.json().name);
+        this.data.changeStatus(true);
+        this.data.changeUserId(user.json().user_id);
+        this.data.changeUserName(user.json().name);
+        this.data.changeUserConfirmed(user.json().confirmed);
       })
       .catch((err) => {
         console.log(err);
       });
-  }
-
-  changeUserId(userId) {
-    this.data.changeUserId(userId);
-  }
-
-  changeUserName(userName) {
-    this.data.changeUserName(userName);
-  }
-
-  changeStatus(value) {
-    this.data.changeStatus(value);
   }
 }

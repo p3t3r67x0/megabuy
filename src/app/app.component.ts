@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   textColor: string;
 
   user: User = new User();
+  userConfirmed: boolean;
   isLoggedIn: boolean;
   userName: string;
   token: string;
@@ -38,6 +39,7 @@ export class AppComponent implements OnInit {
     private data: DataService,
     private auth: AuthService,
     private http: Http) {
+    this.data.currentUserConfirmed.subscribe(userConfirmed => this.userConfirmed = userConfirmed);
     this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
     this.data.currentUserName.subscribe(userName => this.userName = userName);
 
@@ -61,29 +63,42 @@ export class AppComponent implements OnInit {
     translate.use(browserLang.match(/en|de/) ? browserLang : 'en');
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.checkUserStatus();
+  }
 
   onLogout(): void {
     const token = localStorage.getItem('token');
 
     this.auth.logout(this.user, token)
       .then((user) => {
-        console.log(user.json());
-        this.changeStatus();
+        // console.log(user.json());
+        this.data.changeStatus(false);
         localStorage.removeItem('token');
         localStorage.removeItem('admin');
         this.router.navigateByUrl('/login');
       })
       .catch((err) => {
-        console.log(err.json());
-        this.changeStatus();
+        // console.log(err.json());
+        this.data.changeStatus(false);
         localStorage.removeItem('token');
         localStorage.removeItem('admin');
         this.router.navigateByUrl('/login');
       });
   }
 
-  changeStatus() {
-    this.data.changeStatus(false);
+  checkUserStatus() {
+    this.auth.loginStatus(localStorage.getItem('token'))
+      .then((user) => {
+        console.log(user.json());
+        this.data.changeStatus(true);
+        this.data.changeUserId(user.json().user_id);
+        this.data.changeUserName(user.json().name);
+        this.data.changeUserConfirmed(user.json().confirmed);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
+
 }

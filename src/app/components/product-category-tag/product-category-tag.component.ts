@@ -66,14 +66,14 @@ export class ProductCategoryTagComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-
   checkUserStatus() {
     this.auth.loginStatus(localStorage.getItem('token'))
       .then((user) => {
         // console.log(user.json());
-        this.changeStatus();
-        this.changeUserId(user.json().user_id);
-        this.changeUserName(user.json().name);
+        this.data.changeStatus(true);
+        this.data.changeUserId(user.json().user_id);
+        this.data.changeUserName(user.json().name);
+        this.data.changeUserConfirmed(user.json().confirmed);
       })
       .catch((err) => {
         console.log(err.json());
@@ -104,17 +104,4 @@ export class ProductCategoryTagComponent implements OnInit, OnDestroy {
 
     return this.http.get(url, { headers: headers }).toPromise();
   }
-
-  changeUserId(userId) {
-    this.data.changeUserId(userId);
-  }
-
-  changeUserName(userName) {
-    this.data.changeUserName(userName);
-  }
-
-  changeStatus() {
-    this.data.changeStatus(true);
-  }
-
 }

@@ -78,6 +78,8 @@ export class ProductComponent implements OnInit {
     private layout: LayoutService,
     private router: Router,
     private data: DataService) {
+    this.data.currentUserId.subscribe(userId => this.userId = userId);
+
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
     this.layout.currentWarningColor.subscribe(warningColor => this.warningColor = warningColor);
@@ -100,7 +102,6 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.data.currentUserId.subscribe(userId => this.userId = userId);
     this.limit = -1;
     this.page = 1;
     this.getAllProductsByUser();

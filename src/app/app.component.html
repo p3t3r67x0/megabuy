@@ -1,4 +1,5 @@
 <div [style.background-color]="backgroundColor" class="min-height-100">
+<div *ngIf="isLoggedIn && !userConfirmed" [style.background-color]="warningColor" class="alert confirm-email">Please confirm your mail address</div>
   <nav [style.background-color]="navbarColor" class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">

@@ -1,4 +1,4 @@
-html, body, app-root{
+html, body, app-root {
   height: 100%;
 }
 
@@ -65,6 +65,16 @@ a.inbox-links:hover {
   width: 100%;
   padding: 1em;
   background-color: #fff;
+}
+
+.confirm-email {
+  position: absolute;
+  text-align: center;
+  margin-left: -150px;
+  width: 300px;
+  z-index: 100;
+  left: 50%;
+  top: 9px;
 }
 
 .margin-bottom-0 {

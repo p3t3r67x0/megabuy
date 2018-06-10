@@ -31,6 +31,7 @@ export class SettingsComponent implements OnInit {
   textColor: string;
 
   rForm: FormGroup;
+  pattern: string;
   hover: boolean;
   token: string;
   userId: string;
@@ -48,6 +49,8 @@ export class SettingsComponent implements OnInit {
     private layout: LayoutService,
     private http: Http,
     private data: DataService) {
+    this.data.currentUserId.subscribe(userId => this.userId = userId);
+
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
     this.layout.currentWarningColor.subscribe(warningColor => this.warningColor = warningColor);
@@ -66,27 +69,28 @@ export class SettingsComponent implements OnInit {
     this.errorWebsite = 'Do you own a website or an other online account?';
     this.errorUsername = 'Choose an uniqe username';
     this.errorEmail = 'You\'ll use this when you log in and if you ever need to reset your password.';
+    this.pattern = '^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}';
     this.rForm = fb.group({
-      'name': [null, Validators.compose([Validators.required, Validators.minLength(5)])],
+      'name': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
       'email': [null, Validators.compose([Validators.required, Validators.email])],
       'phone': [null, Validators.compose([Validators.pattern('[0-9]+')])],
-      'username': [null, Validators.compose([Validators.required, Validators.minLength(5)])],
-      'website': [null, Validators.compose([Validators.pattern('^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}')])],
+      'username': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
+      'website': [null, Validators.compose([Validators.pattern(this.pattern)])],
       'bio': [null, Validators.compose([Validators.minLength(30), Validators.maxLength(500)])]
     });
+
+    this.token = localStorage.getItem('token');
+    this.url = environment.apiUrl;
   }
 
   ngOnInit() {
-    this.data.currentUserId.subscribe(userId => this.userId = userId);
-    this.token = localStorage.getItem('token');
-    this.url = environment.apiUrl;
     this.getUser();
   }
 
   updateForm(user) {
     this.updateUser(user, this.token, this.userId)
       .then((res) => {
-        console.log(res.json());
+        // console.log(res.json());
       })
       .catch((err) => {
         console.log(err.json());
@@ -117,7 +121,7 @@ export class SettingsComponent implements OnInit {
   getUser() {
     this.loadUser(this.token, this.userId)
       .then((user) => {
-        console.log(user.json());
+        // console.log(user.json());
         this.rForm.patchValue({
           'name': user.json().user.name,
           'email': user.json().user.email,

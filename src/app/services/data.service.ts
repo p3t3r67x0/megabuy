@@ -7,11 +7,14 @@ export class DataService {
   private userName = new BehaviorSubject<string>('');
   private userStatus = new BehaviorSubject<boolean>(false);
   private userAdminStatus = new BehaviorSubject<string>('');
+  private userConfirmed = new BehaviorSubject<boolean>(false);
+
 
   currentUserId = this.userId.asObservable();
   currentUserName = this.userName.asObservable();
   currentUserStatus = this.userStatus.asObservable();
   currentAdminStatus = this.userAdminStatus.asObservable();
+  currentUserConfirmed = this.userConfirmed.asObservable();
 
   constructor() { }
 
@@ -25,6 +28,10 @@ export class DataService {
 
   changeStatus(userStatus) {
     this.userStatus.next(userStatus);
+  }
+
+  changeUserConfirmed(userConfirmed) {
+    this.userConfirmed.next(userConfirmed);
   }
 
   changeAdminStatus(userAdminStatus) {

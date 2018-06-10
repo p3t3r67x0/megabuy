@@ -44,6 +44,12 @@ export class AuthService {
     return this.http.post(url, user, { headers: this.headers }).toPromise();
   }
 
+  confirmation(user): Promise<any> {
+    let url: string;
+    url = `${this.url}/api/confirmation`;
+    return this.http.post(url, user, { headers: this.headers }).toPromise();
+  }
+
   loginStatus(token): Promise<any> {
     let url: string;
     let headers: Headers;

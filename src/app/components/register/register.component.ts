@@ -76,6 +76,14 @@ export class RegisterComponent implements OnInit {
     this.auth.register(value)
       .then((user) => {
         // console.log(user.json());
+        this.auth.confirmation(value)
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
         localStorage.setItem('token', user.json().token);
         this.router.navigateByUrl('/product');
       })

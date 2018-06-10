@@ -51,13 +51,14 @@ export class ProductUserTagComponent implements OnInit, OnDestroy {
     this.layout.currentTextColor.subscribe(textColor => this.textColor = textColor);
     this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
-  }
 
-  ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.userId = params['id'];
     });
     this.url = environment.apiUrl;
+  }
+
+  ngOnInit() {
     this.checkUserStatus();
     this.getProducts();
   }
@@ -73,10 +74,11 @@ export class ProductUserTagComponent implements OnInit, OnDestroy {
   checkUserStatus() {
     this.auth.loginStatus(localStorage.getItem('token'))
       .then((user) => {
-        console.log(user.json());
-        this.changeStatus();
-        this.changeUserId(user.json().user_id);
-        this.changeUserName(user.json().name);
+        // console.log(user.json());
+        this.data.changeStatus(true);
+        this.data.changeUserId(user.json().user_id);
+        this.data.changeUserName(user.json().name);
+        this.data.changeUserConfirmed(user.json().confirmed);
       })
       .catch((err) => {
         console.log(err.json());
@@ -106,17 +108,4 @@ export class ProductUserTagComponent implements OnInit, OnDestroy {
 
     return this.http.get(url, { headers: headers }).toPromise();
   }
-
-  changeUserId(userId) {
-    this.data.changeUserId(userId);
-  }
-
-  changeUserName(userName) {
-    this.data.changeUserName(userName);
-  }
-
-  changeStatus() {
-    this.data.changeStatus(true);
-  }
-
 }

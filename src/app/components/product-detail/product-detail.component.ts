@@ -52,6 +52,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     private element: ElementRef,
     private data: DataService,
     private auth: AuthService) {
+    this.data.currentUserId.subscribe(userId => this.userId = userId);
+
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
     this.layout.currentWarningColor.subscribe(warningColor => this.warningColor = warningColor);
@@ -73,15 +75,15 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       'subject': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
       'message': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(500)])]
     });
-  }
 
-  ngOnInit() {
-    this.data.currentUserId.subscribe(userId => this.userId = userId);
     this.sub = this.route.params.subscribe(params => {
       this.productId = params['id'];
     });
     this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
+  }
+
+  ngOnInit() {
     this.checkUserStatus();
     this.getProductById();
   }
@@ -122,6 +124,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         this.changeStatus();
         this.changeUserId(user.json().user_id);
         this.changeUserName(user.json().name);
+        this.data.changeUserConfirmed(user.json().confirmed);
         this.userName = user.json().name;
       })
       .catch((err) => {
