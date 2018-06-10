@@ -25,7 +25,7 @@
   </div>
 
   <div class="col-sm-6">
-    <h1 [style.color]="headlineColor">Add category</h1>
+    <h1 [style.color]="headlineColor">{{ 'term_add_category' | translate }}</h1>
     <form [formGroup]="rForm" class="white padding-15" (ngSubmit)="addProductCategory(rForm.value)">
       <div class="form-group">
         <label [style.color]="textColor">Name</label>
