@@ -7,6 +7,9 @@ import { DataService } from '../../services/data.service';
 import { environment } from '../../../environments/environment';
 import { LayoutService } from '../../services/layout.service';
 
+declare var jquery: any;
+declare var $: any;
+
 
 @Component({
   selector: 'app-product-category',
@@ -34,6 +37,7 @@ export class ProductCategoryComponent implements OnInit {
   hover: boolean;
   editField: string;
   error: any = {};
+  modalId = 'product-category-error';
   productCategories: any = [];
   rForm: FormGroup;
   userId: string;
@@ -92,13 +96,9 @@ export class ProductCategoryComponent implements OnInit {
         }
       })
       .catch((err) => {
-        console.log(err.json());
+        // console.log(err.json());
         this.error = err.json();
-
-        if (err.status === 401) {
-          localStorage.removeItem('token');
-          this.router.navigateByUrl('/login');
-        }
+        $('#' + this.modalId).modal();
       });
   }
 
@@ -108,13 +108,9 @@ export class ProductCategoryComponent implements OnInit {
         // console.log(res.json());
       })
       .catch((err) => {
-        console.log(err.json());
+        // console.log(err.json());
         this.error = err.json();
-
-        if (err.status === 401) {
-          localStorage.removeItem('token');
-          this.router.navigateByUrl('/login');
-        }
+        $('#' + this.modalId).modal();
       });
   }
 
@@ -129,13 +125,9 @@ export class ProductCategoryComponent implements OnInit {
         }
       })
       .catch((err) => {
-        console.log(err.json());
+        // console.log(err.json());
         this.error = err.json();
-
-        if (err.status === 401) {
-          localStorage.removeItem('token');
-          this.router.navigateByUrl('/login');
-        }
+        $('#' + this.modalId).modal();
       });
   }
 
@@ -147,12 +139,6 @@ export class ProductCategoryComponent implements OnInit {
       })
       .catch((err) => {
         console.log(err.json());
-        this.error = err.json();
-
-        if (err.status === 401) {
-          localStorage.removeItem('token');
-          this.router.navigateByUrl('/login');
-        }
       });
   }
 

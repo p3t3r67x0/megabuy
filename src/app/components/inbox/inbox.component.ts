@@ -171,8 +171,6 @@ export class InboxComponent implements OnInit {
       })
       .catch(err => {
         // console.log(err.json());
-        this.error = err.json();
-        $('#' + this.modalId).modal();
       });
   }
 }
