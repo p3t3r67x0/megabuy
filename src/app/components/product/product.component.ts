@@ -34,7 +34,6 @@ declare var jquery: any;
 declare var $: any;
 
 
-
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -58,6 +57,7 @@ export class ProductComponent implements OnInit {
   limit: number;
   page: number;
   userId: string;
+  userConfirmed: boolean;
   headers: Headers;
   product: Product;
   editField: string;
@@ -66,7 +66,8 @@ export class ProductComponent implements OnInit {
   token: string;
   description: string;
   name: string;
-  error: Error;
+  error: any = {};
+  modalId = 'product-error';
   errorName: string;
   currencies: string[];
   products: any = [];
@@ -79,6 +80,7 @@ export class ProductComponent implements OnInit {
     private router: Router,
     private data: DataService) {
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentUserConfirmed.subscribe(userConfirmed => this.userConfirmed = userConfirmed);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
@@ -283,13 +285,9 @@ export class ProductComponent implements OnInit {
         // console.log(res.json());
       })
       .catch((err) => {
-        console.log(err.json());
+        // console.log(err.json());
         this.error = err.json();
-
-        if (err.status === 401) {
-          localStorage.removeItem('token');
-          this.router.navigateByUrl('/login');
-        }
+        $('#' + this.modalId).modal();
       });
   }
 
@@ -317,13 +315,9 @@ export class ProductComponent implements OnInit {
         }
       })
       .catch((err) => {
-        console.log(err.json());
+        // console.log(err.json());
         this.error = err.json();
-
-        if (err.status === 401) {
-          localStorage.removeItem('token');
-          this.router.navigateByUrl('/login');
-        }
+        $('#' + this.modalId).modal();
       });
   }
 
@@ -351,17 +345,12 @@ export class ProductComponent implements OnInit {
               this.products[i].image = res.json().images;
             })
             .catch(err => {
-              console.log(err);
+              console.log(err.json());
             });
         }
       })
       .catch((err) => {
-        console.log(err);
-
-        if (err.status === 401) {
-          localStorage.removeItem('token');
-          this.router.navigateByUrl('/login');
-        }
+        console.log(err.json());
       });
   }
 
@@ -385,13 +374,7 @@ export class ProductComponent implements OnInit {
         this.productCategories = productCategories.json()['product-categories'];
       })
       .catch((err) => {
-        console.log(err.json());
-        this.error = err.json();
-
-        if (err.status === 401) {
-          localStorage.removeItem('token');
-          this.router.navigateByUrl('/login');
-        }
+        // console.log(err.json());
       });
   }
 
@@ -438,17 +421,14 @@ export class ProductComponent implements OnInit {
     return this.http.delete(url, { headers: headers })
       .toPromise()
       .then(res => {
-        console.log(res.json());
+        // console.log(res.json());
         const imageElement = <any>document.getElementById('image-' + imageId);
         imageElement.parentNode.remove();
       })
       .catch(err => {
-        console.log(err);
-
-        if (err.status === 401) {
-          localStorage.removeItem('token');
-          this.router.navigateByUrl('/login');
-        }
+        // console.log(err.json());
+        this.error = err.json();
+        $('#' + this.modalId).modal();
       });
   }
 

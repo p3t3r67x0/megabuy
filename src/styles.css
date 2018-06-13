@@ -77,6 +77,16 @@ a.inbox-links:hover {
   top: 9px;
 }
 
+.confirm-restricted {
+  position: absolute;
+  margin-top: -24px;
+  background-color: #000;
+  width: 100%;
+  height: calc(100% - 48px);
+  z-index: 800;
+  opacity: 0.5;
+}
+
 .margin-bottom-0 {
   margin-bottom: 0;
 }
@@ -235,6 +245,10 @@ a.inbox-links:hover {
 
 .navbar-form {
   background: inherit;
+}
+
+.navbar {
+  border-radius: 0;
 }
 
 .navbar-default {

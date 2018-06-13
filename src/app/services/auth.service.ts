@@ -46,7 +46,7 @@ export class AuthService {
 
   confirmation(user): Promise<any> {
     let url: string;
-    url = `${this.url}/api/confirmation`;
+    url = `${this.url}/api/confirm`;
     return this.http.post(url, user, { headers: this.headers }).toPromise();
   }
 
@@ -62,5 +62,4 @@ export class AuthService {
 
     return this.http.get(url, { headers: headers }).toPromise();
   }
-
 }

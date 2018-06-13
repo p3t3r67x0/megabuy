@@ -44,5 +44,5 @@
   "term_refresh": "Aktualisieren",
   "term_mark_all_as_read": "Alle als gelesen makieren",
   "term_select_more_for_action": "Makiere Nachrichten um mehr Optionen zu sehen",
-  "term_alert_confirmation_mail": "Bestätige Deine E-Mail Adresse, um auf alle Funktionen zugreifen zu können. Eine Bestätigungsnachricht wurde an {name} gesendet."
+  "term_alert_confirmation_mail": "Bestätige Deine E-Mail Adresse"
 }

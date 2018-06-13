@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Headers, Http } from '@angular/http';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from './services/auth.service';
 import { DataService } from './services/data.service';
 import { LayoutService } from './services/layout.service';
-import { TranslateService } from '@ngx-translate/core';
+import { environment } from '../environments/environment';
 import { User } from './models/user';
 
 
@@ -28,10 +29,15 @@ export class AppComponent implements OnInit {
   textColor: string;
 
   user: User = new User();
+  elementScrollHeight: string;
+  userConfirmedMessage: string;
   userConfirmed: boolean;
+  userId: string;
   isLoggedIn: boolean;
+  htmlToAdd: string;
   userName: string;
   token: string;
+  url: string;
 
   constructor(private router: Router,
     public translate: TranslateService,
@@ -39,9 +45,11 @@ export class AppComponent implements OnInit {
     private data: DataService,
     private auth: AuthService,
     private http: Http) {
+    this.data.currentUserConfirmedMessage.subscribe(userConfirmedMessage => this.userConfirmedMessage = userConfirmedMessage);
     this.data.currentUserConfirmed.subscribe(userConfirmed => this.userConfirmed = userConfirmed);
     this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
     this.data.currentUserName.subscribe(userName => this.userName = userName);
+    this.data.currentUserId.subscribe(userId => this.userId = userId);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
@@ -61,21 +69,30 @@ export class AppComponent implements OnInit {
 
     const browserLang = translate.getBrowserLang();
     translate.use(browserLang.match(/en|de/) ? browserLang : 'en');
+
+    this.token = localStorage.getItem('token');
+    this.url = environment.apiUrl;
   }
 
   ngOnInit() {
     this.checkUserStatus();
+    this.data.changeUserConfirmedMessage(localStorage.getItem('cm'));
+  }
+
+  setElementHeight(event) {
+    const height = document.querySelector('.min-height-100').scrollHeight - 48 + 'px';
+    const element = <HTMLElement>document.querySelector('.confirm-restricted');
+    element.style.height = height;
   }
 
   onLogout(): void {
-    const token = localStorage.getItem('token');
-
-    this.auth.logout(this.user, token)
+    this.auth.logout(this.user, this.token)
       .then((user) => {
         // console.log(user.json());
         this.data.changeStatus(false);
         localStorage.removeItem('token');
         localStorage.removeItem('admin');
+        localStorage.removeItem('cm');
         this.router.navigateByUrl('/login');
       })
       .catch((err) => {
@@ -83,14 +100,15 @@ export class AppComponent implements OnInit {
         this.data.changeStatus(false);
         localStorage.removeItem('token');
         localStorage.removeItem('admin');
+        localStorage.removeItem('cm');
         this.router.navigateByUrl('/login');
       });
   }
 
   checkUserStatus() {
-    this.auth.loginStatus(localStorage.getItem('token'))
+    this.auth.loginStatus(this.token)
       .then((user) => {
-        console.log(user.json());
+        // console.log(user.json());
         this.data.changeStatus(true);
         this.data.changeUserId(user.json().user_id);
         this.data.changeUserName(user.json().name);
@@ -101,4 +119,23 @@ export class AppComponent implements OnInit {
       });
   }
 
+  resendConfirmationLink() {
+    let url: string;
+    let headers: Headers;
+
+    url = `${this.url}/api/confirm/user/${this.userId}`;
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.token}`
+    });
+
+    return this.http.get(url, { headers: headers })
+      .toPromise()
+      .then(res => {
+        console.log(res.json());
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 }

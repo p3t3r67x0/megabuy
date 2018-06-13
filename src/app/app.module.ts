@@ -27,6 +27,7 @@ import { UploadComponent } from './components/upload/upload.component';
 import { InboxComponent } from './components/inbox/inbox.component';
 import { InboxDetailComponent } from './components/inbox-detail/inbox-detail.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { ConfirmComponent } from './components/confirm/confirm.component';
 
 import { AuthService } from './services/auth.service';
 import { DataService } from './services/data.service';
@@ -114,6 +115,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         component: ProductUserTagComponent
       },
       {
+        path: 'confirm/:token',
+        component: ConfirmComponent
+      },
+      {
         path: 'search/:query',
         component: ProductsComponent
       }
@@ -139,7 +144,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     InboxComponent,
     InboxDetailComponent,
     LayoutComponent,
-    ColorPipe
+    ColorPipe,
+    ConfirmComponent
   ],
   providers: [
     AuthService,

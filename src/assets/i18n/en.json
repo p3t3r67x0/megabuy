@@ -44,5 +44,5 @@
   "term_refresh": "Refresh",
   "term_mark_all_as_read": "Mark all as read",
   "term_select_more_for_action": "Select messages to see more actions",
-  "term_alert_confirmation_mail": "Confirm your email address to access all features. A confirmation message was sent to {name}"
+  "term_alert_confirmation_mail": "Confirm your email address"
 }

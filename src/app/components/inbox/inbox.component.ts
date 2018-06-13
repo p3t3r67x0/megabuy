@@ -6,6 +6,9 @@ import { AuthService } from '../../services/auth.service';
 import { LayoutService } from '../../services/layout.service';
 import { environment } from '../../../environments/environment';
 
+declare var jquery: any;
+declare var $: any;
+
 
 @Component({
   selector: 'app-inbox',
@@ -29,6 +32,8 @@ export class InboxComponent implements OnInit {
   rForm: FormGroup;
   selectedAll: any;
   markAllCheckbox: boolean;
+  modalId = 'inbox-error';
+  error: any = {};
   messages: any[];
   userId: string;
   token: string;
@@ -165,7 +170,9 @@ export class InboxComponent implements OnInit {
         }
       })
       .catch(err => {
-        console.log(err);
+        // console.log(err.json());
+        this.error = err.json();
+        $('#' + this.modalId).modal();
       });
   }
 }

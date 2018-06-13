@@ -79,11 +79,18 @@ export class LoginComponent implements OnInit {
   onLogin(value): void {
     this.auth.login(value)
       .then((user) => {
-        // console.log(user.json());
+        console.log(user.json());
 
         if (user.json().user.admin) {
           this.data.changeAdminStatus(true);
           localStorage.setItem('admin', user.json().user.admin);
+        }
+
+        // if user not confirmed
+        if (!user.json().user.confirmed) {
+          const confirmationMessage = 'Confirm your email address';
+          this.data.changeUserConfirmedMessage(confirmationMessage);
+          localStorage.setItem('cm', confirmationMessage);
         }
 
         this.data.changeUserConfirmed(user.json().user.confirmed);

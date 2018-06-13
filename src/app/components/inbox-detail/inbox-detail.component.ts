@@ -6,6 +6,9 @@ import { AuthService } from '../../services/auth.service';
 import { LayoutService } from '../../services/layout.service';
 import { environment } from '../../../environments/environment';
 
+declare var jquery: any;
+declare var $: any;
+
 
 @Component({
   selector: 'app-inbox-detail',
@@ -28,6 +31,8 @@ export class InboxDetailComponent implements OnInit {
 
   messageId: string;
   userId: string;
+  modalId = 'inbox-detail-error';
+  error: any = {};
   message: any = {};
   token: string;
   url: string;
@@ -84,7 +89,9 @@ export class InboxDetailComponent implements OnInit {
         this.router.navigateByUrl('/inbox');
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err.json());
+        this.error = err.json();
+        $('#' + this.modalId).modal();
       });
   }
 
@@ -106,7 +113,9 @@ export class InboxDetailComponent implements OnInit {
         // console.log(message.json());
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err.json());
+        this.error = err.json();
+        $('#' + this.modalId).modal();
       });
   }
 
@@ -131,7 +140,9 @@ export class InboxDetailComponent implements OnInit {
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err.json());
+        this.error = err.json();
+        $('#' + this.modalId).modal();
       });
   }
 

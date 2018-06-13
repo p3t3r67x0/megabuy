@@ -3,18 +3,19 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class DataService {
-  private userId = new BehaviorSubject<string>('0');
-  private userName = new BehaviorSubject<string>('');
-  private userStatus = new BehaviorSubject<boolean>(false);
-  private userAdminStatus = new BehaviorSubject<string>('');
+  private userConfirmedMessage = new BehaviorSubject<string>('');
   private userConfirmed = new BehaviorSubject<boolean>(false);
+  private userAdminStatus = new BehaviorSubject<string>('');
+  private userStatus = new BehaviorSubject<boolean>(false);
+  private userName = new BehaviorSubject<string>('');
+  private userId = new BehaviorSubject<string>('0');
 
-
-  currentUserId = this.userId.asObservable();
-  currentUserName = this.userName.asObservable();
-  currentUserStatus = this.userStatus.asObservable();
-  currentAdminStatus = this.userAdminStatus.asObservable();
+  currentUserConfirmedMessage = this.userConfirmedMessage.asObservable();
   currentUserConfirmed = this.userConfirmed.asObservable();
+  currentAdminStatus = this.userAdminStatus.asObservable();
+  currentUserStatus = this.userStatus.asObservable();
+  currentUserName = this.userName.asObservable();
+  currentUserId = this.userId.asObservable();
 
   constructor() { }
 
@@ -36,5 +37,9 @@ export class DataService {
 
   changeAdminStatus(userAdminStatus) {
     this.userAdminStatus.next(userAdminStatus);
+  }
+
+  changeUserConfirmedMessage(userConfirmedMessage) {
+    this.userConfirmedMessage.next(userConfirmedMessage);
   }
 }

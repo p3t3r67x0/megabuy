@@ -64,7 +64,7 @@ export class RegisterComponent implements OnInit {
     this.errorEmail = 'You\'ll use this when you log in and if you ever need to reset your password.';
     this.errorPassword = 'Enter a combination of at least six numbers, letters and punctuation marks.';
     this.rForm = fb.group({
-      'name': [null, Validators.compose([Validators.required, Validators.minLength(3)])],
+      'name': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
       'password': [null, Validators.required],
       'email': [null, Validators.compose([Validators.required, Validators.email])],
     });
@@ -78,7 +78,10 @@ export class RegisterComponent implements OnInit {
         // console.log(user.json());
         this.auth.confirmation(value)
           .then(res => {
-            console.log(res);
+            // console.log(res.json());
+            this.data.changeUserConfirmed(res.json().confirmed);
+            this.data.changeUserConfirmedMessage(res.json().message);
+            localStorage.setItem('cm', res.json().message);
           })
           .catch(err => {
             console.log(err);
@@ -100,5 +103,4 @@ export class RegisterComponent implements OnInit {
         $('#myModal').modal();
       });
   }
-
 }

@@ -1,6 +1,6 @@
 <div [style.background-color]="backgroundColor" class="min-height-100">
-<div *ngIf="isLoggedIn && !userConfirmed" [style.background-color]="warningColor" class="alert confirm-email">Please confirm your mail address</div>
-  <nav [style.background-color]="navbarColor" class="navbar navbar-default">
+  <div *ngIf="isLoggedIn && !userConfirmed" [style.background-color]="warningColor" class="alert confirm-email">{{ userConfirmedMessage }}, <a class="pointer" (click)="resendConfirmationLink(userId)">resend link</a></div>
+  <nav [style.background-color]="navbarColor" [style.border-color]="navbarColor" class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -30,6 +30,7 @@
       </div>
     </div>
   </nav>
+  <div (window:resize)="setElementHeight()" [style.height]="setElementHeight()" *ngIf="isLoggedIn && !userConfirmed" class="confirm-restricted"></div>
   <div class="container">
     <router-outlet></router-outlet>
   </div>

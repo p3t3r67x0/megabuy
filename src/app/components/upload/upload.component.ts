@@ -27,13 +27,13 @@ export class UploadComponent implements OnInit {
   textColor: string;
 
   url: string;
-  error: string;
   token: string;
   hover: boolean;
   currencies: string[];
-  selectedFile: any = [];
-  rForm: FormGroup;
   productCategories: string[];
+  rForm: FormGroup;
+  selectedFile: any = [];
+  error: any = {};
 
   @Output() uploaded = new EventEmitter<string>();
 
