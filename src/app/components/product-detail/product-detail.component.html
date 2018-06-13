@@ -77,8 +77,8 @@
       </form>
     </div>
     <div class="padding-15 margin-bottom-24 white">
-       <h4 [style.color]="headlineColor" class="margin-top-0">Seller information</h4>
-       <p class="margin-bottom-0">By <a [style.color]="linkColor" routerLink="/user/{{ product.user_id }}">{{ product.user_name }}</a> in <a [style.color]="linkColor" routerLink="/category/{{ product.category_id }}">{{ product.category }}</a></p>
+      <h4 [style.color]="headlineColor" class="margin-top-0">{{ 'term_seller_information' | translate }}</h4>
+      <p class="margin-bottom-0">By <a [style.color]="linkColor" routerLink="/user/{{ product.user_id }}">{{ product.user_name }}</a> in <a [style.color]="linkColor" routerLink="/category/{{ product.category_id }}">{{ product.category }}</a></p>
     </div>
   </div>
 </div>
