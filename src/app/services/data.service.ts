@@ -7,6 +7,7 @@ export class DataService {
   private userConfirmed = new BehaviorSubject<boolean>(false);
   private userAdminStatus = new BehaviorSubject<string>('');
   private userStatus = new BehaviorSubject<boolean>(false);
+  private userAvatar = new BehaviorSubject<string>('');
   private userName = new BehaviorSubject<string>('');
   private userId = new BehaviorSubject<string>('0');
 
@@ -14,6 +15,7 @@ export class DataService {
   currentUserConfirmed = this.userConfirmed.asObservable();
   currentAdminStatus = this.userAdminStatus.asObservable();
   currentUserStatus = this.userStatus.asObservable();
+  currentUserAvatar = this.userAvatar.asObservable();
   currentUserName = this.userName.asObservable();
   currentUserId = this.userId.asObservable();
 
@@ -25,6 +27,10 @@ export class DataService {
 
   changeUserName(userName) {
     this.userName.next(userName);
+  }
+
+  changeUserAvatar(userAvatar) {
+    this.userAvatar.next(userAvatar);
   }
 
   changeStatus(userStatus) {

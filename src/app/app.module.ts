@@ -36,6 +36,7 @@ import { AuthGuard } from './services/ensure-authenticated.service';
 import { LoginRedirectService } from './services/login-redirect.service';
 import { NgStringPipesModule } from 'angular-pipes';
 import { ColorPipe } from './color.pipe';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -145,7 +146,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     InboxDetailComponent,
     LayoutComponent,
     ColorPipe,
-    ConfirmComponent
+    ConfirmComponent,
+    ProfileComponent
   ],
   providers: [
     AuthService,

@@ -44,6 +44,9 @@ export class SettingsComponent implements OnInit {
   errorUsername: string;
   errorEmail: string;
 
+  name: string;
+  userName: string;
+
   constructor(private fb: FormBuilder,
     private router: Router,
     private layout: LayoutService,
@@ -128,6 +131,18 @@ export class SettingsComponent implements OnInit {
           'phone': user.json().user.phone,
           'username': user.json().user.username,
           'website': user.json().user.website
+        });
+
+        this.name = user.json().user.name;
+        this.userName = user.json().user.username;
+
+        this.rForm.get('name').valueChanges.subscribe(val => {
+          this.data.changeUserName(val);
+          this.name = val;
+        });
+
+        this.rForm.get('username').valueChanges.subscribe(val => {
+          this.userName = val;
         });
       })
       .catch((err) => {

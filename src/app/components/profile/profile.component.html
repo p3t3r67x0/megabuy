@@ -1,0 +1,20 @@
+<div class="margin-bottom-24">
+  <h1 [style.color]="headlineColor">Profile</h1>
+  <div class="padding-12 white" style="display: flex">
+    <div class="pos-relative">
+      <img id="avatarImage" class="" width="120px" height="auto" src="https://ssl.gstatic.com/ui/v1/icons/mail/profile_mask2.png">
+      <div class="button-wrapper">
+        <div class="profile-buttons">
+          <input type="file" class="hidden" id="realFileUpload">
+          <button class="btn btn-xs btn-default glyphicon glyphicon-camera" id="cutomFileUpload"></button>
+          <button class="btn btn-xs btn-danger glyphicon glyphicon-trash"></button>
+        </div>
+      </div>
+    </div>
+    <div class="padding-left-12">
+      <h2 class="margin-top-0 margin-bottom-0">{{ name }}</h2>
+      <p>{{ userName }}</p>
+    </div>
+  </div>
+</div>
+<canvas class="hidden" id="canvas" width="120" height="120"></canvas>

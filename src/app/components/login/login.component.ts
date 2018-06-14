@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { LayoutService } from '../../services/layout.service';
+import { environment } from '../../../environments/environment';
 import { User } from '../../models/user';
 
 declare var jquery: any;
@@ -42,6 +43,7 @@ export class LoginComponent implements OnInit {
   isAdmin: string;
   error: any = {};
   token: string;
+  url: string;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -72,6 +74,8 @@ export class LoginComponent implements OnInit {
       'password': [null, Validators.required],
       'email': [null, Validators.compose([Validators.required, Validators.email])],
     });
+
+    this.url = environment.apiUrl;
   }
 
   ngOnInit() { }
@@ -94,6 +98,7 @@ export class LoginComponent implements OnInit {
         }
 
         this.data.changeUserConfirmed(user.json().user.confirmed);
+        this.data.changeUserAvatar(this.url + '/' + user.json().user.avatar);
         this.data.changeUserId(user.json().user.public_id);
         localStorage.setItem('token', user.json().token);
         this.router.navigateByUrl('/product');

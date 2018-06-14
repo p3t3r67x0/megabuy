@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
   userId: string;
   isLoggedIn: boolean;
   htmlToAdd: string;
+  userAvatar: string;
   userName: string;
   token: string;
   url: string;
@@ -48,6 +49,7 @@ export class AppComponent implements OnInit {
     this.data.currentUserConfirmedMessage.subscribe(userConfirmedMessage => this.userConfirmedMessage = userConfirmedMessage);
     this.data.currentUserConfirmed.subscribe(userConfirmed => this.userConfirmed = userConfirmed);
     this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
+    this.data.currentUserAvatar.subscribe(userAvatar => this.userAvatar = userAvatar);
     this.data.currentUserName.subscribe(userName => this.userName = userName);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
 
@@ -80,7 +82,7 @@ export class AppComponent implements OnInit {
   }
 
   setElementHeight(event) {
-    const height = document.querySelector('.min-height-100').scrollHeight - 48 + 'px';
+    const height = document.querySelector('.min-height-100').scrollHeight - 53 + 'px';
     const element = <HTMLElement>document.querySelector('.confirm-restricted');
     element.style.height = height;
   }
@@ -112,6 +114,7 @@ export class AppComponent implements OnInit {
         this.data.changeStatus(true);
         this.data.changeUserId(user.json().user_id);
         this.data.changeUserName(user.json().name);
+        this.data.changeUserAvatar(this.url + '/' + user.json().avatar);
         this.data.changeUserConfirmed(user.json().confirmed);
       })
       .catch((err) => {

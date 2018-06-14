@@ -9,14 +9,17 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-        <a class="navbar-brand" routerLink="/" style="font-weight: 500;">Megabuy</a>
+        <a class="navbar-brand" routerLink="/" style="font-weight: 900; letter-spacing: 1px;">juuwl</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right" [class.navbar-padding]="!isLoggedIn">
           <li *ngIf="!isLoggedIn"><a class="nav-link" routerLink="/login">{{ 'term_login' | translate }}</a></li>
           <li *ngIf="!isLoggedIn"><a class="nav-link" routerLink="/register">{{ 'term_sign_up' | translate }}</a></li>
           <li [style.background-color]="navbarColor" *ngIf="isLoggedIn" class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ userName }} <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <img class="img-circle navbar-avatar" src="{{ userAvatar }}">
+              {{ userName }} <span class="caret"></span>
+            </a>
             <ul class="dropdown-menu">
               <li *ngIf="isAdmin"><a class="nav-link" routerLink="/users">{{ 'term_users' | translate }}</a></li>
               <li><a class="nav-link" routerLink="/inbox">{{ 'term_inbox' | translate }}</a></li>
@@ -34,4 +37,7 @@
   <div class="container">
     <router-outlet></router-outlet>
   </div>
+  <footer>
+
+  </footer>
 </div>
