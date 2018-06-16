@@ -39,6 +39,8 @@ export class ProductCategoryTagComponent implements OnInit, OnDestroy {
     private data: DataService,
     private layout: LayoutService,
     private auth: AuthService) {
+    this.data.changeIsPublicPage(true);
+
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
     this.layout.currentWarningColor.subscribe(warningColor => this.warningColor = warningColor);
@@ -70,7 +72,7 @@ export class ProductCategoryTagComponent implements OnInit, OnDestroy {
     this.auth.loginStatus(localStorage.getItem('token'))
       .then((user) => {
         // console.log(user.json());
-        this.data.changeStatus(true);
+        this.data.changeUserStatus(true);
         this.data.changeUserId(user.json().user_id);
         this.data.changeUserName(user.json().name);
         this.data.changeUserConfirmed(user.json().confirmed);

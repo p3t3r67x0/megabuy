@@ -28,6 +28,11 @@ import { InboxComponent } from './components/inbox/inbox.component';
 import { InboxDetailComponent } from './components/inbox-detail/inbox-detail.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
+import { ImprintComponent } from './components/imprint/imprint.component';
+import { ContactUserComponent } from './components/contact-user/contact-user.component';
+import { LoginWrapperComponent } from './components/login-wrapper/login-wrapper.component';
 
 import { AuthService } from './services/auth.service';
 import { DataService } from './services/data.service';
@@ -36,7 +41,6 @@ import { AuthGuard } from './services/ensure-authenticated.service';
 import { LoginRedirectService } from './services/login-redirect.service';
 import { NgStringPipesModule } from 'angular-pipes';
 import { ColorPipe } from './color.pipe';
-import { ProfileComponent } from './components/profile/profile.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -65,7 +69,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
       {
         path: 'login',
-        component: LoginComponent,
+        component: LoginWrapperComponent,
         canActivate: [LoginRedirectService]
       },
       {
@@ -87,6 +91,14 @@ export function HttpLoaderFactory(http: HttpClient) {
         path: 'product-category',
         component: ProductCategoryComponent,
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'privacy',
+        component: PrivacyComponent
+      },
+      {
+        path: 'imprint',
+        component: ImprintComponent
       },
       {
         path: 'settings',
@@ -147,7 +159,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     LayoutComponent,
     ColorPipe,
     ConfirmComponent,
-    ProfileComponent
+    ProfileComponent,
+    PrivacyComponent,
+    ImprintComponent,
+    ContactUserComponent,
+    LoginWrapperComponent
   ],
   providers: [
     AuthService,

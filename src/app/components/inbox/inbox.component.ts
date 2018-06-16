@@ -44,6 +44,7 @@ export class InboxComponent implements OnInit {
     private layout: LayoutService,
     private data: DataService,
     private auth: AuthService) {
+    this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
@@ -139,7 +140,7 @@ export class InboxComponent implements OnInit {
     this.auth.loginStatus(this.token)
       .then((user) => {
         // console.log(user.json());
-        this.data.changeStatus(true);
+        this.data.changeUserStatus(true);
         this.data.changeUserId(user.json().user_id);
         this.data.changeUserName(user.json().name);
         this.data.changeUserConfirmed(user.json().confirmed);
@@ -163,14 +164,14 @@ export class InboxComponent implements OnInit {
     return this.http.get(url, { headers: headers })
       .toPromise()
       .then(res => {
-        // console.log(res.json());
+        console.log(res.json());
         this.messages = res.json().messages;
         for (const m of this.messages) {
           m.selected = false;
         }
       })
       .catch(err => {
-        // console.log(err.json());
+        console.log(err.json());
       });
   }
 }

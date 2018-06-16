@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   linkColor: string;
   textColor: string;
 
+  isPublic: boolean;
   user: User = new User();
   elementScrollHeight: string;
   userConfirmedMessage: string;
@@ -46,6 +47,7 @@ export class AppComponent implements OnInit {
     private data: DataService,
     private auth: AuthService,
     private http: Http) {
+    this.data.currentIsPublicPage.subscribe(isPublic => this.isPublic = isPublic);
     this.data.currentUserConfirmedMessage.subscribe(userConfirmedMessage => this.userConfirmedMessage = userConfirmedMessage);
     this.data.currentUserConfirmed.subscribe(userConfirmed => this.userConfirmed = userConfirmed);
     this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
@@ -91,7 +93,7 @@ export class AppComponent implements OnInit {
     this.auth.logout(this.user, this.token)
       .then((user) => {
         // console.log(user.json());
-        this.data.changeStatus(false);
+        this.data.changeUserStatus(false);
         localStorage.removeItem('token');
         localStorage.removeItem('admin');
         localStorage.removeItem('cm');
@@ -99,7 +101,7 @@ export class AppComponent implements OnInit {
       })
       .catch((err) => {
         // console.log(err.json());
-        this.data.changeStatus(false);
+        this.data.changeUserStatus(false);
         localStorage.removeItem('token');
         localStorage.removeItem('admin');
         localStorage.removeItem('cm');
@@ -111,7 +113,7 @@ export class AppComponent implements OnInit {
     this.auth.loginStatus(this.token)
       .then((user) => {
         // console.log(user.json());
-        this.data.changeStatus(true);
+        this.data.changeUserStatus(true);
         this.data.changeUserId(user.json().user_id);
         this.data.changeUserName(user.json().name);
         this.data.changeUserAvatar(this.url + '/' + user.json().avatar);

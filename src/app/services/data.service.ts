@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class DataService {
+  private isPublicPage = new BehaviorSubject<boolean>(false);
   private userConfirmedMessage = new BehaviorSubject<string>('');
   private userConfirmed = new BehaviorSubject<boolean>(false);
   private userAdminStatus = new BehaviorSubject<string>('');
@@ -11,6 +12,7 @@ export class DataService {
   private userName = new BehaviorSubject<string>('');
   private userId = new BehaviorSubject<string>('0');
 
+  currentIsPublicPage = this.isPublicPage.asObservable();
   currentUserConfirmedMessage = this.userConfirmedMessage.asObservable();
   currentUserConfirmed = this.userConfirmed.asObservable();
   currentAdminStatus = this.userAdminStatus.asObservable();
@@ -20,6 +22,10 @@ export class DataService {
   currentUserId = this.userId.asObservable();
 
   constructor() { }
+
+  changeIsPublicPage(isPublicPage) {
+    this.isPublicPage.next(isPublicPage);
+  }
 
   changeUserId(userId) {
     this.userId.next(userId);
@@ -33,7 +39,7 @@ export class DataService {
     this.userAvatar.next(userAvatar);
   }
 
-  changeStatus(userStatus) {
+  changeUserStatus(userStatus) {
     this.userStatus.next(userStatus);
   }
 

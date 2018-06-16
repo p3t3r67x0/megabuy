@@ -47,6 +47,7 @@ export class ProductCategoryComponent implements OnInit {
     private layout: LayoutService,
     private fb: FormBuilder,
     private data: DataService) {
+    this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);

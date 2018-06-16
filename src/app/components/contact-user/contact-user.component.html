@@ -1,0 +1,37 @@
+<div *ngIf="!isLoggedIn" class="padding-15 margin-bottom-24 white">
+  <button *ngIf="!showLoginForm" (click)="signInForMessage()" [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false"
+    class="full-width btn btn-success">Nachricht schreiben</button>
+  <div *ngIf="showLoginForm" class="show-login-form">
+    <app-login [redirect]="currentUrl"></app-login>
+  </div>
+</div>
+<div *ngIf="isLoggedIn" class="padding-15 margin-bottom-24 white">
+  <h2 [style.color]="headlineColor" class="margin-top-0">{{ 'term_contact_seller' | translate }}</h2>
+  <p [style.color]="successColor" *ngIf="requestSubmited" class="text-success">Your message was sent!</p>
+  <form [formGroup]="contactForm" class="padding-0" (ngSubmit)="submitContactForm(contactForm.value)">
+    <div class="form-group">
+      <label [style.color]="textColor">Telefonnummer</label>
+      <input formControlName="telephone" type="name" class="form-control">
+      <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!contactForm.controls['telephone'].valid && contactForm.controls['telephone'].touched">
+        {{ errorPhone }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label [style.color]="textColor">{{ 'term_subject' | translate }}</label>
+      <input formControlName="subject" type="subject" class="form-control">
+      <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!contactForm.controls['subject'].valid && contactForm.controls['subject'].touched">
+        {{ errorSubject }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label [style.color]="textColor">{{ 'term_message' | translate }}</label>
+      <textarea formControlName="message" class="form-control"></textarea>
+      <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!contactForm.controls['message'].valid && contactForm.controls['message'].touched">
+        {{ errorMessage }}
+      </div>
+    </div>
+    <div>
+      <input [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary" value="{{ 'term_send_now' | translate }}" [disabled]="!contactForm.valid">
+    </div>
+  </form>
+</div>

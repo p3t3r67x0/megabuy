@@ -109,7 +109,7 @@ export class ProfileComponent implements OnInit {
             self.http.put(url, form, { headers: headers })
               .toPromise()
               .then(res => {
-                console.log(res);
+                // console.log(res);
               })
               .catch(err => {
                 console.log(err);

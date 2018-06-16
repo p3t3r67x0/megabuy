@@ -14,7 +14,7 @@ export class AuthGuard {
     return this.auth.loginStatus(localStorage.getItem('token'))
       .then((user) => {
         // console.log(user.json());
-        this.data.changeStatus(true);
+        this.data.changeUserStatus(true);
         this.data.changeUserId(user.json().user_id);
         this.data.changeUserName(user.json().name);
         return true;

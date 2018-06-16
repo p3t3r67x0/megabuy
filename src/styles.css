@@ -7,7 +7,7 @@ app-root {
 }
 
 .min-height-100 {
-  min-height: 100%;
+  min-height: calc(100vh - 50px);
 }
 
 textarea {
@@ -28,9 +28,22 @@ h4, .h4 {
   font-family: 'Muli';
 }
 
+.content {
+  min-height: calc(100vh - 70px);
+}
+
+.footer {
+  height: 50px;
+}
+
 .inbox-profil {
   float: left;
   width: 11%;
+}
+
+.reader-settings {
+  line-height: 1.6em;
+  font-size: 1.2em;
 }
 
 .inbox-message {
@@ -53,6 +66,10 @@ a.inbox-links:hover {
 
 .inbox-highlighted {
   background-color: #ffc;
+}
+
+.show-login-form {
+
 }
 
 .pointer {

@@ -46,36 +46,7 @@
       <h1 [style.color]="headlineColor">{{ product.price }}{{ product.currency }}</h1>
       <button [style.border-color]="successColor" [ngStyle]="hover ? { 'background-color': successColor | color: -0.1 } : { 'background-color': successColor }" (mouseover)="hover=true" (mouseleave)="hover=false" class="full-width btn btn-success">{{ 'term_buy_now' | translate }}</button>
     </div>
-    <div class="padding-15 margin-bottom-24 white">
-      <h2 [style.color]="headlineColor" class="margin-top-0">{{ 'term_contact_seller' | translate }}</h2>
-      <p [style.color]="successColor" *ngIf="requestSubmited" class="text-success">Your message was sent!</p>
-      <form [formGroup]="rForm" class="padding-0" (ngSubmit)="submitContactForm(rForm.value)">
-        <div class="form-group">
-          <label [style.color]="textColor">Name</label>
-          <input formControlName="name" type="name" class="form-control">
-          <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">
-            {{ errorName }}
-          </div>
-        </div>
-        <div class="form-group">
-          <label [style.color]="textColor">{{ 'term_subject' | translate }}</label>
-          <input formControlName="subject" type="subject" class="form-control">
-          <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['subject'].valid && rForm.controls['subject'].touched">
-            {{ errorSubject }}
-          </div>
-        </div>
-        <div class="form-group">
-          <label [style.color]="textColor">{{ 'term_message' | translate }}</label>
-          <textarea formControlName="message" class="form-control"></textarea>
-          <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['message'].valid && rForm.controls['message'].touched">
-            {{ errorMessage }}
-          </div>
-        </div>
-        <div>
-          <input [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary" value="{{ 'term_send_now' | translate }}" [disabled]="!rForm.valid">
-        </div>
-      </form>
-    </div>
+    <app-contact-user [product]="product"></app-contact-user>
     <div class="padding-15 margin-bottom-24 white">
       <h4 [style.color]="headlineColor" class="margin-top-0">{{ 'term_seller_information' | translate }}</h4>
       <p class="margin-bottom-0">By <a [style.color]="linkColor" routerLink="/user/{{ product.user_id }}">{{ product.user_name }}</a> in <a [style.color]="linkColor" routerLink="/category/{{ product.category_id }}">{{ product.category }}</a></p>

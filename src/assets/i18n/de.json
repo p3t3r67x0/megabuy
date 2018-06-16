@@ -45,5 +45,7 @@
   "term_mark_all_as_read": "Alle als gelesen makieren",
   "term_select_more_for_action": "Makiere Nachrichten um mehr Optionen zu sehen",
   "term_alert_confirmation_mail": "Bestätige Deine E-Mail Adresse",
-  "term_seller_information": "Verkäufer Information"
+  "term_seller_information": "Verkäufer Information",
+  "term_privacy_policy": "Datenschutzerklärung",
+  "term_imprint": "Impressum"
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Headers, Http } from '@angular/http';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SplitPipe } from 'angular-pipes';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
@@ -29,14 +28,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   linkColor: string;
   textColor: string;
 
-  private sub: any;
-  rForm: FormGroup;
+  sub: any;
   url: string;
   hover: boolean;
-  errorName: string;
-  errorSubject: string;
-  errorMessage: string;
-  requestSubmited: boolean;
   imageLength: number;
   productId: string;
   userId: string;
@@ -46,12 +40,12 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   error: any = {};
 
   constructor(private route: ActivatedRoute,
-    private fb: FormBuilder,
     private http: Http,
     private layout: LayoutService,
     private element: ElementRef,
     private data: DataService,
     private auth: AuthService) {
+    this.data.changeIsPublicPage(true);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
@@ -66,15 +60,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.layout.currentTextColor.subscribe(textColor => this.textColor = textColor);
     this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
-
-    this.errorName = 'What\'s your name?';
-    this.errorSubject = 'Tell the seller where they can contact you';
-    this.errorMessage = 'You may want to descripe your question more detailed';
-    this.rForm = fb.group({
-      'name': [this.userName, Validators.compose([Validators.required, Validators.minLength(2)])],
-      'subject': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
-      'message': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(500)])]
-    });
 
     this.sub = this.route.params.subscribe(params => {
       this.productId = params['id'];
@@ -92,38 +77,13 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  submitContactForm(value) {
-    let url: string;
-    let headers: Headers;
-
-    url = `${this.url}/api/inbox`;
-    headers = new Headers({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
-    });
-
-    value.user_id = this.product.user_id;
-    value.parent_id = '';
-
-    return this.http.post(url, value, { headers: headers })
-      .toPromise()
-      .then(res => {
-        // console.log(res);
-        this.requestSubmited = true;
-        this.rForm.reset();
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
   checkUserStatus() {
     this.auth.loginStatus(localStorage.getItem('token'))
       .then((user) => {
         // console.log(user.json());
-        this.changeStatus();
-        this.changeUserId(user.json().user_id);
-        this.changeUserName(user.json().name);
+        this.data.changeUserStatus(true);
+        this.data.changeUserId(user.json().user_id);
+        this.data.changeUserName(user.json().name);
         this.data.changeUserConfirmed(user.json().confirmed);
         this.userName = user.json().name;
       })
@@ -162,17 +122,4 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
     return this.http.get(url, { headers: headers }).toPromise();
   }
-
-  changeUserId(userId) {
-    this.data.changeUserId(userId);
-  }
-
-  changeUserName(userName) {
-    this.data.changeUserName(userName);
-  }
-
-  changeStatus() {
-    this.data.changeStatus(true);
-  }
-
 }

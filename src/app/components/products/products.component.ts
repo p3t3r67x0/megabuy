@@ -42,6 +42,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private layout: LayoutService,
     private data: DataService,
     private auth: AuthService) {
+    this.data.changeIsPublicPage(true);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
@@ -84,7 +85,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.auth.loginStatus(localStorage.getItem('token'))
       .then((user) => {
         // console.log(user.json());
-        this.data.changeStatus(true);
+        this.data.changeUserStatus(true);
         this.data.changeUserId(user.json().user_id);
         this.data.changeUserName(user.json().name);
         this.data.changeUserConfirmed(user.json().confirmed);

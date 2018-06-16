@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,6 +18,8 @@ declare var $: any;
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  @Input() redirect: string;
+
   backgroundColor: string;
   headlineColor: string;
   warningColor: string;
@@ -50,6 +52,7 @@ export class LoginComponent implements OnInit {
     private layout: LayoutService,
     private data: DataService,
     private auth: AuthService) {
+    this.data.changeIsPublicPage(true);
     this.data.currentUserConfirmed.subscribe(userConfirmed => this.userConfirmed = userConfirmed);
     this.data.currentAdminStatus.subscribe(isAdmin => this.isAdmin = isAdmin);
     this.data.currentUserName.subscribe(userName => this.userName = userName);
@@ -83,7 +86,7 @@ export class LoginComponent implements OnInit {
   onLogin(value): void {
     this.auth.login(value)
       .then((user) => {
-        console.log(user.json());
+        // console.log(user.json());
 
         if (user.json().user.admin) {
           this.data.changeAdminStatus(true);
@@ -97,11 +100,13 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('cm', confirmationMessage);
         }
 
+        localStorage.setItem('token', user.json().token);
         this.data.changeUserConfirmed(user.json().user.confirmed);
         this.data.changeUserAvatar(this.url + '/' + user.json().user.avatar);
         this.data.changeUserId(user.json().user.public_id);
-        localStorage.setItem('token', user.json().token);
-        this.router.navigateByUrl('/product');
+        this.data.changeUserName(user.json().name);
+        this.data.changeUserStatus(true);
+        this.router.navigateByUrl(this.redirect);
       })
       .catch((err) => {
         this.error = err.json();

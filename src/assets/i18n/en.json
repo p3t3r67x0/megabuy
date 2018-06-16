@@ -45,5 +45,7 @@
   "term_mark_all_as_read": "Mark all as read",
   "term_select_more_for_action": "Select messages to see more actions",
   "term_alert_confirmation_mail": "Confirm your email address",
-  "term_seller_information": "Seller information"
+  "term_seller_information": "Seller information",
+  "term_privacy_policy": "Privacy policy",
+  "term_imprint": "Imprint"
 }

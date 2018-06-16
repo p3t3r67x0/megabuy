@@ -79,6 +79,7 @@ export class ProductComponent implements OnInit {
     private layout: LayoutService,
     private router: Router,
     private data: DataService) {
+    this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
     this.data.currentUserConfirmed.subscribe(userConfirmed => this.userConfirmed = userConfirmed);
 

@@ -47,6 +47,8 @@ export class RegisterComponent implements OnInit {
     private layout: LayoutService,
     private data: DataService,
     private auth: AuthService) {
+    this.data.changeIsPublicPage(true);
+
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
     this.layout.currentWarningColor.subscribe(warningColor => this.warningColor = warningColor);
