@@ -33,6 +33,7 @@ import { PrivacyComponent } from './components/privacy/privacy.component';
 import { ImprintComponent } from './components/imprint/imprint.component';
 import { ContactUserComponent } from './components/contact-user/contact-user.component';
 import { LoginWrapperComponent } from './components/login-wrapper/login-wrapper.component';
+import { InboxReplyComponent } from './components/inbox-reply/inbox-reply.component';
 
 import { AuthService } from './services/auth.service';
 import { DataService } from './services/data.service';
@@ -163,7 +164,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PrivacyComponent,
     ImprintComponent,
     ContactUserComponent,
-    LoginWrapperComponent
+    LoginWrapperComponent,
+    InboxReplyComponent
   ],
   providers: [
     AuthService,

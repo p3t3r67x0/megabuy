@@ -47,5 +47,7 @@
   "term_alert_confirmation_mail": "Confirm your email address",
   "term_seller_information": "Seller information",
   "term_privacy_policy": "Privacy policy",
-  "term_imprint": "Imprint"
+  "term_imprint": "Imprint",
+  "term_message_sent": "Your message was sent!",
+  "term_phone_number": "Phone number"
 }

@@ -47,5 +47,7 @@
   "term_alert_confirmation_mail": "Bestätige Deine E-Mail Adresse",
   "term_seller_information": "Verkäufer Information",
   "term_privacy_policy": "Datenschutzerklärung",
-  "term_imprint": "Impressum"
+  "term_imprint": "Impressum",
+  "term_message_sent": "Deine Nachricht wurde versandt!",
+  "term_phone_number": "Telefonnummer"
 }

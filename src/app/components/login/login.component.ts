@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
 
   errorEmail: string;
   errorPassword: string;
+  modalId = 'login-error';
   rForm: FormGroup;
   hover: boolean;
   post: any;
@@ -104,7 +105,7 @@ export class LoginComponent implements OnInit {
         this.data.changeUserConfirmed(user.json().user.confirmed);
         this.data.changeUserAvatar(this.url + '/' + user.json().user.avatar);
         this.data.changeUserId(user.json().user.public_id);
-        this.data.changeUserName(user.json().name);
+        this.data.changeUserName(user.json().user.name);
         this.data.changeUserStatus(true);
         this.router.navigateByUrl(this.redirect);
       })
@@ -118,7 +119,7 @@ export class LoginComponent implements OnInit {
         }
 
         console.log(err.json());
-        $('#myModal').modal();
+        $('#' + this.modalId).modal();
       });
   }
 }

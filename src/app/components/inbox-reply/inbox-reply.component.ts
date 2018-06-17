@@ -2,19 +2,20 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { DataService } from '../../services/data.service';
 import { LayoutService } from '../../services/layout.service';
 import { environment } from '../../../environments/environment';
 
 
 @Component({
-  selector: 'app-contact-user',
-  templateUrl: './contact-user.component.html',
-  styleUrls: ['./contact-user.component.css']
+  selector: 'app-inbox-reply',
+  templateUrl: './inbox-reply.component.html',
+  styleUrls: ['./inbox-reply.component.css']
 })
-export class ContactUserComponent implements OnInit {
-  @Input() product: any;
+export class InboxReplyComponent implements OnInit {
+  @Input() receiver: string;
+  @Input() subject: string;
+  @Input() parent: string;
 
   backgroundColor: string;
   headlineColor: string;
@@ -29,27 +30,22 @@ export class ContactUserComponent implements OnInit {
   linkColor: string;
   textColor: string;
 
-  showLoginForm: boolean;
   requestSubmited: boolean;
-  contactForm: FormGroup;
-  isLoggedIn: boolean;
-  currentUrl: string;
-  userName: string;
+  replyForm: FormGroup;
+  hover: boolean;
   userId: string;
   token: string;
   url: string;
 
-  errorPhone: string;
-  errorSubject: string;
   errorMessage: string;
 
-  constructor(private fb: FormBuilder,
-    private http: Http,
-    private router: Router,
+  constructor(private http: Http,
     private layout: LayoutService,
+    private router: Router,
+    private fb: FormBuilder,
     private data: DataService) {
+    this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
-    this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
@@ -64,28 +60,19 @@ export class ContactUserComponent implements OnInit {
     this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
 
-    this.errorPhone = 'Tell the seller how to get touch with you';
-    this.errorSubject = 'Describe in short what you want to ask';
-    this.errorMessage = 'You may want to descripe your question more detailed';
-    this.contactForm = fb.group({
-      'telephone': [this.userName, Validators.compose([Validators.required, Validators.minLength(2)])],
-      'subject': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
-      'message': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(500)])]
+    this.errorMessage = 'Reply with a minimum of 30 to 15000 characters';
+    this.replyForm = fb.group({
+      'message': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(15000)])]
     });
 
+    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
   ngOnInit() {
-    this.currentUrl = this.router.url;
   }
 
-  signInForMessage() {
-    this.showLoginForm = true;
-  }
-
-  submitContactForm(value) {
-    this.token = localStorage.getItem('token');
+  submitReplyForm(value) {
     let url: string;
     let headers: Headers;
 
@@ -95,18 +82,20 @@ export class ContactUserComponent implements OnInit {
       'Authorization': `Bearer ${this.token}`
     });
 
-    value.user_id = this.product.user_id;
-    value.parent_id = '';
+    console.log(this.receiver);
+
+    value.subject = 'Re: ' + this.subject;
+    value.user_id = this.receiver;
+    value.parent_id = this.parent;
 
     return this.http.post(url, value, { headers: headers })
       .toPromise()
       .then(res => {
-        // console.log(res);
-        this.requestSubmited = true;
-        this.contactForm.reset();
+        console.log(res);
+        this.replyForm.reset();
       })
       .catch(err => {
-        console.log(err.json());
+        console.log(err);
       });
   }
 }

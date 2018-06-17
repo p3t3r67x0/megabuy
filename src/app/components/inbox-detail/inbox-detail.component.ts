@@ -30,10 +30,12 @@ export class InboxDetailComponent implements OnInit {
   textColor: string;
 
   messageId: string;
-  userId: string;
+  showReplyForm: boolean;
   modalId = 'inbox-detail-error';
-  error: any = {};
+  messages: any = [];
   message: any = {};
+  error: any = {};
+  userId: string;
   token: string;
   url: string;
   sub: any;
@@ -71,6 +73,10 @@ export class InboxDetailComponent implements OnInit {
   ngOnInit() {
     this.checkUserStatus();
     this.getMessageById();
+  }
+
+  openReplyForm() {
+    this.showReplyForm = true;
   }
 
   deleteMessageById() {
@@ -120,6 +126,31 @@ export class InboxDetailComponent implements OnInit {
       });
   }
 
+  getParentMessageById(userId, parentId) {
+    let url: string;
+    let headers: Headers;
+
+    url = `${this.url}/api/inbox/user/${userId}/${parentId}`;
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    return this.http.get(url, { headers: headers })
+      .toPromise()
+      .then((message) => {
+        console.log(message.json());
+        this.messages.push(message.json());
+
+        if (message.json().parent_id) {
+          this.getParentMessageById(message.json().user_id, message.json().parent_id);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   getMessageById() {
     let url: string;
     let headers: Headers;
@@ -133,17 +164,20 @@ export class InboxDetailComponent implements OnInit {
     return this.http.get(url, { headers: headers })
       .toPromise()
       .then((message) => {
-        // console.log(message.json());
-        this.message = message.json();
+        console.log(message.json());
+        // this.message = message.json();
+        this.messages.push(message.json());
+
+        if (message.json().parent_id) {
+          this.getParentMessageById(message.json().user_id, message.json().parent_id);
+        }
 
         if (!this.message.read) {
           this.updateMessageStatusById();
         }
       })
       .catch((err) => {
-        // console.log(err.json());
-        this.error = err.json();
-        $('#' + this.modalId).modal();
+        console.log(err);
       });
   }
 

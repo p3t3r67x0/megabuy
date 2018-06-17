@@ -94,6 +94,7 @@ export class AppComponent implements OnInit {
       .then((user) => {
         // console.log(user.json());
         this.data.changeUserStatus(false);
+        this.data.changeUserName('');
         localStorage.removeItem('token');
         localStorage.removeItem('admin');
         localStorage.removeItem('cm');
@@ -102,6 +103,7 @@ export class AppComponent implements OnInit {
       .catch((err) => {
         // console.log(err.json());
         this.data.changeUserStatus(false);
+        this.data.changeUserName('');
         localStorage.removeItem('token');
         localStorage.removeItem('admin');
         localStorage.removeItem('cm');
