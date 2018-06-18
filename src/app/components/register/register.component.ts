@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit {
   errorName: string;
   errorEmail: string;
   errorPassword: string;
+  modalId = 'signup-error';
   rForm: FormGroup;
   hover: boolean;
   post: any;
@@ -102,7 +103,7 @@ export class RegisterComponent implements OnInit {
         }
 
         console.log(this.error);
-        $('#myModal').modal();
+        $('#' + this.modalId).modal();
       });
   }
 }

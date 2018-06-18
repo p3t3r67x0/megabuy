@@ -81,6 +81,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.checkUserStatus();
     this.data.changeUserConfirmedMessage(localStorage.getItem('cm'));
+    this.layout.getLayout('eba882aa557d');
   }
 
   setElementHeight(event) {

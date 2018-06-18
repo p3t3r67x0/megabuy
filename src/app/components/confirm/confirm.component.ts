@@ -41,7 +41,7 @@ export class ConfirmComponent implements OnInit {
     return this.http.post(url, { headers: headers })
       .toPromise()
       .then((res) => {
-        // console.log(res.json());
+        console.log(res.json());
 
         if (res.json().status === 'success') {
           this.data.changeUserConfirmed(true);
@@ -49,7 +49,7 @@ export class ConfirmComponent implements OnInit {
         }
       })
       .catch((err) => {
-        // console.log(err.json());
+        console.log(err.json());
 
         if (err.json().status === 'fail') {
           this.data.changeUserConfirmedMessage(err.json().message);

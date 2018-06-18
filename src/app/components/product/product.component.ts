@@ -346,12 +346,12 @@ export class ProductComponent implements OnInit {
               this.products[i].image = res.json().images;
             })
             .catch(err => {
-              console.log(err.json());
+              console.log(err);
             });
         }
       })
       .catch((err) => {
-        console.log(err.json());
+        console.log(err);
       });
   }
 
@@ -375,7 +375,7 @@ export class ProductComponent implements OnInit {
         this.productCategories = productCategories.json()['product-categories'];
       })
       .catch((err) => {
-        // console.log(err.json());
+        console.log(err);
       });
   }
 

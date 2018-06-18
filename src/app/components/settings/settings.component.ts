@@ -89,6 +89,7 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.getUser();
+    this.layout.getLayout(this.userId);
   }
 
   updateForm(user) {

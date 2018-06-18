@@ -30,7 +30,10 @@ export class LayoutComponent implements OnInit {
   userId: string;
   url: string;
 
-  constructor(private router: Router, private http: Http, private data: DataService, private layout: LayoutService) {
+  constructor(private router: Router,
+    private http: Http,
+    private data: DataService,
+    private layout: LayoutService) {
     this.data.currentUserId.subscribe(userId => this.userId = userId);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
@@ -47,15 +50,31 @@ export class LayoutComponent implements OnInit {
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
     this.layout.currentLayoutId.subscribe(layoutId => this.layoutId = layoutId);
 
+    this.layout.getLayout(this.userId);
+
     this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
   ngOnInit() {
-    this.layout.getLayout();
   }
 
   onColorChange() {
+    const postData = {
+      'background': this.backgroundColor,
+      'headline': this.headlineColor,
+      'warning': this.warningColor,
+      'success': this.successColor,
+      'navbar': this.navbarColor,
+      'teaser': this.teaserColor,
+      'button': this.buttonColor,
+      'alert': this.alertColor,
+      'error': this.errorColor,
+      'info': this.infoColor,
+      'link': this.linkColor,
+      'text': this.textColor
+    };
+
     this.layout.changeBackgroundColor(this.backgroundColor);
     this.layout.changeHeadlineColor(this.headlineColor);
     this.layout.changeWarningColor(this.warningColor);
@@ -69,42 +88,6 @@ export class LayoutComponent implements OnInit {
     this.layout.changeLinkColor(this.linkColor);
     this.layout.changeTextColor(this.textColor);
 
-    this.upadateLayout();
+    this.layout.upadateLayout(this.layoutId, postData, this.token);
   }
-
-  upadateLayout() {
-    let url: string;
-    let headers: Headers;
-
-    const post = {
-      'background': this.backgroundColor,
-      'headline': this.headlineColor,
-      'warning': this.warningColor,
-      'success': this.successColor,
-      'navbar': this.navbarColor,
-      'teaser': this.teaserColor,
-      'button': this.buttonColor,
-      'alert': this.alertColor,
-      'error': this.errorColor,
-      'info': this.infoColor,
-      'link': this.linkColor,
-      'text': this.textColor,
-    };
-
-    url = `${this.url}/api/layout/${this.layoutId}`;
-    headers = new Headers({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.token}`
-    });
-
-    return this.http.put(url, post, { headers: headers })
-      .toPromise()
-      .then(res => {
-        console.log(res.json());
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
 }

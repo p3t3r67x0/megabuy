@@ -40,7 +40,6 @@ export class LayoutService {
   constructor(private router: Router, private http: Http) {
     this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
-    this.getLayout();
   }
 
   changeBackgroundColor(backgroundColor) {
@@ -95,17 +94,18 @@ export class LayoutService {
     this.layoutId.next(layoutId);
   }
 
-  getLayout() {
+  getLayout(userId) {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/api/layout`;
+    url = `${this.url}/api/layout/user/${userId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
     });
 
     return this.http.get(url, { headers: headers }).toPromise()
       .then(res => {
+        console.log(res.json());
         this.changeBackgroundColor(res.json().layout.background);
         this.changeHeadlineColor(res.json().layout.headline);
         this.changeWarningColor(res.json().layout.warning);
@@ -122,7 +122,64 @@ export class LayoutService {
       })
       .catch(err => {
         console.log(err);
+        this.createLayout(userId);
       });
   }
 
+  createLayout(userId) {
+    let url: string;
+    let headers: Headers;
+
+    const post = {
+      'user_id': userId,
+      'background': '',
+      'headline': '',
+      'warning': '',
+      'success': '',
+      'navbar': '',
+      'teaser': '',
+      'button': '',
+      'alert': '',
+      'error': '',
+      'info': '',
+      'link': '',
+      'text': ''
+    };
+
+    url = `${this.url}/api/layout`;
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.token}`
+    });
+
+    return this.http.post(url, post, { headers: headers })
+      .toPromise()
+      .then(res => {
+        console.log(res.json());
+        this.changeLayoutId(res.json().id);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  upadateLayout(layoutId, postData, tokenString) {
+    let url: string;
+    let headers: Headers;
+
+    url = `${this.url}/api/layout/${layoutId}`;
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${tokenString}`
+    });
+
+    return this.http.put(url, postData, { headers: headers })
+      .toPromise()
+      .then(res => {
+        console.log(res.json());
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 }

@@ -85,6 +85,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.auth.loginStatus(localStorage.getItem('token'))
       .then((user) => {
         // console.log(user.json());
+        this.layout.getLayout(this.userId);
         this.data.changeUserStatus(true);
         this.data.changeUserId(user.json().user_id);
         this.data.changeUserName(user.json().name);
