@@ -155,13 +155,13 @@ export class SettingsComponent implements OnInit {
 
         this.userForm.get('firstname').valueChanges.subscribe(val => {
           this.fullName = this.getFullName(val, this.userForm.get('lastname').value, user.json().user.name);
-          this.data.changeUserName('VORNAME');
+          this.data.changeUserName(this.fullName);
           this.name = this.fullName;
         });
 
         this.userForm.get('lastname').valueChanges.subscribe(val => {
           this.fullName = this.getFullName(this.userForm.get('firstname').value, val, user.json().user.name);
-          this.data.changeUserName('NACHNAME');
+          this.data.changeUserName(this.fullName);
           this.name = this.fullName;
         });
 

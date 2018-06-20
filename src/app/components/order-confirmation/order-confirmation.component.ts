@@ -1,20 +1,18 @@
-import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Headers, Http } from '@angular/http';
-import { SplitPipe } from 'angular-pipes';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { LayoutService } from '../../services/layout.service';
 import { environment } from '../../../environments/environment';
 
 
 @Component({
-  selector: 'app-product-detail',
-  templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.css']
+  selector: 'app-order-confirmation',
+  templateUrl: './order-confirmation.component.html',
+  styleUrls: ['./order-confirmation.component.css']
 })
-export class ProductDetailComponent implements OnInit, OnDestroy {
+export class OrderConfirmationComponent implements OnInit {
   backgroundColor: string;
   headlineColor: string;
   warningColor: string;
@@ -28,25 +26,19 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   linkColor: string;
   textColor: string;
 
-  sub: any;
-  url: string;
-  hover: boolean;
-  imageLength: number;
-  productId: string;
+  order: any = {};
+  orderId: string;
   userId: string;
-  userName: string;
   token: string;
-  product: any = {};
-  error: any = {};
+  url: string;
+  sub: any;
 
   constructor(private route: ActivatedRoute,
     private http: Http,
     private router: Router,
     private layout: LayoutService,
-    private element: ElementRef,
-    private data: DataService,
-    private auth: AuthService) {
-    this.data.changeIsPublicPage(true);
+    private data: DataService) {
+    this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
@@ -63,68 +55,36 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
 
     this.sub = this.route.params.subscribe(params => {
-      this.productId = params['id'];
+      this.orderId = params['id'];
     });
+
     this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
   ngOnInit() {
-    this.checkUserStatus();
-    this.getProductById();
+    this.getOrder();
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
-
-  onBuyNow() {
-    this.router.navigateByUrl('/checkout/' + this.productId);
-  }
-
-  checkUserStatus() {
-    this.auth.loginStatus(localStorage.getItem('token'))
-      .then((user) => {
-        // console.log(user.json());
-        this.data.changeUserStatus(true);
-        this.data.changeUserId(user.json().user_id);
-        this.data.changeUserName(user.json().name);
-        this.data.changeUserConfirmed(user.json().confirmed);
-        this.userName = user.json().name;
-      })
-      .catch((err) => {
-        console.log(err.json());
-      });
-  }
-
-  getProductById() {
-    this.getOneProductById()
-      .then((product) => {
-        // console.log(product.json());
-        this.product = product.json();
-        this.imageLength = this.product.image.split(',').length;
-      })
-      .catch((err) => {
-        console.log(err.json());
-        this.error = err.json();
-      });
-  }
-
-  imageClicked(event) {
-    const el = this.element.nativeElement.querySelector('div.col-xs-12.margin-bottom-12');
-    const src = event.target;
-    el.innerHTML = src.outerHTML;
-  }
-
-  getOneProductById() {
+  getOrder() {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/api/product/${this.productId}`;
+    url = `${this.url}/api/order/${this.orderId}`;
     headers = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
     });
 
-    return this.http.get(url, { headers: headers }).toPromise();
+    this.http.get(url, { headers: headers })
+      .toPromise()
+      .then(res => {
+        console.log(res.json());
+        this.order = res.json().order;
+      })
+      .catch(err => {
+        console.log(err.json());
+      });
   }
+
 }

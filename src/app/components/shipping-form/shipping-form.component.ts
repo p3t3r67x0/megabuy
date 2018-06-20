@@ -1,9 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Headers, Http } from '@angular/http';
+import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { LayoutService } from '../../services/layout.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+
+interface Order {
+  user_id: string;
+  product_id: string;
+  address_id: string;
+}
+
 
 @Component({
   selector: 'app-shipping-form',
@@ -11,6 +19,8 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./shipping-form.component.css']
 })
 export class ShippingFormComponent implements OnInit {
+  @Input() productId: string;
+
   backgroundColor: string;
   headlineColor: string;
   warningColor: string;
@@ -34,6 +44,7 @@ export class ShippingFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private http: Http,
+    private router: Router,
     private data: DataService,
     private layout: LayoutService) {
     this.data.changeIsPublicPage(false);
@@ -107,51 +118,66 @@ export class ShippingFormComponent implements OnInit {
       });
   }
 
-  createAddress(value) {
+  createOrder(addressId, userId, productId) {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/api/address`;
+    url = `${this.url}/api/order`;
     headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.token}`
     });
 
-    console.log(value);
+    const value: Order = {
+      user_id: userId,
+      product_id: productId,
+      address_id: addressId
+    };
 
-    /*
     return this.http.post(url, value, { headers: headers })
       .toPromise()
       .then(res => {
-        console.log(res);
+        console.log(res.json());
+        this.router.navigateByUrl('/order/' + res.json().id);
       })
       .catch(err => {
         console.log(err);
       });
-    */
   }
 
   submitCheckoutForm(value) {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/api/checkout`;
     headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.token}`
     });
 
-    console.log(value);
+    if (!this.userAddressId) {
+      url = `${this.url}/api/address`;
 
-    /*
-    return this.http.post(url, value, { headers: headers })
-      .toPromise()
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    */
+      return this.http.post(url, value, { headers: headers })
+        .toPromise()
+        .then(res => {
+          console.log(res.json());
+          this.createOrder(res.json().id, this.userId, this.productId);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+      url = `${this.url}/api/address/${this.userAddressId}`;
+
+      return this.http.put(url, value, { headers: headers })
+        .toPromise()
+        .then(res => {
+          console.log(res.json());
+          this.createOrder(this.userAddressId, this.userId, this.productId);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
 }

@@ -36,6 +36,7 @@ import { LoginWrapperComponent } from './components/login-wrapper/login-wrapper.
 import { InboxReplyComponent } from './components/inbox-reply/inbox-reply.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ShippingFormComponent } from './components/shipping-form/shipping-form.component';
+import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 
 import { AuthService } from './services/auth.service';
 import { DataService } from './services/data.service';
@@ -109,8 +110,13 @@ export function HttpLoaderFactory(http: HttpClient) {
         canActivate: [AuthGuard]
       },
       {
-        path: 'checkout',
+        path: 'checkout/:id',
         component: CheckoutComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'order/:id',
+        component: OrderConfirmationComponent,
         canActivate: [AuthGuard]
       },
       {
@@ -174,7 +180,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginWrapperComponent,
     InboxReplyComponent,
     CheckoutComponent,
-    ShippingFormComponent
+    ShippingFormComponent,
+    OrderConfirmationComponent
   ],
   providers: [
     AuthService,

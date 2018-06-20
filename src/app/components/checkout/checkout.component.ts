@@ -52,8 +52,8 @@ export class CheckoutComponent implements OnInit {
     this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
 
-    this.sub = this.route.queryParams.subscribe(params => {
-      this.productId = params['product'];
+    this.sub = this.route.params.subscribe(params => {
+      this.productId = params['id'];
     });
 
     this.token = localStorage.getItem('token');
