@@ -1,0 +1,148 @@
+<h1>{{ 'term_billing_address' | translate }}</h1>
+<div class="wrapper">
+  <form [formGroup]="checkoutForm" (ngSubmit)="submitCheckoutForm(checkoutForm.value)">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label [style.color]="textColor" for="firstName">{{ 'term_firstname' | translate }}</label>
+          <input class="form-control" id="firstName" formControlName="firstname" placeholder="Max" type="text">
+          <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!checkoutForm.controls['firstname'].valid && checkoutForm.controls['firstname'].touched">
+            Valid first name is.
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label [style.color]="textColor" for="lastName">{{ 'term_lastname' | translate }}</label>
+          <input class="form-control" id="lastName" formControlName="lastname" placeholder="Mustermann" type="text">
+          <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!checkoutForm.controls['lastname'].valid && checkoutForm.controls['lastname'].touched">
+            Valid last name is.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label [style.color]="textColor" for="emailAddress">Email</label>
+      <input class="form-control" id="emailAddress" formControlName="email" placeholder="you@example.com" type="email">
+      <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!checkoutForm.controls['email'].valid && checkoutForm.controls['email'].touched">
+        Please enter a valid email address for shipping updates.
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label [style.color]="textColor" for="addressDefault">{{ 'term_street' | translate }}</label>
+          <input class="form-control" id="addressDefault" formControlName="street" placeholder="Frankfurter Allee 78" type="text">
+          <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!checkoutForm.controls['street'].valid && checkoutForm.controls['street'].touched">
+            Please enter your street and house number.
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label [style.color]="textColor" for="addressDefault">{{ 'term_city' | translate }}</label>
+          <input class="form-control" id="addressDefault" formControlName="city" placeholder="Berlin" type="text">
+          <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!checkoutForm.controls['city'].valid && checkoutForm.controls['city'].touched">
+            Please enter your city.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label [style.color]="textColor" for="addressOptional">{{ 'term_address' | translate }} <span class="text-muted">(Optional)</span></label>
+      <input class="form-control" id="addressOptional" formControlName="address" placeholder="Apartment or suite" type="text">
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label [style.color]="textColor" for="zipCode">{{ 'term_zipcode' | translate }}</label>
+          <input class="form-control" id="zipCode" formControlName="zipcode" placeholder="" type="text">
+          <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!checkoutForm.controls['zipcode'].valid && checkoutForm.controls['zipcode'].touched">
+            Zip code.
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label [style.color]="textColor" for="stateName">{{ 'term_state' | translate }}</label>
+          <select class="form-control" id="stateName" formControlName="state">
+            <option value="1">Baden-Württemberg</option>
+            <option value="2">Bayern</option>
+            <option value="3">Berlin</option>
+            <option value="4">Brandenburg</option>
+            <option value="5">Bremen</option>
+            <option value="6">Hamburg</option>
+            <option value="7">Hessen</option>
+            <option value="8">Mecklenburg-Vorpommern</option>
+            <option value="9">Niedersachsen</option>
+            <option value="10">Nordrhein-Westfalen</option>
+            <option value="11">Rheinland-Pfalz</option>
+            <option value="12">Saarland</option>
+            <option value="13">Sachsen</option>
+            <option value="14">Sachsen-Anhalt</option>
+            <option value="15">Schleswig-Holstein</option>
+            <option value="16">Thüringen</option>
+          </select>
+          <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!checkoutForm.controls['state'].valid && checkoutForm.controls['state'].touched">
+            Please provide a valid state.
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="form-group">
+          <label [style.color]="textColor" for="CountryName">{{ 'term_country' | translate }}</label>
+          <select class="form-control" id="CountryName" formControlName="country">
+            <option value="1">Belgien</option>
+            <option value="2">Malta</option>
+            <option value="3">Bulgarien</option>
+            <option value="4">Niederlande</option>
+            <option value="5">Dänemark</option>
+            <option value="6">Österreich</option>
+            <option value="7">Deutschland</option>
+            <option value="8">Polen</option>
+            <option value="9">Estland</option>
+            <option value="10">Portugal</option>
+            <option value="11">Finnland</option>
+            <option value="12">Rumänien</option>
+            <option value="13">Frankreich</option>
+            <option value="14">Slowakei</option>
+            <option value="15">Griechenland</option>
+            <option value="16">Slowenien</option>
+            <option value="17">Irland</option>
+            <option value="18">Spanien</option>
+            <option value="19">Italien</option>
+            <option value="20">Schweden</option>
+            <option value="21">Kroatien</option>
+            <option value="22">Tschechische Republik</option>
+            <option value="24">Lettland</option>
+            <option value="25">Ungarn</option>
+            <option value="26">Litauen</option>
+            <option value="27">Vereinigtes Königreich</option>
+            <option value="29">Luxemburg</option>
+            <option value="30">Zypern</option>
+          </select>
+          <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!checkoutForm.controls['country'].valid && checkoutForm.controls['country'].touched">
+            Please select a valid country.
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="margin-top-9">
+    <div class="checkbox">
+      <label [style.color]="textColor" for="sameAddress"><input id="sameAddress" formControlName="sameAddress" type="checkbox"> <strong>Shipping address is the same as my billing address</strong></label>
+    </div>
+    <div class="checkbox">
+      <label [style.color]="textColor" for="saveAddress"><input id="saveAddress" formControlName="saveAddress" type="checkbox"> <strong>Save this information for next time</strong></label>
+    </div>
+    <hr>
+    <h4>Payment</h4>
+    <div class="form-group">
+      <div class="radio">
+        <label [style.color]="textColor" for="credit"><input id="credit" formControlName="paymentMethod" value="3322222323" type="radio"> Überweisung</label>
+      </div>
+    </div>
+    <hr>
+    <input class="btn btn-primary btn-lg btn-block" [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" [disabled]="!checkoutForm.valid"
+      type="submit" value="{{ 'term_continue_checkout' | translate }}">
+  </form>
+</div>

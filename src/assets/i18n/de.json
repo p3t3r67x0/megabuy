@@ -49,5 +49,15 @@
   "term_privacy_policy": "Datenschutzerklärung",
   "term_imprint": "Impressum",
   "term_message_sent": "Deine Nachricht wurde versandt!",
-  "term_phone_number": "Telefonnummer"
+  "term_phone_number": "Telefonnummer",
+  "term_billing_address": "Rechnungsadresse",
+  "term_firstname": "Vorname",
+  "term_lastname": "Nachname",
+  "term_street": "Straße",
+  "term_city": "Stadt",
+  "term_address": "Adresse",
+  "term_zipcode": "Postleitzahl",
+  "term_state": "Bundesland",
+  "term_country": "Land",
+  "term_continue_checkout": "Weiter zur Kasse"
 }

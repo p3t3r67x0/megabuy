@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Headers, Http } from '@angular/http';
 import { SplitPipe } from 'angular-pipes';
 import { TranslateService } from '@ngx-translate/core';
@@ -41,6 +41,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private http: Http,
+    private router: Router,
     private layout: LayoutService,
     private element: ElementRef,
     private data: DataService,
@@ -75,6 +76,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  onBuyNow() {
+    this.router.navigateByUrl('/checkout');
   }
 
   checkUserStatus() {

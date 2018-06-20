@@ -10,7 +10,8 @@ export class DataService {
   private userStatus = new BehaviorSubject<boolean>(false);
   private userAvatar = new BehaviorSubject<string>('');
   private userName = new BehaviorSubject<string>('');
-  private userId = new BehaviorSubject<string>('0');
+  private userId = new BehaviorSubject<string>('');
+  private userAddressId = new BehaviorSubject<string>('');
 
   currentIsPublicPage = this.isPublicPage.asObservable();
   currentUserConfirmedMessage = this.userConfirmedMessage.asObservable();
@@ -20,11 +21,17 @@ export class DataService {
   currentUserAvatar = this.userAvatar.asObservable();
   currentUserName = this.userName.asObservable();
   currentUserId = this.userId.asObservable();
+  currentUserAddressId = this.userAddressId.asObservable();
+
 
   constructor() { }
 
   changeIsPublicPage(isPublicPage) {
     this.isPublicPage.next(isPublicPage);
+  }
+
+  changeUserAddressId(userAddressId) {
+    this.userAddressId.next(userAddressId);
   }
 
   changeUserId(userId) {

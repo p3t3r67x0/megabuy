@@ -38,6 +38,7 @@ export class AppComponent implements OnInit {
   htmlToAdd: string;
   userAvatar: string;
   userName: string;
+  fullName: string;
   token: string;
   url: string;
 
@@ -116,11 +117,9 @@ export class AppComponent implements OnInit {
     this.auth.loginStatus(this.token)
       .then((user) => {
         // console.log(user.json());
+
         this.data.changeUserStatus(true);
         this.data.changeUserId(user.json().user_id);
-        this.data.changeUserName(user.json().name);
-        this.data.changeUserAvatar(this.url + '/' + user.json().avatar);
-        this.data.changeUserConfirmed(user.json().confirmed);
       })
       .catch((err) => {
         console.log(err);

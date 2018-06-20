@@ -2,45 +2,58 @@
   <div class="col-sm-6 margin-bottom-24">
     <app-profile [name]="name" [userName]="userName"></app-profile>
     <h1 [style.color]="headlineColor">{{ 'term_profile' | translate }}</h1>
-    <form class="padding-15 white" [formGroup]="rForm" (ngSubmit)="updateForm(rForm.value)">
-      <div class="form-group">
-        <label [style.color]="textColor" for="user-name">Name</label>
-        <input class="form-control" type="text" placeholder="{{ 'placeholder_name' | translate }}" formControlName="name" id="user-name">
-        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">
-          {{ errorName }}
+    <form class="padding-15 white" [formGroup]="userForm" (ngSubmit)="submitUserForm(userForm.value)">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label [style.color]="textColor" for="firstName">First name</label>
+            <input class="form-control" id="firstName" formControlName="firstname" placeholder="Max" value="" type="text">
+            <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!userForm.controls['firstname'].valid && userForm.controls['firstname'].touched">
+              Valid first name is.
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label [style.color]="textColor" for="lastName">Last name</label>
+            <input class="form-control" id="lastName" formControlName="lastname" placeholder="Mustermann" value="" type="text">
+            <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!userForm.controls['lastname'].valid && userForm.controls['lastname'].touched">
+              Valid last name is.
+            </div>
+          </div>
         </div>
       </div>
       <div class="form-group">
         <label [style.color]="textColor" for="user-email">E-Mail</label>
         <input class="form-control" type="text" placeholder="max@example.com" formControlName="email" id="user-email">
-        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">
+        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!userForm.controls['email'].valid && userForm.controls['email'].touched">
           {{ errorEmail }}
         </div>
       </div>
       <div class="form-group">
         <label [style.color]="textColor" for="user-username">{{ 'term_username' | translate }}</label>
         <input class="form-control" type="text" placeholder="@username" formControlName="username" id="user-username">
-        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['username'].valid && rForm.controls['username'].touched">
+        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!userForm.controls['username'].valid && userForm.controls['username'].touched">
           {{ errorUsername }}
         </div>
       </div>
       <div class="form-group">
         <label [style.color]="textColor" for="user-phone">{{ 'term_phone' | translate }}</label>
         <input class="form-control" type="text" placeholder="040 1233432" formControlName="phone" id="user-phone">
-        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['phone'].valid && rForm.controls['phone'].touched">
+        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!userForm.controls['phone'].valid && userForm.controls['phone'].touched">
           {{ errorPhone }}
         </div>
       </div>
       <div class="form-group">
         <label [style.color]="textColor" for="user-website">{{ 'term_website' | translate }}</label>
         <input class="form-control" type="text" placeholder="example.com" formControlName="website" id="user-website">
-        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['website'].valid && rForm.controls['website'].touched">
+        <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!userForm.controls['website'].valid && userForm.controls['website'].touched">
           {{ errorWebsite }}
         </div>
       </div>
 
       <input [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary" value="{{ 'term_save_now' | translate }}"
-        [disabled]="!rForm.valid">
+        [disabled]="!userForm.valid">
     </form>
   </div>
   <app-layout></app-layout>

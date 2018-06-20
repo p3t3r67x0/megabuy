@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
 
   userId: string;
   userName: string;
+  fullName: string;
   userConfirmed: boolean;
   isAdmin: string;
   error: any = {};
@@ -87,7 +88,7 @@ export class LoginComponent implements OnInit {
   onLogin(value): void {
     this.auth.login(value)
       .then((user) => {
-        // console.log(user.json());
+        console.log(user.json());
 
         if (user.json().user.admin) {
           this.data.changeAdminStatus(true);
@@ -101,12 +102,22 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('cm', confirmationMessage);
         }
 
+        // get full name from user
+        if (user.json().user.firstname && user.json().user.lastname) {
+          this.fullName = user.json().user.firstname + ' ' + user.json().user.lastname;
+        } else {
+          this.fullName = user.json().user.name;
+        }
+
         localStorage.setItem('token', user.json().token);
+
         this.data.changeUserConfirmed(user.json().user.confirmed);
         this.data.changeUserAvatar(this.url + '/' + user.json().user.avatar);
+        this.data.changeUserAddressId(user.json().user.address_id);
         this.data.changeUserId(user.json().user.public_id);
-        this.data.changeUserName(user.json().user.name);
+        this.data.changeUserName(this.fullName);
         this.data.changeUserStatus(true);
+
         this.router.navigateByUrl(this.redirect);
       })
       .catch((err) => {

@@ -28,6 +28,40 @@ h4, .h4 {
   font-family: 'Muli';
 }
 
+input[type="checkbox"], input[type="radio"] {
+  margin-top: 1px;
+}
+
+.align-items-center {
+  -webkit-box-align: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+}
+
+.justify-content-between {
+  -webkit-box-pack: justify !important;
+  -ms-flex-pack: justify !important;
+  justify-content: space-between !important;
+}
+
+.display-flex {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+
+.badge-secondary {
+  color: #fff;
+  background-color: #6c757d;
+}
+
+.badge-pill {
+  padding-right: .6em;
+  padding-left: .6em;
+  border-radius: 10rem;
+  font-size: 2rem;
+}
+
 .content {
   min-height: calc(100vh - 70px);
 }
@@ -51,6 +85,10 @@ h4, .h4 {
   width: 89%;
 }
 
+h6 {
+  font-size: 1.6rem;
+}
+
 p.inbox-text {
   line-height: 24px;
   font-size: 16px;
@@ -68,8 +106,8 @@ a.inbox-links:hover {
   background-color: #ffc;
 }
 
-.show-login-form {
-
+.bg-light {
+  background-color: #f8f9fa;
 }
 
 .pointer {

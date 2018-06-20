@@ -49,5 +49,15 @@
   "term_privacy_policy": "Privacy policy",
   "term_imprint": "Imprint",
   "term_message_sent": "Your message was sent!",
-  "term_phone_number": "Phone number"
+  "term_phone_number": "Phone number",
+  "term_billing_address": "Billing address",
+  "term_firstname": "First name",
+  "term_lastname": "Last name",
+  "term_street": "Street",
+  "term_city": "City",
+  "term_address": "Adsress",
+  "term_zipcode": "Zipcode",
+  "term_state": "State",
+  "term_country": "Country",
+  "term_continue_checkout": "Continue to checkout"
 }

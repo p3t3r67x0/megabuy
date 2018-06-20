@@ -30,7 +30,7 @@ export class SettingsComponent implements OnInit {
   linkColor: string;
   textColor: string;
 
-  rForm: FormGroup;
+  userForm: FormGroup;
   pattern: string;
   hover: boolean;
   token: string;
@@ -45,6 +45,7 @@ export class SettingsComponent implements OnInit {
   errorEmail: string;
 
   name: string;
+  fullName: string;
   userName: string;
 
   constructor(private fb: FormBuilder,
@@ -74,8 +75,10 @@ export class SettingsComponent implements OnInit {
     this.errorUsername = 'Choose an uniqe username';
     this.errorEmail = 'You\'ll use this when you log in and if you ever need to reset your password.';
     this.pattern = '^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}';
-    this.rForm = fb.group({
-      'name': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
+    this.userForm = fb.group({
+      'name': [this.fullName],
+      'firstname': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
+      'lastname': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
       'email': [null, Validators.compose([Validators.required, Validators.email])],
       'phone': [null, Validators.compose([Validators.pattern('[0-9]+')])],
       'username': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
@@ -92,7 +95,7 @@ export class SettingsComponent implements OnInit {
     this.layout.getLayout(this.userId);
   }
 
-  updateForm(user) {
+  submitUserForm(user) {
     this.updateUser(user, this.token, this.userId)
       .then((res) => {
         // console.log(res.json());
@@ -123,32 +126,51 @@ export class SettingsComponent implements OnInit {
     return this.http.put(url, user, { headers: headers }).toPromise();
   }
 
+  getFullName(firstName, lastName, name) {
+    if (firstName && lastName) {
+      return firstName + ' ' + lastName;
+    } else {
+      return name;
+    }
+  }
+
   getUser() {
     this.loadUser(this.token, this.userId)
       .then((user) => {
         // console.log(user.json());
-        this.rForm.patchValue({
-          'name': user.json().user.name,
+        this.userForm.patchValue({
+          'firstname': user.json().user.firstname,
+          'lastname': user.json().user.lastname,
           'email': user.json().user.email,
           'phone': user.json().user.phone,
           'username': user.json().user.username,
-          'website': user.json().user.website
+          'website': user.json().user.website,
+          'name': user.json().user.name
         });
 
-        this.name = user.json().user.name;
+        this.fullName = this.getFullName(user.json().user.firstname, user.json().user.lastname, user.json().user.name);
+
+        this.name = this.fullName;
         this.userName = user.json().user.username;
 
-        this.rForm.get('name').valueChanges.subscribe(val => {
-          this.data.changeUserName(val);
-          this.name = val;
+        this.userForm.get('firstname').valueChanges.subscribe(val => {
+          this.fullName = this.getFullName(val, this.userForm.get('lastname').value, user.json().user.name);
+          this.data.changeUserName('VORNAME');
+          this.name = this.fullName;
         });
 
-        this.rForm.get('username').valueChanges.subscribe(val => {
+        this.userForm.get('lastname').valueChanges.subscribe(val => {
+          this.fullName = this.getFullName(this.userForm.get('firstname').value, val, user.json().user.name);
+          this.data.changeUserName('NACHNAME');
+          this.name = this.fullName;
+        });
+
+        this.userForm.get('username').valueChanges.subscribe(val => {
           this.userName = val;
         });
       })
       .catch((err) => {
-        console.log(err.json());
+        console.log(err);
         this.error = err.json();
 
         if (err.status === 401) {
