@@ -34,8 +34,9 @@ export class AuthGuard {
       })
       .catch((err) => {
         // console.log(err.json());
+        const url = this.router.url;
         localStorage.removeItem('token');
-        this.router.navigateByUrl('/login');
+        this.router.navigateByUrl('/login?redirect=' + url);
         return false;
       });
   }

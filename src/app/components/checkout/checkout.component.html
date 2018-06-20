@@ -10,20 +10,20 @@
     <ul class="list-group">
       <li class="list-group-item display-flex justify-content-between">
         <div class="">
-          <h6 class="margin-bottom-0 margin-top-0">Neuer Kinderwagen</h6>
-          <small class="text-muted">In gutem Zustand</small>
+          <h6 class="margin-bottom-0 margin-top-0">{{ product.name }}</h6>
+          <small class="text-muted">{{ product.condition }}</small>
         </div>
-        <span class="text-muted">212€</span>
+        <span class="text-muted">{{ product.price }}{{ product.currency }}</span>
       </li>
         <li class="list-group-item display-flex justify-content-between">
           <div class="">
             <h6 class="margin-bottom-0 margin-top-0">Versand</h6>
           </div>
-          <span class="text-muted">12€</span>
+          <span class="text-muted">{{ product.shipping_fee }}{{ product.currency}}</span>
         </li>
       <li class="list-group-item display-flex justify-content-between bg-light">
         <span>Total (EUR)</span>
-        <strong>224€</strong>
+        <strong>{{ product.total_amount }}{{ product.currency}}</strong>
       </li>
     </ul>
   </div>

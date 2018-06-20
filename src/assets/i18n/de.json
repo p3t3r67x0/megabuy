@@ -59,5 +59,6 @@
   "term_zipcode": "Postleitzahl",
   "term_state": "Bundesland",
   "term_country": "Land",
-  "term_continue_checkout": "Weiter zur Kasse"
+  "term_continue_checkout": "Weiter zur Kasse",
+  "term_shipping_fee": "Versandgebühr"
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Headers, Http } from '@angular/http';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { LayoutService } from '../../services/layout.service';
 import { environment } from '../../../environments/environment';
@@ -23,11 +25,16 @@ export class CheckoutComponent implements OnInit {
   linkColor: string;
   textColor: string;
 
+  productId: string;
   userId: string;
+  product: any = {};
   token: string;
   url: string;
+  sub: any;
 
-  constructor(private data: DataService,
+  constructor(private route: ActivatedRoute,
+    private data: DataService,
+    private http: Http,
     private layout: LayoutService) {
     this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
@@ -45,9 +52,35 @@ export class CheckoutComponent implements OnInit {
     this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
 
+    this.sub = this.route.queryParams.subscribe(params => {
+      this.productId = params['product'];
+    });
+
     this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.getProductById();
+  }
+
+  getProductById() {
+    let url: string;
+    let headers: Headers;
+
+    url = `${this.url}/api/product/${this.productId}`;
+    headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.get(url, { headers: headers })
+      .toPromise()
+      .then((product) => {
+        console.log(product.json());
+        this.product = product.json();
+      })
+      .catch((err) => {
+        console.log(err.json());
+      });
+  }
 }

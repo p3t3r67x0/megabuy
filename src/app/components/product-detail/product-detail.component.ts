@@ -79,7 +79,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   }
 
   onBuyNow() {
-    this.router.navigateByUrl('/checkout');
+    this.router.navigateByUrl('/checkout?product=' + this.productId);
   }
 
   checkUserStatus() {

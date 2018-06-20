@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
@@ -44,12 +44,15 @@ export class LoginComponent implements OnInit {
   userName: string;
   fullName: string;
   userConfirmed: boolean;
+  redirectUrl: string;
   isAdmin: string;
   error: any = {};
   token: string;
   url: string;
+  sub: any;
 
-  constructor(private fb: FormBuilder,
+  constructor(private route: ActivatedRoute,
+    private fb: FormBuilder,
     private router: Router,
     private layout: LayoutService,
     private data: DataService,
@@ -78,6 +81,10 @@ export class LoginComponent implements OnInit {
     this.rForm = fb.group({
       'password': [null, Validators.required],
       'email': [null, Validators.compose([Validators.required, Validators.email])],
+    });
+
+    this.sub = this.route.queryParams.subscribe(params => {
+      this.redirectUrl = params['redirect'];
     });
 
     this.url = environment.apiUrl;
@@ -118,7 +125,11 @@ export class LoginComponent implements OnInit {
         this.data.changeUserName(this.fullName);
         this.data.changeUserStatus(true);
 
-        this.router.navigateByUrl(this.redirect);
+        if (this.redirectUrl) {
+          this.router.navigateByUrl(decodeURI(this.redirectUrl));
+        } else {
+          this.router.navigateByUrl(this.redirect);
+        }
       })
       .catch((err) => {
         this.error = err.json();
