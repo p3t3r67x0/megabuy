@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-6 margin-bottom-24">
-    <h1 [style.color]="headlineColor">{{ 'term_your_categories' | translate }}</h1>
+    <h1 [style.color]="headlineColor">{{ 'term_my_categories' | translate }}</h1>
     <ul *ngIf="productCategories.length > 0" class="list-unstyled margin-bottom-0">
       <li id="{{ productCategory.id }}" class="tender padding-15" *ngFor="let productCategory of productCategories">
         <ng-container *ngIf="productCategory.user_id == userId">

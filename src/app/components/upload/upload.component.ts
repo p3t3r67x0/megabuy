@@ -30,6 +30,7 @@ export class UploadComponent implements OnInit {
   token: string;
   hover: boolean;
   currencies: string[];
+  productConditions: string[];
   productCategories: string[];
   rForm: FormGroup;
   selectedFile: any = [];
@@ -56,13 +57,17 @@ export class UploadComponent implements OnInit {
 
     this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
+
     this.getAllProductCategories();
     this.getAllCurrencies();
+    this.getAllConditions();
+
     this.rForm = fb.group({
       'name': [null, Validators.required],
       'description': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(500)])],
       'category': ['a4acbd3b4d36', Validators.required],
       'thumbnail': [null, Validators.required],
+      'condition_id': ['251e384c9c43', Validators.required],
       'currency': ['b20c5d668a7f', Validators.required],
       'shipping_fee': [null, Validators.required],
       'price': [null, Validators.required]
@@ -88,6 +93,13 @@ export class UploadComponent implements OnInit {
     });
   }
 
+  getAllConditions() {
+    this.http.get(`${this.url}/api/conditions`).subscribe(res => {
+      // console.log(res.json());
+      this.productConditions = res.json().conditions;
+    });
+  }
+
   onUpload(value) {
     let url: string;
     let file: any = '';
@@ -99,6 +111,7 @@ export class UploadComponent implements OnInit {
     fd.append('currency_id', value.currency);
     fd.append('description', value.description);
     fd.append('shipping_fee', value.shipping_fee);
+    fd.append('condition_id', value.condition_id);
     fd.append('price', value.price);
 
     for (file of this.selectedFile) {

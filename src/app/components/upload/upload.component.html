@@ -1,7 +1,7 @@
 <h1>{{ 'term_add_product' | translate }}</h1>
 <form [formGroup]="rForm" class="white padding-15" enctype="multipart/form-data" (ngSubmit)="onUpload(rForm.value)">
   <div class="form-group">
-    <label [style.color]="textColor">Name</label>
+    <label [style.color]="textColor">Artikelbezeichnung</label>
     <input class="form-control" formControlName="name" type="text">
     <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['name'].valid && rForm.controls['name'].touched">
       You must specify a product name
@@ -44,8 +44,18 @@
     </div>
   </div>
   <div class="form-group">
+    <label [style.color]="textColor">Artikelzustand</label>
+    <select  class="form-control" title="Artikelzustand" formControlName="condition_id">
+      <option *ngFor="let condition of productConditions" value="{{ condition.id }}">{{ condition.name }}</option>
+    </select>
+    <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['condition_id'].valid && rForm.controls['condition_id'].touched">
+      You must choose a condition
+    </div>
+  </div>
+  <div class="form-group">
     <label [style.color]="textColor">{{ 'term_image' | translate }}</label>
     <input type="file" formControlName="thumbnail" (change)="onFileSelected($event)" multiple>
   </div>
-  <input [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary" value="{{ 'term_save_now' | translate }}" [disabled]="!rForm.valid">
+  <input [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary" value="{{ 'term_save_now' | translate }}"
+    [disabled]="!rForm.valid">
 </form>
