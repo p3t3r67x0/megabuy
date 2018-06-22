@@ -60,5 +60,6 @@
   "term_state": "Bundesland",
   "term_country": "Land",
   "term_continue_checkout": "Weiter zur Kasse",
-  "term_shipping_fee": "Versandgebühr"
+  "term_shipping_fee": "Versandgebühr",
+  "term_my_orders": "Meine Bestellungen"
 }

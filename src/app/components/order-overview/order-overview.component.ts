@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Headers, Http } from '@angular/http';
 import { TranslateService } from '@ngx-translate/core';
 import { DataService } from '../../services/data.service';
@@ -8,11 +8,11 @@ import { environment } from '../../../environments/environment';
 
 
 @Component({
-  selector: 'app-order-confirmation',
-  templateUrl: './order-confirmation.component.html',
-  styleUrls: ['./order-confirmation.component.css']
+  selector: 'app-order-overview',
+  templateUrl: './order-overview.component.html',
+  styleUrls: ['./order-overview.component.css']
 })
-export class OrderConfirmationComponent implements OnInit {
+export class OrderOverviewComponent implements OnInit {
   backgroundColor: string;
   headlineColor: string;
   warningColor: string;
@@ -26,16 +26,12 @@ export class OrderConfirmationComponent implements OnInit {
   linkColor: string;
   textColor: string;
 
-  order: any = {};
-  hover: boolean;
-  orderId: string;
+  orders: any = [];
   userId: string;
   token: string;
   url: string;
-  sub: any;
 
-  constructor(private route: ActivatedRoute,
-    private http: Http,
+  constructor(private http: Http,
     private router: Router,
     private layout: LayoutService,
     private data: DataService) {
@@ -55,23 +51,19 @@ export class OrderConfirmationComponent implements OnInit {
     this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
 
-    this.sub = this.route.params.subscribe(params => {
-      this.orderId = params['id'];
-    });
-
     this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
   ngOnInit() {
-    this.getOrder();
+    this.getAllOrderByUser();
   }
 
-  getOrder() {
+  getAllOrderByUser() {
     let url: string;
     let headers: Headers;
 
-    url = `${this.url}/api/order/${this.orderId}`;
+    url = `${this.url}/api/order/user/${this.userId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.token}`
@@ -81,11 +73,10 @@ export class OrderConfirmationComponent implements OnInit {
       .toPromise()
       .then(res => {
         console.log(res.json());
-        this.order = res.json().order;
+        this.orders = res.json().orders;
       })
       .catch(err => {
         console.log(err.json());
       });
   }
-
 }

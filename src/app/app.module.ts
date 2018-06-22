@@ -37,6 +37,7 @@ import { InboxReplyComponent } from './components/inbox-reply/inbox-reply.compon
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ShippingFormComponent } from './components/shipping-form/shipping-form.component';
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
+import { OrderOverviewComponent } from './components/order-overview/order-overview.component';
 
 import { AuthService } from './services/auth.service';
 import { DataService } from './services/data.service';
@@ -107,6 +108,11 @@ export function HttpLoaderFactory(http: HttpClient) {
       {
         path: 'settings',
         component: SettingsComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'orders',
+        component: OrderOverviewComponent,
         canActivate: [AuthGuard]
       },
       {
@@ -181,7 +187,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     InboxReplyComponent,
     CheckoutComponent,
     ShippingFormComponent,
-    OrderConfirmationComponent
+    OrderConfirmationComponent,
+    OrderOverviewComponent
   ],
   providers: [
     AuthService,

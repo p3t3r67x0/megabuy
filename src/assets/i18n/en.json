@@ -60,5 +60,6 @@
   "term_state": "State",
   "term_country": "Country",
   "term_continue_checkout": "Continue to checkout",
-  "term_shipping_fee": "Shipping fee"
+  "term_shipping_fee": "Shipping fee",
+  "term_my_orders": "My orders"
 }

@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h1>Meine Bestellungen</h1>
+    <ul class="padding-left-0 list-group">
+      <li *ngFor="let order of orders" class="list-unstyled margin-bottom-24">
+        <div class="list-group-item bg-light">
+          <div class="row">
+            <div class="col-xs-12 col-sm-8">
+              <p class="margin-bottom-0 h4">{{ order.name }}</p>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+              <p class="margin-bottom-0"><span class="box-order-date"><strong>Kaufdatum:</strong> {{ order.created_date | date: 'dd.MM.yy, HH:mm' }}</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item">
+          <div class="row">
+            <div class="col-xs-4 col-sm-3 col-md-2 margin-bottom-sm-12 padding-right-0">
+              <img src="{{ url }}/{{ order.thumbnail }}" width="100%" height="auto">
+              <p></p>
+            </div>
+            <div class="col-xs-8 col-sm-5 col-md-4">
+              <p class="margin-bottom-6"><strong>Lieferadresse:</strong></p>
+              <address class="margin-bottom-0">
+                {{ order.firstname }} {{ order.lastname }}<br>
+                {{ order.street }}<br>
+                {{ order.zipcode }} {{ order.city }}
+              </address>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 margin-bottom-sm-12">
+              <p class="margin-bottom-6"><strong>Kostenübersicht:</strong></p>
+              <div class="display-flex justify-content-between">
+                <div class="">
+                  <p class="margin-bottom-3 margin-top-0">Preis</p>
+                </div>
+                <span class="text-muted">{{ order.price }}{{ order.currency}}</span>
+              </div>
+              <div class="display-flex justify-content-between">
+                <div class="">
+                  <p class="margin-bottom-3 margin-top-0">Versand</p>
+                </div>
+                <span class="text-muted">{{ order.shipping_fee }}{{ order.currency}}</span>
+              </div>
+              <div class="display-flex justify-content-between">
+                <p class="margin-bottom-0 margin-top-0">Gesamt</p>
+                <strong>{{ order.total_amount }}{{ order.currency}}</strong>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-3">
+              <button class="btn btn-default btn-block">Bewertung abgeben</button>
+              <button class="btn btn-default btn-block">Verkäufer kontaktieren</button>
+              <button class="btn btn-default btn-block">Bestellung verbergen</button>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

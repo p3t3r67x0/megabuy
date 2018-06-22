@@ -177,7 +177,7 @@ a.inbox-links:hover {
   margin-bottom: 9px;
 }
 
-.margin-bottom-12 {
+.margin-bottom-12, .margin-bottom-sm-12 {
   margin-bottom: 12px;
 }
 
@@ -509,6 +509,9 @@ li.tender:nth-of-type(odd) {
   .inbox-profil {
     width: 8%;
   }
+  .box-order-date {
+    float: left;
+  }
 }
 
 @media (max-width: 767px) {
@@ -524,6 +527,9 @@ li.tender:nth-of-type(odd) {
   .inbox-profil {
     width: 6%;
   }
+  .box-order-date {
+    float: right;
+  }
 }
 
 @media (min-width: 992px) {
@@ -536,6 +542,9 @@ li.tender:nth-of-type(odd) {
   }
   .box-product-text {
     padding: 12px 12px 12px 0;
+  }
+  .margin-bottom-sm-12 {
+    margin-bottom: 0;
   }
 }
 
