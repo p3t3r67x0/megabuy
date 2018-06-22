@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/webtobesocial/megabuy.svg?branch=master)](https://travis-ci.org/webtobesocial/megabuy)
+
 # Megabuy
 
 ![settings and layout](https://drive.google.com/uc?id=178sPGGp9cfU0ZA_kWhkus3LNpMkHZDIT)
