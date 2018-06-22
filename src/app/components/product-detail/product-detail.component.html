@@ -43,7 +43,8 @@
   </div>
   <div class="col-sm-4">
     <div class="padding-15 margin-bottom-24 white">
-      <h1 [style.color]="headlineColor">{{ product.price }}{{ product.currency }}</h1>
+      <h1 [style.color]="headlineColor">{{ product.price }}{{ product.currency }} <small *ngIf="product.shipping_fee > 0" class="pull-right">Versand: {{ product.shipping_fee }}{{ product.currency }}</small></h1>
+
       <button (click)="onBuyNow()" [style.border-color]="successColor" [ngStyle]="hover ? { 'background-color': successColor | color: -0.1 } : { 'background-color': successColor }" (mouseover)="hover=true" (mouseleave)="hover=false" class="full-width btn btn-success">{{ 'term_buy_now' | translate }}</button>
     </div>
     <app-contact-user [product]="product"></app-contact-user>

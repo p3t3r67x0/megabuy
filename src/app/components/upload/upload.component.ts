@@ -64,6 +64,7 @@ export class UploadComponent implements OnInit {
       'category': ['a4acbd3b4d36', Validators.required],
       'thumbnail': [null, Validators.required],
       'currency': ['b20c5d668a7f', Validators.required],
+      'shipping_fee': [null, Validators.required],
       'price': [null, Validators.required]
     });
   }
@@ -94,9 +95,10 @@ export class UploadComponent implements OnInit {
     const fd = new FormData;
 
     fd.append('name', value.name);
-    fd.append('description', value.description);
     fd.append('category_id', value.category);
     fd.append('currency_id', value.currency);
+    fd.append('description', value.description);
+    fd.append('shipping_fee', value.shipping_fee);
     fd.append('price', value.price);
 
     for (file of this.selectedFile) {

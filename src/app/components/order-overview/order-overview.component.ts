@@ -79,4 +79,26 @@ export class OrderOverviewComponent implements OnInit {
         console.log(err.json());
       });
   }
+
+  hideOrderById(orderId) {
+    let url: string;
+    let headers: Headers;
+
+    url = `${this.url}/api/order/${orderId}`;
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    this.http.put(url, {}, { headers: headers })
+      .toPromise()
+      .then(res => {
+        console.log(res.json());
+        const orderElement = document.getElementById('order-' + orderId);
+        orderElement.parentNode.removeChild(orderElement);
+      })
+      .catch(err => {
+        console.log(err.json());
+      });
+  }
 }
