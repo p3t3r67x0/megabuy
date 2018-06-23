@@ -30,6 +30,7 @@ export class ProductCategoryComponent implements OnInit {
   linkColor: string;
   textColor: string;
 
+  loading: boolean;
   url: string;
   limit: number;
   page: number;
@@ -75,6 +76,7 @@ export class ProductCategoryComponent implements OnInit {
   ngOnInit() {
     this.limit = -1;
     this.page = 1;
+    this.loading = true;
     this.getProductCategories();
   }
 
@@ -136,6 +138,7 @@ export class ProductCategoryComponent implements OnInit {
     this.loadProductCategories(this.token, this.limit, this.page)
       .then((productCategories) => {
         // console.log(productCategories.json());
+        this.loading = false;
         this.productCategories = productCategories.json()['product-categories'];
       })
       .catch((err) => {

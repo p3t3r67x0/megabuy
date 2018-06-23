@@ -25,6 +25,7 @@ export class LayoutComponent implements OnInit {
   linkColor: string;
   textColor: string;
 
+  loading: boolean;
   token: string;
   layoutId: string;
   userId: string;
@@ -50,7 +51,10 @@ export class LayoutComponent implements OnInit {
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
     this.layout.currentLayoutId.subscribe(layoutId => this.layoutId = layoutId);
 
-    this.layout.getLayout(this.userId);
+    this.loading = true;
+    this.layout.getLayout(this.userId).then(() => {
+      this.loading = false;
+    });
 
     this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;

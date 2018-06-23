@@ -27,6 +27,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   linkColor: string;
   textColor: string;
 
+  loading: boolean;
   url: string;
   limit: number;
   page: number;
@@ -72,6 +73,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
       } else {
         this.getAllProducts();
       }
+
+      this.loading = true;
     });
 
     this.checkUserStatus();
@@ -100,6 +103,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.loadProducts(this.limit, this.page)
       .then((products) => {
         // console.log(products.json());
+        this.loading = false;
         this.products = products.json().products;
       })
       .catch((err) => {
@@ -128,6 +132,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.getQueryProducts(this.limit, this.page)
       .then((products) => {
         // console.log(products);
+        this.loading = false;
         this.products = products.json().products;
       })
       .catch((err) => {

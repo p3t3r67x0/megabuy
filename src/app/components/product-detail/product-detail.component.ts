@@ -28,6 +28,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   linkColor: string;
   textColor: string;
 
+  loading: boolean;
   sub: any;
   url: string;
   hover: boolean;
@@ -70,6 +71,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.checkUserStatus();
     this.getProductById();
   }
@@ -101,6 +103,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.getOneProductById()
       .then((product) => {
         // console.log(product.json());
+        this.loading = false;
         this.product = product.json();
         this.imageLength = this.product.image.split(',').length;
       })

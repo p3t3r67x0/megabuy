@@ -40,6 +40,7 @@ export class ProfileComponent implements OnInit {
   linkColor: string;
   textColor: string;
 
+  loading: boolean;
   url: string;
   token: string;
   userId: string;
@@ -123,6 +124,7 @@ export class ProfileComponent implements OnInit {
       reader.readAsDataURL(file);
     });
 
+    this.loading = true;
     this.getUserById();
   }
 
@@ -140,6 +142,7 @@ export class ProfileComponent implements OnInit {
       .toPromise()
       .then(res => {
         // console.log(res.json());
+        this.loading = false;
         const avatarImage = <HTMLImageElement>document.getElementById('avatarImage');
         avatarImage.src = this.url + '/' + res.json().user.avatar;
       })

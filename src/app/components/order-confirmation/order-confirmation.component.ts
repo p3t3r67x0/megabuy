@@ -26,6 +26,7 @@ export class OrderConfirmationComponent implements OnInit {
   linkColor: string;
   textColor: string;
 
+  loading: boolean;
   order: any = {};
   hover: boolean;
   orderId: string;
@@ -64,6 +65,7 @@ export class OrderConfirmationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.getOrder();
   }
 
@@ -80,7 +82,8 @@ export class OrderConfirmationComponent implements OnInit {
     this.http.get(url, { headers: headers })
       .toPromise()
       .then(res => {
-        console.log(res.json());
+        // console.log(res.json());
+        this.loading = false;
         this.order = res.json().order;
       })
       .catch(err => {

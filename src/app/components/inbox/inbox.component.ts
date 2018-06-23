@@ -29,6 +29,7 @@ export class InboxComponent implements OnInit {
   linkColor: string;
   textColor: string;
 
+  loading: boolean;
   rForm: FormGroup;
   selectedAll: any;
   markAllCheckbox: boolean;
@@ -59,12 +60,14 @@ export class InboxComponent implements OnInit {
     this.layout.currentTextColor.subscribe(textColor => this.textColor = textColor);
     this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
+
     this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
     this.messages = [];
   }
 
   ngOnInit() {
+    this.loading = true;
     this.checkUserStatus();
   }
 
@@ -164,8 +167,10 @@ export class InboxComponent implements OnInit {
     return this.http.get(url, { headers: headers })
       .toPromise()
       .then(res => {
-        console.log(res.json());
+        // console.log(res.json());
+        this.loading = false;
         this.messages = res.json().messages;
+
         for (const m of this.messages) {
           m.selected = false;
         }

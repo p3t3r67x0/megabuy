@@ -101,12 +101,14 @@ export class ProductComponent implements OnInit {
     this.headers = new Headers({
       'content-type': 'application/json'
     });
-    this.getAllProductCategories();
   }
 
   ngOnInit() {
     this.limit = -1;
     this.page = 1;
+    this.loading = true;
+
+    this.getAllProductCategories();
     this.getAllProductsByUser();
     this.getAllCurrencies();
   }
@@ -338,6 +340,7 @@ export class ProductComponent implements OnInit {
     this.loadProducts(this.token)
       .then((products) => {
         this.products = products.json().products;
+        this.loading = false;
 
         for (let i = 0; i < this.products.length; i++) {
           this.products[i].image = '';

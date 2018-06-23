@@ -1,6 +1,6 @@
 <h1>{{ 'term_billing_address' | translate }}</h1>
 <div class="wrapper">
-  <form [formGroup]="checkoutForm" (ngSubmit)="submitCheckoutForm(checkoutForm.value)">
+  <form *ngIf="!loading" [formGroup]="checkoutForm" (ngSubmit)="submitCheckoutForm(checkoutForm.value)">
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
@@ -145,4 +145,12 @@
     <input class="btn btn-primary btn-lg btn-block" [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" [disabled]="!checkoutForm.valid"
       type="submit" value="{{ 'term_continue_checkout' | translate }}">
   </form>
+  <div *ngIf="loading" style="display: flex; align-items: center; justify-content: center;">
+    <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
 </div>

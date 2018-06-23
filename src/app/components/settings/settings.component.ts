@@ -30,6 +30,7 @@ export class SettingsComponent implements OnInit {
   linkColor: string;
   textColor: string;
 
+  loading: boolean;
   userForm: FormGroup;
   pattern: string;
   hover: boolean;
@@ -91,8 +92,8 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.getUser();
-    this.layout.getLayout(this.userId);
   }
 
   submitUserForm(user) {
@@ -138,6 +139,8 @@ export class SettingsComponent implements OnInit {
     this.loadUser(this.token, this.userId)
       .then((user) => {
         // console.log(user.json());
+        this.loading = false;
+
         this.userForm.patchValue({
           'firstname': user.json().user.firstname,
           'lastname': user.json().user.lastname,

@@ -26,6 +26,7 @@ export class OrderOverviewComponent implements OnInit {
   linkColor: string;
   textColor: string;
 
+  loading: boolean;
   orders: any = [];
   userId: string;
   token: string;
@@ -56,6 +57,7 @@ export class OrderOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.getAllOrderByUser();
   }
 
@@ -72,10 +74,12 @@ export class OrderOverviewComponent implements OnInit {
     this.http.get(url, { headers: headers })
       .toPromise()
       .then(res => {
-        console.log(res.json());
+        // console.log(res.json());
+        this.loading = false;
         this.orders = res.json().orders;
       })
       .catch(err => {
+        this.loading = false;
         console.log(err.json());
       });
   }

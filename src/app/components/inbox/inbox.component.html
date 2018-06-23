@@ -28,7 +28,7 @@
   </div>
 </div>
 
-<div *ngIf="messages.length > 0 else alert"  class="list-group">
+<div *ngIf="!loading && messages.length > 0 else alert"  class="list-group">
   <div *ngFor="let message of messages;" class="list-group-item" [ngClass]="{ 'inbox-highlighted' : message.selected }" >
     <input type="checkbox" [(ngModel)]="message.selected" style="margin-top: 2px;">
     <a class="inbox-links" routerLink="/inbox/{{ message.id }}">
@@ -41,6 +41,15 @@
       <small class="text-muted">{{ (message.message.length > 55) ? (message.message | slice: 0: 55) + '...' : message.message }}</small>
       <span class="badge margin-top-2 pull-right"> {{ message.created | date: 'HH:mm'  }}</span>
     </a>
+  </div>
+</div>
+
+<div *ngIf="loading" style="display: flex; align-items: center; justify-content: center;">
+  <div class="lds-ring">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
   </div>
 </div>
 

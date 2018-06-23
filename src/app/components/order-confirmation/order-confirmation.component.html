@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-xs-12 col-sm-8 margin-bottom-24">
     <h1>Order</h1>
-    <div class="wrapper margin-bottom-24">
+    <div *ngIf="!loading" class="wrapper margin-bottom-24">
       <div class="row">
         <div class="col-sm-2">
           <img src="{{ url }}/{{ order.thumbnail }}" width="100%" height="auto">
@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div *ngIf="!laoding" class="row">
       <div class="col-sm-6">
         <div class="wrapper margin-bottom-24">
           <h4>Lieferadresse:</h4>
@@ -37,6 +37,14 @@
         <button class="btn btn-primary btn-lg btn-block" [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false">Jetzt zahlungspflichtig kaufen</button>
       </div>
     </div>
+    <div *ngIf="loading" style="display: flex; align-items: center; justify-content: center;">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
   </div>
   <div class="col-xs-12 col-sm-4">
     <h1 class="text-muted display-flex justify-content-between align-items-center">
@@ -51,12 +59,12 @@
         </div>
         <span class="text-muted">{{ order.price }}{{ order.currency }}</span>
       </li>
-        <li class="list-group-item display-flex justify-content-between">
-          <div class="">
-            <h6 class="margin-bottom-0 margin-top-0">Versand</h6>
-          </div>
-          <span class="text-muted">{{ order.shipping_fee }}{{ order.currency}}</span>
-        </li>
+      <li class="list-group-item display-flex justify-content-between">
+        <div class="">
+          <h6 class="margin-bottom-0 margin-top-0">Versand</h6>
+        </div>
+        <span class="text-muted">{{ order.shipping_fee }}{{ order.currency}}</span>
+      </li>
       <li class="list-group-item display-flex justify-content-between bg-light">
         <span>Total (EUR)</span>
         <strong>{{ order.total_amount }}{{ order.currency}}</strong>

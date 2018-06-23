@@ -29,6 +29,14 @@
         </div>
       </li>
     </ul>
-    <div [style.color]="textColor" [style.background-color]="infoColor" class="alert" *ngIf="products.length == 0">Sorry there are no products listed!</div>
+    <div *ngIf="loading" style="display: flex; align-items: center; justify-content: center;">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div [style.color]="textColor" [style.background-color]="infoColor" class="alert" *ngIf="!loading && products.length == 0">Sorry there are no products listed!</div>
   </div>
 </div>

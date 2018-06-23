@@ -34,6 +34,7 @@ export class ShippingFormComponent implements OnInit {
   linkColor: string;
   textColor: string;
 
+  loading: boolean;
   userAddressId: string;
   userId: string;
   hover: boolean;
@@ -84,6 +85,7 @@ export class ShippingFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.getAddress();
   }
 
@@ -100,7 +102,8 @@ export class ShippingFormComponent implements OnInit {
     this.http.get(url, { headers: headers })
       .toPromise()
       .then(res => {
-        console.log(res.json());
+        // console.log(res.json());
+        this.loading = false;
         this.checkoutForm.patchValue({
           'firstname': res.json().address.firstname,
           'lastname': res.json().address.lastname,

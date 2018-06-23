@@ -9,7 +9,7 @@
               <p class="margin-bottom-0 h4">{{ order.name }}</p>
             </div>
             <div class="col-xs-12 col-sm-4">
-              <p class="margin-bottom-0"><span class="box-order-date"><strong>Kaufdatum:</strong> {{ order.created_date | date: 'dd.MM.yy, HH:mm' }}</span></p>
+              <p class="margin-bottom-0"><span class="box-order-date"><strong>Gekauft am:</strong> {{ order.created_date | date: 'dd.MM.yy, HH:mm' }}</span></p>
             </div>
           </div>
         </div>
@@ -55,6 +55,14 @@
         </div>
       </li>
     </ul>
+    <div *ngIf="loading" style="display: flex; align-items: center; justify-content: center;">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
     <div [style.color]="textColor" [style.background-color]="infoColor" class="alert" *ngIf="orders.length == 0">You have no orders!</div>
   </div>
 </div>
