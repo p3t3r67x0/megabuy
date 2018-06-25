@@ -72,7 +72,7 @@ export class ProductComponent implements OnInit {
   currencies: string[];
   products: any = [];
   productCategories: string[];
-
+  productConditions: string[];
 
   constructor(private fb: FormBuilder,
     private http: Http,
@@ -110,6 +110,7 @@ export class ProductComponent implements OnInit {
 
     this.getAllProductCategories();
     this.getAllProductsByUser();
+    this.getAllConditions();
     this.getAllCurrencies();
   }
 
@@ -304,6 +305,7 @@ export class ProductComponent implements OnInit {
       'Authorization': `Bearer ${token}`
     });
 
+    console.log(product);
     return this.http.put(url, product, { headers: headers }).toPromise();
   }
 
@@ -339,6 +341,7 @@ export class ProductComponent implements OnInit {
   getAllProductsByUser() {
     this.loadProducts(this.token)
       .then((products) => {
+        // console.log(products.json().products);
         this.products = products.json().products;
         this.loading = false;
 
@@ -380,6 +383,13 @@ export class ProductComponent implements OnInit {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  getAllConditions() {
+    this.http.get(`${this.url}/api/conditions`).subscribe(res => {
+      // console.log(res.json().conditions);
+      this.productConditions = res.json().conditions;
+    });
   }
 
   loadAllProductCategories(token, limit, page) {

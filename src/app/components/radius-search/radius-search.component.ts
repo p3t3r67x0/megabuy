@@ -29,6 +29,7 @@ export class RadiusSearchComponent implements OnInit {
   url: string;
   token: string;
   userId: string;
+  hover: boolean;
   searchForm: FormGroup;
   productCategories: string[];
 

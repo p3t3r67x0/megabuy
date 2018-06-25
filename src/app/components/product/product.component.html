@@ -23,32 +23,50 @@
             <p>{{ product.description }}</p>
             <div *ngIf="editField == product.id" id="{{ product.id }}">
               <div class="form-group">
-                <label for="{{ product.id }}-name">Name</label><br>
-                <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.name" type="text" placeholder="Flowers" name="name" id="{{ product.id }}-name">
+                <label for="name-{{ product.id }}">Artikelbezeichnung</label>
+                <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.name" type="text" placeholder="Flowers" name="name" id="name-{{ product.id }}">
               </div>
-              <div class="form-group col-xs-6 padding-left-0 padding-right-0">
-                <label for="{{ product.id }}-price">{{ 'term_price' | translate }}</label><br>
-                <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.price" type="text" placeholder="37€" name="price" id="{{ product.id }}-price">
+              <div class="form-group">
+                <label for="description-{{ product.id }}">{{ 'term_description' | translate }}</label>
+                <textarea class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.description" type="text" placeholder="Write a short description about your item" name="description" id="description-{{ product.id }}"></textarea>
               </div>
-              <div class="form-group col-xs-6 padding-right-0">
-                <label for="{{ product.id }}-price">{{ 'term_currency' | translate }}</label><br>
-                <select class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.currency_id" name="Currency">
+              <div class="form-group col-xs-4 padding-left-0">
+                <label for="price-{{ product.id }}">{{ 'term_price' | translate }}</label>
+                <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.price" type="text" placeholder="37€" name="price" id="price-{{ product.id }}">
+              </div>
+              <div class="form-group col-xs-4 padding-left-0 padding-right-0">
+                <label for="shippingFee-{{ product.id }}">Versandkosten</label>
+                <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.shipping_fee" type="text" placeholder="37€" name="price" id="shippingFee-{{ product.id }}">
+              </div>
+              <div class="form-group col-xs-4 padding-right-0">
+                <label for="currency-{{ product.id }}">{{ 'term_currency' | translate }}</label>
+                <select class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.currency_id" name="Currency" id="currency-{{ product.id }}">
                   <option *ngFor="let currency of currencies" [ngValue]="currency.id">{{ currency.name }} ({{ currency.unit_symbol }})</option>
                 </select>
               </div>
               <div class="form-group">
-                <label>{{ 'term_category' | translate }}</label>
-                <select class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.category_id" name="category">
-                    <option *ngFor="let productCategory of productCategories" [ngValue]="productCategory.id">{{ productCategory.name }}</option>
-                  </select>
+                <label for="category-{{ product.id }}">{{ 'term_category' | translate }}</label>
+                <select class="form-control" (change)="updateEntry(product)" [(ngModel)]="product.category_id" name="category" id="category-{{ product.id }}">
+                  <option *ngFor="let productCategory of productCategories" [ngValue]="productCategory.id">{{ productCategory.name }}</option>
+                </select>
               </div>
               <div class="form-group">
-                <label for="{{ product.id }}-description">{{ 'term_description' | translate }}</label><br>
-                <textarea class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.description" type="text" placeholder="Write a short description about your item" name="description" id="{{ product.id }}-description"></textarea>
+                <label for="condition-{{ product.id }}" [style.color]="textColor">Artikelzustand</label>
+                <select class="form-control" (change)="updateEntry(product)" title="Artikelzustand" [(ngModel)]="product.condition_id" id="condition-{{ product.id }}">
+                  <option *ngFor="let condition of productConditions" [ngValue]="condition.id">{{ condition.name }}</option>
+                </select>
               </div>
               <div class="form-group">
-                <label for="thumbnail">{{ 'term_image' | translate }}</label>
-                <input id="imageFile" type="file" name="thumbnail" (change)="onFileSelected($event, product.id)" multiple>
+                <label for="thumbnail-{{ product.id }}" [style.color]="textColor">{{ 'term_image' | translate }}</label>
+                <input type="file" name="thumbnail" (change)="onFileSelected($event, product.id)" multiple id="thumbnail-{{ product.id }}">
+              </div>
+              <div class="form-group col-xs-4 padding-left-0 padding-right-0">
+                <label for="zip-{{ product.id }}" [style.color]="textColor">PLZ</label>
+                <input class="form-control" (blur)="updateEntry(product)" name="zip" [(ngModel)]="product.zip" type="text" id="zip-{{ product.id }}">
+              </div>
+              <div class="col-xs-8 padding-right-0">
+                <label for="city-{{ product.id }}" [style.color]="textColor">Ort</label>
+                <input class="form-control" (blur)="updateEntry(product)" name="city" [(ngModel)]="product.city" type="text" id="city-{{ product.id }}">
               </div>
             </div>
           </div>

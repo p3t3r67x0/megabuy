@@ -378,6 +378,14 @@ a.inbox-links:hover {
   background-color: #efefef;
 }
 
+.btn.btn-success {
+  color: #fff;
+}
+
+.btn.btn-success:focus, .btn.btn-success:active, .btn.btn-success:hover {
+  color: #efefef;
+}
+
 .btn-primary {
   background-color: #3f546f;
   border-color: #52657d;

@@ -25,5 +25,5 @@
       <option *ngFor="let productCategory of productCategories" value="{{ productCategory.id }}">{{ productCategory.name }}</option>
     </select>
   </div>
-  <input type="submit" class="btn btn-default" value="Search">
+  <input type="submit" class="btn btn-success" value="Search" [style.border-color]="successColor" [ngStyle]="hover ? { 'background-color': successColor | color: -0.1 } : { 'background-color': successColor }" (mouseover)="hover=true" (mouseleave)="hover=false">
 </form>

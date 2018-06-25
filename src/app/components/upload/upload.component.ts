@@ -32,7 +32,7 @@ export class UploadComponent implements OnInit {
   currencies: string[];
   productConditions: string[];
   productCategories: string[];
-  rForm: FormGroup;
+  uploadForm: FormGroup;
   selectedFile: any = [];
   error: any = {};
 
@@ -62,7 +62,7 @@ export class UploadComponent implements OnInit {
     this.getAllCurrencies();
     this.getAllConditions();
 
-    this.rForm = fb.group({
+    this.uploadForm = fb.group({
       'name': [null, Validators.required],
       'description': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(500)])],
       'category': ['a4acbd3b4d36', Validators.required],
@@ -70,7 +70,9 @@ export class UploadComponent implements OnInit {
       'condition_id': ['251e384c9c43', Validators.required],
       'currency': ['b20c5d668a7f', Validators.required],
       'shipping_fee': [null, Validators.required],
-      'price': [null, Validators.required]
+      'price': [null, Validators.required],
+      'city': [null, Validators.required],
+      'zip': [null, Validators.required]
     });
   }
 
@@ -113,6 +115,8 @@ export class UploadComponent implements OnInit {
     fd.append('shipping_fee', value.shipping_fee);
     fd.append('condition_id', value.condition_id);
     fd.append('price', value.price);
+    fd.append('city', value.city);
+    fd.append('zip', value.zip);
 
     for (file of this.selectedFile) {
       fd.append('image', file, file.name);
@@ -127,7 +131,7 @@ export class UploadComponent implements OnInit {
       .toPromise()
       .then(res => {
         // console.log(res.json());
-        this.rForm.reset();
+        this.uploadForm.reset();
         this.uploaded.emit();
       })
       .catch(err => {
