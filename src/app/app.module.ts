@@ -21,8 +21,6 @@ import { ProductCategoryComponent } from './components/product-category/product-
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { ProductCategoryTagComponent } from './components/product-category-tag/product-category-tag.component';
 import { ProductUserTagComponent } from './components/product-user-tag/product-user-tag.component';
-import { SearchComponent } from './components/search/search.component';
-import { CategoryComponent } from './components/category/category.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { InboxComponent } from './components/inbox/inbox.component';
 import { InboxDetailComponent } from './components/inbox-detail/inbox-detail.component';
@@ -38,6 +36,8 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ShippingFormComponent } from './components/shipping-form/shipping-form.component';
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 import { OrderOverviewComponent } from './components/order-overview/order-overview.component';
+import { RadiusSearchComponent } from './components/radius-search/radius-search.component';
+import { CreateProductComponent } from './components/create-product/create-product.component';
 
 import { AuthService } from './services/auth.service';
 import { DataService } from './services/data.service';
@@ -90,6 +90,11 @@ export function HttpLoaderFactory(http: HttpClient) {
       {
         path: 'product',
         component: ProductComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'create',
+        component: CreateProductComponent,
         canActivate: [AuthGuard]
       },
       {
@@ -171,8 +176,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProductDetailComponent,
     ProductCategoryTagComponent,
     ProductUserTagComponent,
-    SearchComponent,
-    CategoryComponent,
     UploadComponent,
     InboxComponent,
     InboxDetailComponent,
@@ -188,7 +191,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     CheckoutComponent,
     ShippingFormComponent,
     OrderConfirmationComponent,
-    OrderOverviewComponent
+    OrderOverviewComponent,
+    RadiusSearchComponent,
+    CreateProductComponent
   ],
   providers: [
     AuthService,

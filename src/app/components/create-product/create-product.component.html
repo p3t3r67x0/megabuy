@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h1>Kategorie auswählen</h1>
+  </div>
+  <div id="firstChoise" class="col-sm-4">
+    <ul class="list-group list-unstyled">
+      <li *ngFor="let category of categories">
+        <div id="item-{{ category.id }}" class="list-group-item" (click)="querySubCategory(category.id); addClassActive(category.id, 'firstChoise');">
+          {{ category.name }}
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="secondChoise" class="col-sm-4">
+    <ul *ngIf="showSubCategories" class="list-unstyled list-group">
+      <li *ngFor="let category of subCategories">
+        <div id="item-{{ category.id }}" class="list-group-item" (click)="addClassActive(category.id, 'secondChoise')">
+          {{ category.name }}
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <button class="pull-right btn btn-primary" [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false">Weiter</button>
+  </div>
+</div>

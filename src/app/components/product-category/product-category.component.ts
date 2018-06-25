@@ -66,7 +66,8 @@ export class ProductCategoryComponent implements OnInit {
 
     this.rForm = fb.group({
       'name': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
-      'description': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(500)])],
+      'parent': ['', Validators.compose([Validators.required])],
+      'description': [null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(500)])],
     });
 
     this.token = localStorage.getItem('token');
@@ -136,10 +137,10 @@ export class ProductCategoryComponent implements OnInit {
 
   getProductCategories() {
     this.loadProductCategories(this.token, this.limit, this.page)
-      .then((productCategories) => {
-        // console.log(productCategories.json());
+      .then(res => {
+        // console.log(res.json()['product-categories']);
         this.loading = false;
-        this.productCategories = productCategories.json()['product-categories'];
+        this.productCategories = res.json()['product-categories'];
       })
       .catch((err) => {
         console.log(err.json());
