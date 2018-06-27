@@ -33,7 +33,14 @@
 
       <div class="tab-content">
         <div id="home" class="padding-15 tab-pane fade in active">
-          <p class="margin-bottom-0 reader-settings">{{ product.description }}</p>
+          <p class="margin-bottom-24 reader-settings">{{ product.description }}</p>
+          <h4 class="margin-bottom-0">Artikelzustand</h4>
+          <p class="margin-bottom-0">{{ product.condition }}</p>
+          <div *ngIf="product.zip && product.city">
+            <h4 class="margin-bottom-0 margin-top-24">Artikelstandort</h4>
+            <p class="margin-bottom-12">{{ product.zip }} {{ product.city }}</p>
+            <div *ngIf="product.lat && product.lng" style="height: 300px;" leaflet [leafletOptions]="options"></div>
+          </div>
         </div>
         <div id="menu3" class="padding-15 tab-pane fade">
           <p class="margin-bottom-0">Der Verkäufer ist für dieses Angebot verantwortlich.</p>

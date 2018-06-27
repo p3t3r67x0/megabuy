@@ -161,6 +161,11 @@ a.inbox-links:hover {
   opacity: 0.5;
 }
 
+.container {
+  padding-right: 12px;
+  padding-left: 12px;
+}
+
 .margin-bottom-0 {
   margin-bottom: 0;
 }
@@ -197,10 +202,6 @@ a.inbox-links:hover {
   margin-right: 6px;
 }
 
-.margin-top-9 {
-  margin-top: 9px;
-}
-
 .margin-top-0 {
   margin-top: 0;
 }
@@ -209,8 +210,16 @@ a.inbox-links:hover {
   margin-top: 2px;
 }
 
+.margin-top-9 {
+  margin-top: 9px;
+}
+
 .margin-top-12 {
   margin-top: 12px;
+}
+
+.margin-top-24 {
+  margin-top: 24px;
 }
 
 .padding-bottom-12 {
@@ -318,7 +327,11 @@ a.inbox-links:hover {
 }
 
 .navbar-form {
-  background: inherit;
+  background-color: inherit;
+  box-shadow: none;
+  margin: 12px 0 0;
+  border: none;
+  padding: 0;
 }
 
 .navbar {
@@ -578,6 +591,9 @@ li.tender:nth-of-type(odd) {
   }
   .box-order-date {
     float: right;
+  }
+  .navbar-form {
+    margin-top: 7px;
   }
 }
 

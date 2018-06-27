@@ -9,15 +9,26 @@
             </a>
           </div>
           <div class="col-md-8 box-product-text">
-            <div class="padding-right-12 padding-bottom-12 padding-left-12">
-              <div class="pos-absolute pos-right-12">
-                <span class="tags">
-              	   <span class="price-tag"><a href="javascript:void()">{{ product.price }}{{ product.currency }}</a></span>
-                </span>
-              </div>
+            <div class="pos-absolute pos-right-12 pos-top-12">
+              <span class="tags">
+                 <span class="price-tag"><a href="javascript:void()">{{ product.price }}{{ product.currency }}</a></span>
+              </span>
+            </div>
+            <div class="padding-right-12 padding-left-12 margin-bottom-24">
               <p class="margin-bottom-0"><a [style.color]="headlineColor" routerLink="/product/{{ product.id }}" class="h4">{{ product.name }}</a></p>
               <p [style.color]="textColor" class="margin-bottom-12"><small>By <a [style.color]="linkColor" routerLink="/user/{{ product.user_id }}">{{ product.user_name }}</a> in <a [style.color]="linkColor" routerLink="/category/{{ product.category_id }}">{{ product.category }}</a></small></p>
-              <p [style.color]="textColor" class="margin-bottom-0">{{ (product.description.length > 300) ? (product.description | slice: 0: 300) + '...' : product.description }}</p>
+              <p [style.color]="textColor" class="margin-bottom-0 reader-settings">{{ (product.description.length > 300) ? (product.description | slice: 0: 300) + '...' : product.description }}</p>
+            </div>
+            <div class="padding-right-12 padding-bottom-12 padding-left-12">
+              <p class="margin-bottom-3"><strong>Information</strong></p>
+              <ul class="list-unstyled list-inline">
+                <li class="margin-bottom-3" *ngIf="product.shipping_fee > 0">Verandkosten: {{ product.shipping_fee }}{{ product.currency }}</li>
+                <li class="margin-bottom-3" *ngIf="product.shipping_fee == 0">Kostenloser Versand</li>
+                |
+                <li class="margin-bottom-3">Artikelzustand: {{ product.condition }}</li>
+                |
+                <li class="">Standort: {{ product.zip }} {{ product.city }}</li>
+              </ul>
             </div>
           </div>
         </div>

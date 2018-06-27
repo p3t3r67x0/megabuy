@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Headers, Http } from '@angular/http';
 import { SplitPipe } from 'angular-pipes';
+import { latLng, tileLayer, icon, marker } from 'leaflet';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
@@ -32,6 +33,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   sub: any;
   url: string;
   hover: boolean;
+  marker: any = {};
+  options: any = {};
   imageLength: number;
   productId: string;
   userId: string;
@@ -72,7 +75,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loading = true;
-    this.checkUserStatus();
     this.getProductById();
   }
 
@@ -84,42 +86,13 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/checkout/' + this.productId);
   }
 
-  checkUserStatus() {
-    this.auth.loginStatus(localStorage.getItem('token'))
-      .then((user) => {
-        // console.log(user.json());
-        this.data.changeUserStatus(true);
-        this.data.changeUserId(user.json().user_id);
-        this.data.changeUserName(user.json().name);
-        this.data.changeUserConfirmed(user.json().confirmed);
-        this.userName = user.json().name;
-      })
-      .catch((err) => {
-        console.log(err.json());
-      });
-  }
-
-  getProductById() {
-    this.getOneProductById()
-      .then((product) => {
-        // console.log(product.json());
-        this.loading = false;
-        this.product = product.json();
-        this.imageLength = this.product.image.split(',').length;
-      })
-      .catch((err) => {
-        console.log(err.json());
-        this.error = err.json();
-      });
-  }
-
   imageClicked(event) {
     const el = this.element.nativeElement.querySelector('div.col-xs-12.margin-bottom-12');
     const src = event.target;
     el.innerHTML = src.outerHTML;
   }
 
-  getOneProductById() {
+  getProductById() {
     let url: string;
     let headers: Headers;
 
@@ -128,6 +101,26 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       'Content-Type': 'application/json'
     });
 
-    return this.http.get(url, { headers: headers }).toPromise();
+    return this.http.get(url, { headers: headers })
+      .toPromise()
+      .then((product) => {
+        // console.log(product.json());
+        this.loading = false;
+        this.product = product.json();
+        this.imageLength = this.product.image.split(',').length;
+
+        this.marker = marker([product.json().lat, product.json().lng]);
+        this.options = {
+          layers: [
+            tileLayer('https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', { maxZoom: 18 }), this.marker
+          ],
+          zoom: 15,
+          center: latLng(product.json().lat, product.json().lng)
+        };
+      })
+      .catch((err) => {
+        console.log(err.json());
+        this.error = err.json();
+      });
   }
 }

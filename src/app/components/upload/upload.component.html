@@ -11,7 +11,7 @@
     <label [style.color]="textColor">{{ 'term_description' | translate }}</label>
     <textarea class="form-control" formControlName="description"></textarea>
     <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!uploadForm.controls['description'].valid && uploadForm.controls['description'].touched">
-      You must specify a description that's between 30 and 500 characters
+      You must specify a description that's between 30 and 5000 characters
     </div>
   </div>
   <div class="form-group col-xs-4 padding-left-0">

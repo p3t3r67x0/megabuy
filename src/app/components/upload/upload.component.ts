@@ -64,7 +64,7 @@ export class UploadComponent implements OnInit {
 
     this.uploadForm = fb.group({
       'name': [null, Validators.required],
-      'description': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(500)])],
+      'description': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(5000)])],
       'category': ['a4acbd3b4d36', Validators.required],
       'thumbnail': [null, Validators.required],
       'condition_id': ['251e384c9c43', Validators.required],
