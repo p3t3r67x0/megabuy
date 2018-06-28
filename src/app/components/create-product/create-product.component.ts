@@ -28,6 +28,7 @@ export class CreateProductComponent implements OnInit {
   showSubCategories: boolean;
   subCategories: string[];
   categories: string[];
+  categoryId: string;
   userId: string;
   token: string;
   url: string;
@@ -69,6 +70,12 @@ export class CreateProductComponent implements OnInit {
     }
 
     document.getElementById('item-' + categoryId).classList.add('active');
+
+    if (parentElementId === 'secondChoise') {
+      this.categoryId = categoryId;
+    } else {
+      this.categoryId = '';
+    }
   }
 
   querySubCategory(parentId) {

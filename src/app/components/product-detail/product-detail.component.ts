@@ -115,6 +115,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
             tileLayer('https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', { maxZoom: 18 }), this.marker
           ],
           zoom: 15,
+          scrollWheelZoom: false,
           center: latLng(product.json().lat, product.json().lng)
         };
       })

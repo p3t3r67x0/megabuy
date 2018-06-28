@@ -1,29 +1,23 @@
 <form [formGroup]="searchForm" class="navbar-form navbar-left padding-left-0" (ngSubmit)="submitSearchForm(searchForm.value)" role="search">
   <div class="form-group">
-    <input type="text" class="form-control" formControlName="search" placeholder="Was suchst du?">
-  </div>
-  <div class="form-group">
-    <input type="text" class="form-control" formControlName="city_or_zip" placeholder="PLZ oder Ort">
-  </div>
-  <div class="form-group">
-    <select class="form-control" formControlName="distance">
-    <option value="1">5km</option>
-    <option value="2">10km</option>
-    <option value="3">15km</option>
-    <option value="4">20km</option>
-    <option value="5">25km</option>
-    <option value="6">30km</option>
-    <option value="7">35km</option>
-    <option value="8">40km</option>
-    <option value="9">45km</option>
-    <option value="10">50km</option>
-  </select>
-  </div>
-  <div class="form-group">
-    <select class="form-control" formControlName="category">
+    <input type="text" class="form-control form-navbar-element" formControlName="search" placeholder="Was suchst du?">
+    <select class="form-control form-navbar-element" formControlName="category">
       <option value="">Alle Kategorien</option>
       <option *ngFor="let productCategory of productCategories" value="{{ productCategory.id }}">{{ productCategory.name }}</option>
     </select>
+    <input type="text" class="form-control form-navbar-element" formControlName="city_or_zip" placeholder="PLZ oder Ort">
+    <select class="form-control form-navbar-element" formControlName="distance">
+      <option value="1">5km</option>
+      <option value="2">10km</option>
+      <option value="3">15km</option>
+      <option value="4">20km</option>
+      <option value="5">25km</option>
+      <option value="6">30km</option>
+      <option value="7">35km</option>
+      <option value="8">40km</option>
+      <option value="9">45km</option>
+      <option value="10">50km</option>
+    </select>
+    <input type="submit" class="btn btn-success margin-bottom-3" value="Search" [style.border-color]="successColor" [ngStyle]="hover ? { 'background-color': successColor | color: -0.1 } : { 'background-color': successColor }" (mouseover)="hover=true" (mouseleave)="hover=false">
   </div>
-  <input type="submit" class="btn btn-success" value="Search" [style.border-color]="successColor" [ngStyle]="hover ? { 'background-color': successColor | color: -0.1 } : { 'background-color': successColor }" (mouseover)="hover=true" (mouseleave)="hover=false">
 </form>
