@@ -21,8 +21,8 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right" [class.navbar-padding]="!isLoggedIn">
+          <li *ngIf="!isLoggedIn"><a class="nav-link" routerLink="/item-category">Anzeige aufgeben</a></li>
           <li *ngIf="!isLoggedIn"><a class="nav-link" routerLink="/login">{{ 'term_login' | translate }}</a></li>
-          <li *ngIf="!isLoggedIn"><a class="nav-link" routerLink="/register">{{ 'term_sign_up' | translate }}</a></li>
           <li [style.background-color]="navbarColor" *ngIf="isLoggedIn" class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               <img class="img-circle navbar-avatar" src="{{ userAvatar }}">
@@ -31,7 +31,7 @@
             <ul class="dropdown-menu">
               <li *ngIf="isAdmin"><a class="nav-link" routerLink="/users">{{ 'term_users' | translate }}</a></li>
               <li><a class="nav-link" routerLink="/inbox">{{ 'term_inbox' | translate }}</a></li>
-              <li><a class="nav-link" routerLink="/create">Anzeige aufgeben</a></li>
+              <li><a class="nav-link" routerLink="/item-category">Anzeige aufgeben</a></li>
               <li><a class="nav-link" routerLink="/orders">{{ 'term_my_orders' | translate }}</a></li>
               <li><a class="nav-link" routerLink="/product">{{ 'term_my_products' | translate }}</a></li>
               <li><a class="nav-link" routerLink="/product-category">{{ 'term_my_categories' | translate }}</a></li>

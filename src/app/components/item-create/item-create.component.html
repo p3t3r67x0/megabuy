@@ -1,0 +1,81 @@
+<ul class="custom-breadcrumb padding-0 margin-bottom-24">
+  <li class="light-blue-crumb">Kategorie auswählen</li>
+  <li class="light-blue-crumb">Anzeige aufgeben</li>
+  <li class="gray-crumb">Anzeige veröffentlichen</li>
+</ul>
+
+<h1>Anzeige aufgeben</h1>
+<form [formGroup]="uploadForm" class="white col-xs-12 padding-top-12 margin-bottom-24" enctype="multipart/form-data" (ngSubmit)="onUpload(uploadForm.value)">
+  <div class="form-group">
+    <label [style.color]="textColor">Artikelbezeichnung</label>
+    <input class="form-control" formControlName="name" type="text">
+    <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!uploadForm.controls['name'].valid && uploadForm.controls['name'].touched">
+      You must specify a product name
+    </div>
+  </div>
+  <div class="form-group">
+    <label [style.color]="textColor">{{ 'term_description' | translate }}</label>
+    <textarea class="form-control" formControlName="description"></textarea>
+    <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!uploadForm.controls['description'].valid && uploadForm.controls['description'].touched">
+      You must specify a description that's between 30 and 5000 characters
+    </div>
+  </div>
+  <div class="form-group col-xs-4 padding-left-0">
+    <label [style.color]="textColor">{{ 'term_price' | translate }}</label>
+    <input class="form-control" formControlName="price" type="text">
+    <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!uploadForm.controls['price'].valid && uploadForm.controls['price'].touched">
+      You must specify a price.
+    </div>
+  </div>
+  <div class="form-group col-xs-4 padding-left-0 padding-right-0">
+    <label [style.color]="textColor">Versandkosten</label>
+    <input class="form-control" formControlName="shipping_fee" type="text">
+    <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!uploadForm.controls['shipping_fee'].valid && uploadForm.controls['shipping_fee'].touched">
+      You may specify a shipping_fee.
+    </div>
+  </div>
+  <div class="form-group col-xs-4 padding-right-0">
+    <label [style.color]="textColor">{{ 'term_currency' | translate }}</label>
+    <select class="form-control" formControlName="currency">
+      <option *ngFor="let currency of currencies" value="{{ currency.id }}">{{ currency.name }} ({{ currency.unit_symbol }})</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label [style.color]="textColor">{{ 'term_category' | translate }}</label><br>
+    {{ parentCategory.name }} » {{ childCategory.name }}
+  </div>
+  <div class="form-group">
+    <label [style.color]="textColor">Artikelzustand</label>
+    <select class="form-control" title="Artikelzustand" formControlName="condition_id">
+      <option *ngFor="let condition of productConditions" value="{{ condition.id }}">{{ condition.name }}</option>
+    </select>
+    <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!uploadForm.controls['condition_id'].valid && uploadForm.controls['condition_id'].touched">
+      You must choose a condition
+    </div>
+  </div>
+  <div class="form-group">
+    <label [style.color]="textColor">{{ 'term_image' | translate }}</label>
+    <input type="file" formControlName="thumbnail" (change)="onFileSelected($event)" multiple>
+  </div>
+  <div class="form-group col-xs-4 padding-left-0 padding-right-0">
+    <label [style.color]="textColor">PLZ</label>
+    <input class="form-control" formControlName="zip" type="text">
+    <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!uploadForm.controls['zip'].valid && uploadForm.controls['zip'].touched">
+      What's your zip code?
+    </div>
+  </div>
+  <div class="form-group col-xs-8 padding-right-0">
+    <label [style.color]="textColor">Ort</label>
+    <input class="form-control" formControlName="city" type="text">
+    <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!uploadForm.controls['city'].valid && uploadForm.controls['city'].touched">
+      Where does you live?
+    </div>
+  </div>
+</form>
+
+<div class="row margin-bottom-24">
+  <div class="col-xs-12">
+    <button (click)="onUpload(uploadForm.value)" [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary pull-right"
+      [disabled]="!uploadForm.valid">{{ 'term_save_now' | translate }}</button>
+  </div>
+</div>

@@ -1,6 +1,6 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { LayoutService } from '../../services/layout.service';
@@ -8,11 +8,11 @@ import { environment } from '../../../environments/environment';
 
 
 @Component({
-  selector: 'app-upload',
-  templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.css']
+  selector: 'app-item-create',
+  templateUrl: './item-create.component.html',
+  styleUrls: ['./item-create.component.css']
 })
-export class UploadComponent implements OnInit {
+export class ItemCreateComponent implements OnInit {
   backgroundColor: string;
   headlineColor: string;
   warningColor: string;
@@ -26,19 +26,32 @@ export class UploadComponent implements OnInit {
   linkColor: string;
   textColor: string;
 
+  itemName: string;
+  categoryId: string;
+  currencyId: string;
+  description: string;
+  shippingFee: string;
+  conditionId: string;
+  price: string;
+  city: string;
+  zip: string;
+
   url: string;
   token: string;
   hover: boolean;
   currencies: string[];
+  childCategory: Object = {};
+  parentCategory: Object = {};
+  categoryChildId: string;
   productConditions: string[];
   productCategories: string[];
   uploadForm: FormGroup;
   selectedFile: any = [];
   error: any = {};
-
-  @Output() uploaded = new EventEmitter<string>();
+  sub: any;
 
   constructor(private http: Http,
+    private route: ActivatedRoute,
     private layout: LayoutService,
     private fb: FormBuilder,
     private router: Router) {
@@ -55,37 +68,78 @@ export class UploadComponent implements OnInit {
     this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
 
+    if (!this.categoryId) {
+      this.categoryId = 'a4acbd3b4d36';
+    }
+
+    if (!this.currencyId) {
+      this.currencyId = 'b20c5d668a7f';
+    }
+
+    if (!this.conditionId) {
+      this.conditionId = '251e384c9c43';
+    }
+
     this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
+
+    this.itemName = localStorage.getItem('itemName');
+    this.categoryId = localStorage.getItem('categoryId');
+    this.currencyId = localStorage.getItem('currencyId');
+    this.description = localStorage.getItem('description');
+    this.shippingFee = localStorage.getItem('shippingFee');
+    this.conditionId = localStorage.getItem('conditionId');
+    this.price = localStorage.getItem('price');
+    this.city = localStorage.getItem('city');
+    this.zip = localStorage.getItem('zip');
+
+    this.sub = this.route.params.subscribe(params => {
+      this.categoryChildId = params['id'];
+    });
+
+    this.uploadForm = fb.group({
+      'name': [this.itemName, Validators.required],
+      'description': [this.description, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(5000)])],
+      'category': [this.categoryChildId, Validators.required],
+      'thumbnail': [null, Validators.required],
+      'condition_id': [this.conditionId, Validators.required],
+      'shipping_fee': [this.shippingFee, Validators.required],
+      'currency': [this.currencyId, Validators.required],
+      'price': [this.price, Validators.required],
+      'city': [this.city, Validators.required],
+      'zip': [this.zip, Validators.required]
+    });
 
     this.getAllProductCategories();
     this.getAllCurrencies();
     this.getAllConditions();
-
-    this.uploadForm = fb.group({
-      'name': [null, Validators.required],
-      'description': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(5000)])],
-      'category': ['a4acbd3b4d36', Validators.required],
-      'thumbnail': [null, Validators.required],
-      'condition_id': ['251e384c9c43', Validators.required],
-      'currency': ['b20c5d668a7f', Validators.required],
-      'shipping_fee': [null, Validators.required],
-      'price': [null, Validators.required],
-      'city': [null, Validators.required],
-      'zip': [null, Validators.required]
-    });
+    this.getCategoryById();
   }
 
-  ngOnInit() {
-    this.selectedFile = [];
-  }
+  ngOnInit() { }
 
   onFileSelected(event) {
+    this.selectedFile = [];
     let file = '';
 
     for (file of event.target.files) {
       this.selectedFile.push(file);
     }
+  }
+
+  getParentCategoryById(parentId) {
+    this.http.get(`${this.url}/api/category/${parentId}`).subscribe(res => {
+      // console.log(res.json());
+      this.parentCategory = res.json().category;
+    });
+  }
+
+  getCategoryById() {
+    this.http.get(`${this.url}/api/category/${this.categoryChildId}`).subscribe(res => {
+      // console.log(res.json());
+      this.childCategory = res.json().category;
+      this.getParentCategoryById(res.json().category.parent_id);
+    });
   }
 
   getAllCurrencies() {
@@ -103,40 +157,36 @@ export class UploadComponent implements OnInit {
   }
 
   onUpload(value) {
-    let url: string;
     let file: any = '';
-    let headers: Headers;
     const fd = new FormData;
 
-    fd.append('name', value.name);
-    fd.append('category_id', value.category);
-    fd.append('currency_id', value.currency);
+    fd.append('itemName', value.name);
+    fd.append('categoryId', value.category);
+    fd.append('currencyId', value.currency);
     fd.append('description', value.description);
-    fd.append('shipping_fee', value.shipping_fee);
-    fd.append('condition_id', value.condition_id);
+    fd.append('shippingFee', value.shipping_fee);
+    fd.append('conditionId', value.condition_id);
     fd.append('price', value.price);
     fd.append('city', value.city);
     fd.append('zip', value.zip);
 
+    localStorage.setItem('itemName', value.name);
+    localStorage.setItem('categoryId', value.category);
+    localStorage.setItem('currencyId', value.currency);
+    localStorage.setItem('description', value.description);
+    localStorage.setItem('shippingFee', value.shipping_fee);
+    localStorage.setItem('conditionId', value.condition_id);
+    localStorage.setItem('price', value.price);
+    localStorage.setItem('city', value.city);
+    localStorage.setItem('zip', value.zip);
+
     for (file of this.selectedFile) {
       fd.append('image', file, file.name);
+      localStorage.setItem('image', file);
     }
 
-    url = `${this.url}/api/product`;
-    headers = new Headers({
-      'Authorization': `Bearer ${this.token}`
-    });
+    this.router.navigateByUrl('/item-publish');
 
-    return this.http.post(url, fd, { headers: headers })
-      .toPromise()
-      .then(res => {
-        // console.log(res.json());
-        this.uploadForm.reset();
-        this.uploaded.emit();
-      })
-      .catch(err => {
-        console.log(err);
-      });
   }
 
   getAllProductCategories() {

@@ -38,7 +38,9 @@ import { ShippingFormComponent } from './components/shipping-form/shipping-form.
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 import { OrderOverviewComponent } from './components/order-overview/order-overview.component';
 import { RadiusSearchComponent } from './components/radius-search/radius-search.component';
-import { CreateProductComponent } from './components/create-product/create-product.component';
+import { ItemCategoryComponent } from './components/item-category/item-category.component';
+import { ItemCreateComponent } from './components/item-create/item-create.component';
+import { ItemPublishComponent } from './components/item-publish/item-publish.component';
 
 import { AuthService } from './services/auth.service';
 import { DataService } from './services/data.service';
@@ -95,9 +97,16 @@ export function HttpLoaderFactory(http: HttpClient) {
         canActivate: [AuthGuard]
       },
       {
-        path: 'create',
-        component: CreateProductComponent,
-        canActivate: [AuthGuard]
+        path: 'item-category',
+        component: ItemCategoryComponent
+      },
+      {
+        path: 'item-create/:id',
+        component: ItemCreateComponent
+      },
+      {
+        path: 'item-publish',
+        component: ItemPublishComponent
       },
       {
         path: 'product-category',
@@ -195,7 +204,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     OrderConfirmationComponent,
     OrderOverviewComponent,
     RadiusSearchComponent,
-    CreateProductComponent
+    ItemCategoryComponent,
+    ItemCreateComponent,
+    ItemPublishComponent
   ],
   providers: [
     AuthService,

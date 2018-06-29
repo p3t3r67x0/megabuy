@@ -6,11 +6,11 @@ import { LayoutService } from '../../services/layout.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-create-product',
-  templateUrl: './create-product.component.html',
-  styleUrls: ['./create-product.component.css']
+  selector: 'app-item-category',
+  templateUrl: './item-category.component.html',
+  styleUrls: ['./item-category.component.css']
 })
-export class CreateProductComponent implements OnInit {
+export class ItemCategoryComponent implements OnInit {
   backgroundColor: string;
   headlineColor: string;
   warningColor: string;
@@ -62,6 +62,10 @@ export class CreateProductComponent implements OnInit {
     this.getAllCategories();
   }
 
+  submitCategoryForm() {
+    this.router.navigateByUrl('/item-create/' + this.categoryId);
+  }
+
   addClassActive(categoryId, parentElementId) {
     const activeElements: any = document.getElementById(parentElementId).getElementsByClassName('active');
 
@@ -90,7 +94,7 @@ export class CreateProductComponent implements OnInit {
     return this.http.get(url, { headers: headers })
       .toPromise()
       .then((res) => {
-        console.log(res.json()['categories']);
+        // console.log(res.json()['categories']);
         this.showSubCategories = true;
         this.subCategories = res.json()['categories'];
       })
@@ -111,7 +115,7 @@ export class CreateProductComponent implements OnInit {
     return this.http.get(url, { headers: headers })
       .toPromise()
       .then((res) => {
-        console.log(res.json()['product-categories']);
+        // console.log(res.json()['product-categories']);
         this.categories = res.json()['product-categories'];
       })
       .catch((err) => {

@@ -140,7 +140,7 @@ export class LoginComponent implements OnInit {
           this.error.status = 'error';
         }
 
-        console.log(err.json());
+        console.log(err);
         $('#' + this.modalId).modal();
       });
   }
