@@ -2,7 +2,7 @@
   <div class="col-sm-6 margin-bottom-24">
     <h1 [style.color]="headlineColor">{{ 'term_my_categories' | translate }}</h1>
     <ul *ngIf="productCategories.length > 0" class="list-unstyled margin-bottom-0">
-      <li id="{{ productCategory.id }}" class="tender padding-15 margin-bottom-24" *ngFor="let productCategory of productCategories">
+      <li id="{{ productCategory.id }}" class="white padding-15 margin-bottom-24" *ngFor="let productCategory of productCategories">
         <ng-container *ngIf="productCategory.user_id == userId">
           <button class="pull-right btn btn-primary btn-xs glyphicon glyphicon-edit" (click)="showUpdateForm(productCategory.id)"></button>
           <button class="pull-right btn btn-danger btn-xs glyphicon glyphicon-trash margin-right-6" (click)="removeProductCategory(productCategory.id)"></button>

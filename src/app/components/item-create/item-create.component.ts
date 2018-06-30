@@ -40,8 +40,8 @@ export class ItemCreateComponent implements OnInit {
   token: string;
   hover: boolean;
   currencies: string[];
-  childCategory: Object = {};
-  parentCategory: Object = {};
+  childCategory: any = {};
+  parentCategory: any = {};
   categoryChildId: string;
   productConditions: string[];
   productCategories: string[];
@@ -182,11 +182,33 @@ export class ItemCreateComponent implements OnInit {
 
     for (file of this.selectedFile) {
       fd.append('image', file, file.name);
-      localStorage.setItem('image', file);
+      const reader = new FileReader();
+
+      reader.addEventListener('load', function(e: any) {
+        // console.log(e.target.result);
+        localStorage.setItem('image', e.target.result);
+      });
+
+      reader.readAsDataURL(file);
     }
 
-    this.router.navigateByUrl('/item-publish');
+    let headers: Headers;
+    let url: string;
 
+    url = `${this.url}/api/product`;
+    headers = new Headers({
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    this.http.post(url, fd, { headers: headers })
+      .toPromise()
+      .then(res => {
+        console.log(res.json());
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    this.router.navigateByUrl('/item-publish');
   }
 
   getAllProductCategories() {

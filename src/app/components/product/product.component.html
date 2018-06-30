@@ -1,92 +1,85 @@
+<h1>{{ 'term_my_products' | translate }}</h1>
 <div class="row">
-  <div class="col-sm-6">
-    <h1>{{ 'term_my_products' | translate }}</h1>
-    <ul *ngIf="products.length > 0" class="list-unstyled margin-bottom-24">
-      <li class="tender margin-bottom-24" *ngFor="let product of products">
-        <div class="row">
-          <div class="col-xs-12">
-            <img id="image-{{ product.id }}" width="100%" height="auto" src="{{ url }}/{{ product.thumbnail }}">
-            <div id="thumbnail-{{ product.id }}" class="margin-right-12" style="display: flex;">
-              <ng-container *ngIf="product.image.length > 1">
-                <div class="pos-relative margin-top-12 margin-left-12" *ngFor="let image of product.image">
-                  <button class="pos-absolute pos-right-12 pos-top-12 btn btn-danger btn-xs glyphicon glyphicon-trash" (click)="removeImageById(image.id)"></button>
-                  <img id="image-{{ image.id }}" class="full-height" width="100%" height="auto" src="{{ url }}/{{ image.image }}">
-                </div>
-              </ng-container>
-            </div>
+  <div class="masonry-container" *ngIf="products.length > 0">
+    <div class="masonry-brick margin-bottom-24 col-sm-6" *ngFor="let product of products">
+      <img id="image-{{ product.id }}" width="100%" height="auto" src="{{ url }}/{{ product.thumbnail }}">
+      <div id="thumbnail-{{ product.id }}" class="padding-right-12 white" style="display: flex;">
+        <ng-container *ngIf="product.image.length > 1">
+          <div class="pos-relative margin-top-12 margin-left-12" *ngFor="let image of product.image">
+            <button class="pos-absolute pos-right-12 pos-top-12 btn btn-danger btn-xs glyphicon glyphicon-trash" (click)="removeImageById(image.id)"></button>
+            <img id="image-{{ image.id }}" class="full-height" width="100%" height="auto" src="{{ url }}/{{ image.image }}">
           </div>
-          <div class="col-xs-12 padding-top-12 padding-left-27 padding-right-27">
-            <button class="pull-right btn btn-primary btn-xs glyphicon glyphicon-edit" (click)="showUpdateForm(product.id)"></button>
-            <button class="pull-right btn btn-danger btn-xs glyphicon glyphicon-trash margin-right-6" (click)="removeProductById(product.id)"></button>
-            <h4>{{ product.name }}</h4>
-            <p><strong>Preis {{ product.price }} {{ product.currency }}</strong></p>
-            <p>{{ product.description }}</p>
-            <div *ngIf="editField == product.id" id="{{ product.id }}">
-              <div class="form-group">
-                <label for="name-{{ product.id }}">Artikelbezeichnung</label>
-                <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.name" type="text" placeholder="Flowers" name="name" id="name-{{ product.id }}">
-              </div>
-              <div class="form-group">
-                <label for="description-{{ product.id }}">{{ 'term_description' | translate }}</label>
-                <textarea class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.description" type="text" placeholder="Write a short description about your item" name="description" id="description-{{ product.id }}"></textarea>
-              </div>
-              <div class="form-group col-xs-4 padding-left-0">
-                <label for="price-{{ product.id }}">{{ 'term_price' | translate }}</label>
-                <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.price" type="text" placeholder="37€" name="price" id="price-{{ product.id }}">
-              </div>
-              <div class="form-group col-xs-4 padding-left-0 padding-right-0">
-                <label for="shippingFee-{{ product.id }}">Versandkosten</label>
-                <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.shipping_fee" type="text" placeholder="37€" name="price" id="shippingFee-{{ product.id }}">
-              </div>
-              <div class="form-group col-xs-4 padding-right-0">
-                <label for="currency-{{ product.id }}">{{ 'term_currency' | translate }}</label>
-                <select class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.currency_id" name="Currency" id="currency-{{ product.id }}">
-                  <option *ngFor="let currency of currencies" [ngValue]="currency.id">{{ currency.name }} ({{ currency.unit_symbol }})</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="category-{{ product.id }}">{{ 'term_category' | translate }}</label>
-                <select class="form-control" (change)="updateEntry(product)" [(ngModel)]="product.category_id" name="category" id="category-{{ product.id }}">
-                  <option *ngFor="let productCategory of productCategories" [ngValue]="productCategory.id">{{ productCategory.name }}</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="condition-{{ product.id }}" [style.color]="textColor">Artikelzustand</label>
-                <select class="form-control" (change)="updateEntry(product)" title="Artikelzustand" [(ngModel)]="product.condition_id" id="condition-{{ product.id }}">
-                  <option *ngFor="let condition of productConditions" [ngValue]="condition.id">{{ condition.name }}</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="thumbnail-{{ product.id }}" [style.color]="textColor">{{ 'term_image' | translate }}</label>
-                <input type="file" name="thumbnail" (change)="onFileSelected($event, product.id)" multiple id="thumbnail-{{ product.id }}">
-              </div>
-              <div class="form-group col-xs-4 padding-left-0 padding-right-0">
-                <label for="zip-{{ product.id }}" [style.color]="textColor">PLZ</label>
-                <input class="form-control" (blur)="updateEntry(product)" name="zip" [(ngModel)]="product.zip" type="text" id="zip-{{ product.id }}">
-              </div>
-              <div class="col-xs-8 padding-right-0">
-                <label for="city-{{ product.id }}" [style.color]="textColor">Ort</label>
-                <input class="form-control" (blur)="updateEntry(product)" name="city" [(ngModel)]="product.city" type="text" id="city-{{ product.id }}">
-              </div>
+        </ng-container>
+      </div>
+      <div class="padding-12 white">
+        <button class="pull-right btn btn-primary btn-xs glyphicon glyphicon-edit" (click)="showUpdateForm(product.id)"></button>
+        <button class="pull-right btn btn-danger btn-xs glyphicon glyphicon-trash margin-right-6" (click)="removeProductById(product.id)"></button>
+        <h4>{{ product.name }}</h4>
+        <p><strong>Preis {{ product.price }} {{ product.currency }}</strong></p>
+        <p class="margin-bottom-0">{{ product.description }}</p>
+        <div *ngIf="editField == product.id" class="row" id="{{ product.id }}">
+          <div class="col-xs-12">
+            <div class="form-group margin-top-12">
+              <label for="name-{{ product.id }}">Artikelbezeichnung</label>
+              <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.name" type="text" placeholder="Flowers" name="name" id="name-{{ product.id }}">
+            </div>
+            <div class="form-group">
+              <label for="description-{{ product.id }}">{{ 'term_description' | translate }}</label>
+              <textarea class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.description" type="text" placeholder="Write a short description about your item" name="description" id="description-{{ product.id }}"></textarea>
+            </div>
+            <div class="form-group col-xs-4 padding-left-0">
+              <label for="price-{{ product.id }}">{{ 'term_price' | translate }}</label>
+              <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.price" type="text" placeholder="37€" name="price" id="price-{{ product.id }}">
+            </div>
+            <div class="form-group col-xs-4 padding-left-0 padding-right-0">
+              <label for="shippingFee-{{ product.id }}">Versandkosten</label>
+              <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.shipping_fee" type="text" placeholder="37€" name="price" id="shippingFee-{{ product.id }}">
+            </div>
+            <div class="form-group col-xs-4 padding-right-0">
+              <label for="currency-{{ product.id }}">{{ 'term_currency' | translate }}</label>
+              <select class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.currency_id" name="Currency" id="currency-{{ product.id }}">
+              <option *ngFor="let currency of currencies" [ngValue]="currency.id">{{ currency.name }} ({{ currency.unit_symbol }})</option>
+            </select>
+            </div>
+            <div class="form-group">
+              <label for="category-{{ product.id }}">{{ 'term_category' | translate }}</label>
+              <select class="form-control" (change)="updateEntry(product)" [(ngModel)]="product.category_id" name="category" id="category-{{ product.id }}">
+              <option *ngFor="let productCategory of productCategories" [ngValue]="productCategory.id">{{ productCategory.name }}</option>
+            </select>
+            </div>
+            <div class="form-group">
+              <label for="condition-{{ product.id }}" [style.color]="textColor">Artikelzustand</label>
+              <select class="form-control" (change)="updateEntry(product)" title="Artikelzustand" [(ngModel)]="product.condition_id" id="condition-{{ product.id }}">
+              <option *ngFor="let condition of productConditions" [ngValue]="condition.id">{{ condition.name }}</option>
+            </select>
+            </div>
+            <div class="form-group">
+              <label for="thumbnail-{{ product.id }}" [style.color]="textColor">{{ 'term_image' | translate }}</label>
+              <input type="file" name="thumbnail" (change)="onFileSelected($event, product.id)" multiple id="thumbnail-{{ product.id }}">
+            </div>
+            <div class="col-xs-4 padding-left-0 padding-right-0">
+              <label for="zip-{{ product.id }}" [style.color]="textColor">PLZ</label>
+              <input class="form-control" (blur)="updateEntry(product)" name="zip" [(ngModel)]="product.zip" type="text" id="zip-{{ product.id }}">
+            </div>
+            <div class="col-xs-8 padding-right-0">
+              <label for="city-{{ product.id }}" [style.color]="textColor">Ort</label>
+              <input class="form-control" (blur)="updateEntry(product)" name="city" [(ngModel)]="product.city" type="text" id="city-{{ product.id }}">
             </div>
           </div>
         </div>
-      </li>
-    </ul>
-    <div *ngIf="loading" style="display: flex; align-items: center; justify-content: center;">
-      <div class="lds-ring">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
       </div>
     </div>
-    <div [style.color]="textColor" [style.background-color]="infoColor" class="alert" *ngIf="!loading && products.length == 0">Hey add your first product!</div>
-    <canvas class="hidden" id="canvas" width="800" height="500"></canvas>
-  </div>
-  <div class="col-sm-6 margin-bottom-24">
-    <app-upload (uploaded)="getAllProductsByUser()"></app-upload>
   </div>
 </div>
+<div *ngIf="loading" style="display: flex; align-items: center; justify-content: center;">
+  <div class="lds-ring">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+<div [style.color]="textColor" [style.background-color]="infoColor" class="alert" *ngIf="!loading && products.length == 0">Hey add your first product!</div>
+<canvas class="hidden" id="canvas" width="800" height="500"></canvas>
 
 <app-modal [id]="modalId" [error]="error"></app-modal>

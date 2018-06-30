@@ -24,9 +24,9 @@ export class ItemPublishComponent implements OnInit {
   linkColor: string;
   textColor: string;
 
-  category: Object = {};
-  condition: Object = {};
-  currency: Object = {};
+  category: any = {};
+  condition: any = {};
+  currency: any = {};
 
   itemName: string;
   categoryId: string;
@@ -34,12 +34,14 @@ export class ItemPublishComponent implements OnInit {
   description: string;
   shippingFee: string;
   conditionId: string;
+  image: string;
   price: string;
   city: string;
   zip: string;
 
   isLoggedIn: boolean;
   currentUrl: string;
+  userName: string;
   hover: boolean;
   userId: string;
   token: string;
@@ -51,6 +53,7 @@ export class ItemPublishComponent implements OnInit {
     private data: DataService) {
     this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentUserName.subscribe(userName => this.userName = userName);
     this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
@@ -82,6 +85,7 @@ export class ItemPublishComponent implements OnInit {
 
   ngOnInit() {
     this.currentUrl = this.router.url;
+    this.image = localStorage.getItem('image');
 
     this.getCategoryById();
     this.getConditionById();
@@ -132,7 +136,19 @@ export class ItemPublishComponent implements OnInit {
     return this.http.post(url, fd, { headers: headers })
       .toPromise()
       .then(res => {
+        localStorage.removeItem('itemName');
+        localStorage.removeItem('categoryId');
+        localStorage.removeItem('currencyId');
+        localStorage.removeItem('description');
+        localStorage.removeItem('shippingFee');
+        localStorage.removeItem('conditionId');
+        localStorage.removeItem('image');
+        localStorage.removeItem('price');
+        localStorage.removeItem('city');
+        localStorage.removeItem('zip');
+
         console.log(res.json());
+        this.router.navigateByUrl('/product');
       })
       .catch(err => {
         console.log(err);

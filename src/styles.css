@@ -433,12 +433,37 @@ a.inbox-links:hover {
   background-color: #fff;
 }
 
-li.tender:nth-of-type(even) {
-  background-color: #f8f8fa;
+.masonry-brick {
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid-column;
+  display: table;
+  width: 100%;
+  margin: 1.6em 0;
 }
 
-li.tender:nth-of-type(odd) {
-  background-color: #ffffff;
+@media only screen and (min-width: 480px) {
+  .masonry-container {
+    -moz-column-count: 1;
+    -webkit-column-count: 1;
+    column-count: 1;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .masonry-container {
+    -moz-column-count: 1;
+    -webkit-column-count: 1;
+    column-count: 1;
+  }
+}
+
+@media only screen and (min-width: 960px) {
+  .masonry-container {
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+    column-count: 2;
+  }
 }
 
 .custom-breadcrumb {
