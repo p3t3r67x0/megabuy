@@ -37,7 +37,7 @@ export class ItemCategoryComponent implements OnInit {
     private router: Router,
     private layout: LayoutService,
     private data: DataService) {
-    this.data.changeIsPublicPage(false);
+    this.data.changeIsPublicPage(true);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);

@@ -34,11 +34,13 @@ export class ItemPublishComponent implements OnInit {
   description: string;
   shippingFee: string;
   conditionId: string;
-  image: string;
+  tmpImgId: string;
   price: string;
   city: string;
   zip: string;
 
+  tmpThumbnailPath: string;
+  tmpImgPath: string[];
   isLoggedIn: boolean;
   currentUrl: string;
   userName: string;
@@ -75,6 +77,7 @@ export class ItemPublishComponent implements OnInit {
     this.description = localStorage.getItem('description');
     this.shippingFee = localStorage.getItem('shippingFee');
     this.conditionId = localStorage.getItem('conditionId');
+    this.tmpImgId = localStorage.getItem('tmpImgId');
     this.price = localStorage.getItem('price');
     this.city = localStorage.getItem('city');
     this.zip = localStorage.getItem('zip');
@@ -85,8 +88,12 @@ export class ItemPublishComponent implements OnInit {
 
   ngOnInit() {
     this.currentUrl = this.router.url;
-    this.image = localStorage.getItem('image');
 
+    if (!this.tmpImgId) {
+      this.router.navigateByUrl('/item-category');
+    }
+
+    this.getTempImagesById();
     this.getCategoryById();
     this.getConditionById();
     this.getCurrencyById();
@@ -108,46 +115,63 @@ export class ItemPublishComponent implements OnInit {
 
   getCategoryById() {
     this.http.get(`${this.url}/api/category/${this.categoryId}`).subscribe(res => {
-      console.log(res.json());
+      // console.log(res.json());
       this.category = res.json().category;
     });
   }
 
+  getTempImagesById() {
+    const tmpImgId = this.tmpImgId.split(',');
+    const tmpImgPath = [];
+
+    for (const imgId of tmpImgId) {
+      this.http.get(`${this.url}/api/tmp/image/${imgId}`).subscribe(res => {
+        tmpImgPath.push(res.json().image.image);
+      });
+    }
+
+    this.tmpImgPath = tmpImgPath;
+  }
+
   publishProduct() {
-    const fd = new FormData;
     let headers: Headers;
     let url: string;
 
     url = `${this.url}/api/product`;
     headers = new Headers({
+      'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.token}`
     });
 
-    fd.append('name', this.itemName);
-    fd.append('category_id', this.categoryId);
-    fd.append('currency_id', this.currencyId);
-    fd.append('description', this.description);
-    fd.append('shipping_fee', this.shippingFee);
-    fd.append('condition_id', this.conditionId);
-    fd.append('price', this.price);
-    fd.append('city', this.city);
-    fd.append('zip', this.zip);
+    const post = {
+      'name': this.itemName,
+      'category_id': this.categoryId,
+      'currency_id': this.currencyId,
+      'description': this.description,
+      'shipping_fee': this.shippingFee,
+      'condition_id': this.conditionId,
+      'image': this.tmpImgId,
+      'price': this.price,
+      'city': this.city,
+      'zip': this.zip
+    };
 
-    return this.http.post(url, fd, { headers: headers })
+    return this.http.post(url, post, { headers: headers })
       .toPromise()
       .then(res => {
+        console.log(res.json());
+
         localStorage.removeItem('itemName');
         localStorage.removeItem('categoryId');
         localStorage.removeItem('currencyId');
         localStorage.removeItem('description');
         localStorage.removeItem('shippingFee');
         localStorage.removeItem('conditionId');
-        localStorage.removeItem('image');
+        localStorage.removeItem('tmpImgId');
         localStorage.removeItem('price');
         localStorage.removeItem('city');
         localStorage.removeItem('zip');
 
-        console.log(res.json());
         this.router.navigateByUrl('/product');
       })
       .catch(err => {

@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { LayoutService } from '../../services/layout.service';
+import { DataService } from '../../services/data.service';
 import { environment } from '../../../environments/environment';
 
 
@@ -53,8 +54,11 @@ export class ItemCreateComponent implements OnInit {
   constructor(private http: Http,
     private route: ActivatedRoute,
     private layout: LayoutService,
+    private data: DataService,
     private fb: FormBuilder,
     private router: Router) {
+    this.data.changeIsPublicPage(true);
+
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
     this.layout.currentWarningColor.subscribe(warningColor => this.warningColor = warningColor);
@@ -157,18 +161,9 @@ export class ItemCreateComponent implements OnInit {
   }
 
   onUpload(value) {
+    let url: string;
     let file: any = '';
     const fd = new FormData;
-
-    fd.append('itemName', value.name);
-    fd.append('categoryId', value.category);
-    fd.append('currencyId', value.currency);
-    fd.append('description', value.description);
-    fd.append('shippingFee', value.shipping_fee);
-    fd.append('conditionId', value.condition_id);
-    fd.append('price', value.price);
-    fd.append('city', value.city);
-    fd.append('zip', value.zip);
 
     localStorage.setItem('itemName', value.name);
     localStorage.setItem('categoryId', value.category);
@@ -182,33 +177,21 @@ export class ItemCreateComponent implements OnInit {
 
     for (file of this.selectedFile) {
       fd.append('image', file, file.name);
-      const reader = new FileReader();
-
-      reader.addEventListener('load', function(e: any) {
-        // console.log(e.target.result);
-        localStorage.setItem('image', e.target.result);
-      });
-
-      reader.readAsDataURL(file);
     }
 
-    let headers: Headers;
-    let url: string;
+    url = `${this.url}/api/tmp/image`;
 
-    url = `${this.url}/api/product`;
-    headers = new Headers({
-      'Authorization': `Bearer ${this.token}`
-    });
-
-    this.http.post(url, fd, { headers: headers })
+    this.http.post(url, fd)
       .toPromise()
       .then(res => {
-        console.log(res.json());
+        // console.log(res.json());
+        const tmpImgId = res.json().image.join();
+        localStorage.setItem('tmpImgId', tmpImgId);
+        this.router.navigateByUrl('/item-publish');
       })
       .catch(err => {
         console.log(err);
       });
-    this.router.navigateByUrl('/item-publish');
   }
 
   getAllProductCategories() {

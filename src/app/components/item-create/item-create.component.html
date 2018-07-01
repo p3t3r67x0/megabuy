@@ -9,6 +9,7 @@
   <div class="form-group">
     <label [style.color]="textColor">Artikelbezeichnung</label>
     <input class="form-control" formControlName="name" type="text">
+    <div [style.background-color]="infoColor" class="alert margin-top-9" *ngIf="uploadForm.controls['name'].valid && uploadForm.controls['name'].touched || !uploadForm.controls['name'].touched">Gib deiner Anzeige einen aussagekräftigen Titel, um die Findbarkeit über die Suchfunktion zu verbessern.</div>
     <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!uploadForm.controls['name'].valid && uploadForm.controls['name'].touched">
       You must specify a product name
     </div>

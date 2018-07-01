@@ -5,43 +5,49 @@
 </ul>
 
 <ng-container *ngIf="!isLoggedIn">
-  <app-login [redirect]="currentUrl"></app-login>
+  <div class="col-xs-12 col-sm-4 padding-12 white">
+    <app-login [redirect]="currentUrl"></app-login>
+  </div>
 </ng-container>
 
-<h1>Anzeige veröffentlichen</h1>
-<div class="col-xs-12 white margin-bottom-24">
-  <div class="row">
-    <div class="col-md-4 padding-left-0 padding-right-0">
-      <img width="100%" height="auto" src="{{ image }}">
+<h1 *ngIf="isLoggedIn">Anzeige veröffentlichen</h1>
+<div *ngIf="isLoggedIn" class="row">
+  <div class="margin-bottom-24 col-xs-12 col-sm-6">
+    <div class="pos-absolute pos-right-12 pos-top-12">
+      <span class="tags">
+       <span class="price-tag"><a href="javascript:void()">{{ price }}{{ currency.unit_symbol }}</a></span>
+      </span>
     </div>
-    <div class="col-md-8 box-product-text">
-      <div class="pos-absolute pos-top-12" style="right: -3px;">
-        <span class="tags">
-         <span class="price-tag"><a href="javascript:void()">{{ price }}{{ currency.unit_symbol }}</a></span>
-        </span>
-      </div>
-      <div class="padding-right-12 padding-left-12 margin-bottom-18">
-        <p class="margin-bottom-0"><a [style.color]="headlineColor" routerLink="#" class="h4">{{ itemName }}</a></p>
-        <p [style.color]="textColor" class="margin-bottom-12"><small>By <a [style.color]="linkColor" routerLink="#">{{ userName }}</a> in <a [style.color]="linkColor" routerLink="#">{{ category.name }}</a></small></p>
-        <p [style.color]="textColor" class="margin-bottom-0 reader-settings">{{ description }}</p>
-      </div>
-      <div class="padding-right-12 padding-bottom-12 padding-left-12">
-        <p class="margin-bottom-3"><strong>Information</strong></p>
-        <ul class="list-unstyled list-inline">
-          <li class="margin-bottom-3" *ngIf="shippingFee > '0'">Verandkosten: {{ shippingFee }}{{ currency.unit_symbol }}</li>
-          <li class="margin-bottom-3" *ngIf="shippingFee == '0'">Kostenloser Versand</li>
-          |
-          <li class="margin-bottom-3">Artikelzustand: {{ condition.name }}</li>
-          |
-          <li class="">Standort: {{ zip }} {{ city }}</li>
-        </ul>
-      </div>
+    <a routerLink="#">
+    <img width="100%" height="auto" src="{{ url }}/{{ tmpImgPath[0] }}">
+  </a>
+    <div class="padding-right-12 padding-bottom-12 white" style="display: flex;">
+      <ng-container *ngIf="tmpImgPath.length > 1">
+        <div class="pos-relative margin-top-12 margin-left-12" *ngFor="let imgPath of tmpImgPath">
+          <img class="full-height" width="100%" height="auto" src="{{ url }}/{{ imgPath }}">
+        </div>
+      </ng-container>
+    </div>
+    <div class="padding-right-12 padding-left-12 padding-bottom-12 white">
+      <p class="margin-bottom-0"><a [style.color]="headlineColor" routerLink="#" class="h4">{{ itemName }}</a></p>
+      <p [style.color]="textColor" class="margin-bottom-12"><small>By <a [style.color]="linkColor" routerLink="#">{{ userName }}</a> in <a [style.color]="linkColor" routerLink="#">{{ category.name }}</a></small></p>
+      <p [style.color]="textColor" class="margin-bottom-0 reader-settings">{{ description }}</p>
+    </div>
+    <div class="padding-right-12 padding-bottom-12 padding-left-12 white">
+      <p class="margin-bottom-3"><strong>Information</strong></p>
+      <ul class="list-unstyled margin-bottom-0 list-inline">
+        <li class="margin-bottom-3" *ngIf="shippingFee > '0'">Verandkosten: {{ shippingFee }}{{ currency.unit_symbol }}</li>
+        <li class="margin-bottom-3" *ngIf="shippingFee == '0'">Kostenloser Versand</li>
+        |
+        <li class="margin-bottom-3">Artikelzustand: {{ condition.name }}</li>
+        |
+        <li class="">Standort: {{ zip }} {{ city }}</li>
+      </ul>
+    </div>
+    <div class="margin-top-12">
+      <button (click)="publishProduct()" [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary pull-right">Jetzt veröffentlichen</button>
     </div>
   </div>
-</div>
-
-<div class="row margin-bottom-24">
-  <div class="col-xs-12">
-    <button (click)="publishProduct()" [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary pull-right">Jetzt veröffentlichen</button>
+  <div class="col-xs-12 col-sm-6">
   </div>
 </div>
