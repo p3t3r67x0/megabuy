@@ -30,7 +30,6 @@ export class ItemCategoryComponent implements OnInit {
   categories: string[];
   categoryId: string;
   userId: string;
-  token: string;
   url: string;
 
   constructor(private http: Http,
@@ -53,7 +52,6 @@ export class ItemCategoryComponent implements OnInit {
     this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
 
-    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 

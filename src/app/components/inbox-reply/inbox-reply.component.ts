@@ -34,7 +34,7 @@ export class InboxReplyComponent implements OnInit {
   replyForm: FormGroup;
   hover: boolean;
   userId: string;
-  token: string;
+  userToken: string;
   url: string;
 
   errorMessage: string;
@@ -46,6 +46,7 @@ export class InboxReplyComponent implements OnInit {
     private data: DataService) {
     this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
@@ -65,7 +66,6 @@ export class InboxReplyComponent implements OnInit {
       'message': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(15000)])]
     });
 
-    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
@@ -79,10 +79,8 @@ export class InboxReplyComponent implements OnInit {
     url = `${this.url}/api/inbox`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
-
-    console.log(this.receiver);
 
     value.subject = 'Re: ' + this.subject;
     value.user_id = this.receiver;
@@ -91,7 +89,7 @@ export class InboxReplyComponent implements OnInit {
     return this.http.post(url, value, { headers: headers })
       .toPromise()
       .then(res => {
-        console.log(res);
+        // console.log(res);
         this.replyForm.reset();
       })
       .catch(err => {

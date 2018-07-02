@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
   userAvatar: string;
   userName: string;
   fullName: string;
-  token: string;
+  userToken: string;
   url: string;
 
   constructor(private router: Router,
@@ -53,6 +53,7 @@ export class AppComponent implements OnInit {
     this.data.currentUserConfirmed.subscribe(userConfirmed => this.userConfirmed = userConfirmed);
     this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
     this.data.currentUserAvatar.subscribe(userAvatar => this.userAvatar = userAvatar);
+    this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
     this.data.currentUserName.subscribe(userName => this.userName = userName);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
 
@@ -75,7 +76,7 @@ export class AppComponent implements OnInit {
     const browserLang = translate.getBrowserLang();
     translate.use(browserLang.match(/en|de/) ? browserLang : 'en');
 
-    this.token = localStorage.getItem('token');
+    this.data.changeUserToken(localStorage.getItem('token'));
     this.url = environment.apiUrl;
   }
 
@@ -92,11 +93,12 @@ export class AppComponent implements OnInit {
   }
 
   onLogout(): void {
-    this.auth.logout(this.user, this.token)
+    this.auth.logout(this.user, this.userToken)
       .then((user) => {
         // console.log(user.json());
         this.data.changeUserStatus(false);
         this.data.changeUserName('');
+        this.data.changeUserToken('');
         localStorage.removeItem('token');
         localStorage.removeItem('admin');
         localStorage.removeItem('cm');
@@ -106,6 +108,7 @@ export class AppComponent implements OnInit {
         // console.log(err.json());
         this.data.changeUserStatus(false);
         this.data.changeUserName('');
+        this.data.changeUserToken('');
         localStorage.removeItem('token');
         localStorage.removeItem('admin');
         localStorage.removeItem('cm');
@@ -114,12 +117,14 @@ export class AppComponent implements OnInit {
   }
 
   checkUserStatus() {
-    this.auth.loginStatus(this.token)
+    this.auth.loginStatus(this.userToken)
       .then((user) => {
-        // console.log(user.json());
-
-        this.data.changeUserStatus(true);
+        console.log(user.json());
+        this.data.changeUserToken(user.json().token);
+        this.data.changeUserAvatar(this.url + '/' + user.json().avatar);
         this.data.changeUserId(user.json().user_id);
+        this.data.changeUserName(user.json().name);
+        this.data.changeUserStatus(true);
       })
       .catch((err) => {
         console.log(err);
@@ -133,7 +138,7 @@ export class AppComponent implements OnInit {
     url = `${this.url}/api/confirm/user/${this.userId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     return this.http.get(url, { headers: headers })

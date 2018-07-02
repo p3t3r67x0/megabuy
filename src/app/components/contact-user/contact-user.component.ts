@@ -36,7 +36,7 @@ export class ContactUserComponent implements OnInit {
   currentUrl: string;
   userName: string;
   userId: string;
-  token: string;
+  userToken: string;
   url: string;
 
   errorPhone: string;
@@ -49,6 +49,7 @@ export class ContactUserComponent implements OnInit {
     private layout: LayoutService,
     private data: DataService) {
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
     this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
@@ -85,14 +86,13 @@ export class ContactUserComponent implements OnInit {
   }
 
   submitContactForm(value) {
-    this.token = localStorage.getItem('token');
     let url: string;
     let headers: Headers;
 
     url = `${this.url}/api/inbox`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     value.user_id = this.product.user_id;

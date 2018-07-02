@@ -27,7 +27,6 @@ export class RadiusSearchComponent implements OnInit {
   textColor: string;
 
   url: string;
-  token: string;
   userId: string;
   hover: boolean;
   searchForm: FormGroup;
@@ -59,7 +58,6 @@ export class RadiusSearchComponent implements OnInit {
       'distance': [4, Validators.compose([Validators.required])]
     });
 
-    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
@@ -68,14 +66,12 @@ export class RadiusSearchComponent implements OnInit {
   }
 
   submitSearchForm(value) {
-    console.log(value);
     let url: string;
     let headers: Headers;
 
     url = `${this.url}/api/radius`;
     headers = new Headers({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Content-Type': 'application/json'
     });
 
     return this.http.post(url, value, { headers: headers })

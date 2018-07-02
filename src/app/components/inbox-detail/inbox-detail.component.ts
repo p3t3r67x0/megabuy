@@ -36,7 +36,7 @@ export class InboxDetailComponent implements OnInit {
   message: any = {};
   error: any = {};
   userId: string;
-  token: string;
+  userToken: string;
   url: string;
   sub: any;
 
@@ -48,6 +48,7 @@ export class InboxDetailComponent implements OnInit {
     private auth: AuthService) {
     this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
@@ -62,7 +63,6 @@ export class InboxDetailComponent implements OnInit {
     this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
 
-    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
 
     this.sub = this.route.params.subscribe(params => {
@@ -71,7 +71,6 @@ export class InboxDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.checkUserStatus();
     this.getMessageById();
   }
 
@@ -86,7 +85,7 @@ export class InboxDetailComponent implements OnInit {
     url = `${this.url}/api/inbox/user/${this.userId}/${this.messageId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     return this.http.delete(url, { headers: headers })
@@ -111,7 +110,7 @@ export class InboxDetailComponent implements OnInit {
     url = `${this.url}/api/inbox/user/${this.userId}/${this.messageId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     return this.http.put(url, read, { headers: headers })
@@ -133,7 +132,7 @@ export class InboxDetailComponent implements OnInit {
     url = `${this.url}/api/inbox/user/${userId}/${parentId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     return this.http.get(url, { headers: headers })
@@ -158,7 +157,7 @@ export class InboxDetailComponent implements OnInit {
     url = `${this.url}/api/inbox/user/${this.userId}/${this.messageId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     return this.http.get(url, { headers: headers })
@@ -175,20 +174,6 @@ export class InboxDetailComponent implements OnInit {
         if (!this.message.read) {
           this.updateMessageStatusById();
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  checkUserStatus() {
-    this.auth.loginStatus(this.token)
-      .then((user) => {
-        // console.log(user.json());
-        this.data.changeUserStatus(true);
-        this.data.changeUserId(user.json().user_id);
-        this.data.changeUserName(user.json().name);
-        this.data.changeUserConfirmed(user.json().confirmed);
       })
       .catch((err) => {
         console.log(err);

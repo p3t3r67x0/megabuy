@@ -38,7 +38,7 @@ export class ShippingFormComponent implements OnInit {
   userAddressId: string;
   userId: string;
   hover: boolean;
-  token: string;
+  userToken: string;
   url: string;
 
   checkoutForm: FormGroup;
@@ -50,6 +50,7 @@ export class ShippingFormComponent implements OnInit {
     private layout: LayoutService) {
     this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
     this.data.currentUserAddressId.subscribe(userAddressId => this.userAddressId = userAddressId);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
@@ -80,7 +81,6 @@ export class ShippingFormComponent implements OnInit {
       'paymentMethod': [null, Validators.compose([Validators.required])]
     });
 
-    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
@@ -96,7 +96,7 @@ export class ShippingFormComponent implements OnInit {
     url = `${this.url}/api/address/${this.userAddressId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     this.http.get(url, { headers: headers })
@@ -128,7 +128,7 @@ export class ShippingFormComponent implements OnInit {
     url = `${this.url}/api/order`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     const value: Order = {
@@ -154,7 +154,7 @@ export class ShippingFormComponent implements OnInit {
 
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     if (!this.userAddressId) {

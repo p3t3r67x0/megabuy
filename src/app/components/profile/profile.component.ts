@@ -41,14 +41,15 @@ export class ProfileComponent implements OnInit {
   textColor: string;
 
   loading: boolean;
-  url: string;
-  token: string;
+  userToken: string;
   userId: string;
+  url: string;
 
   constructor(private http: Http,
     private layout: LayoutService,
     private data: DataService) {
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
@@ -63,7 +64,6 @@ export class ProfileComponent implements OnInit {
     this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
 
-    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
@@ -104,7 +104,7 @@ export class ProfileComponent implements OnInit {
             url = `${self.url}/api/user/image/${self.userId}`;
 
             headers = new Headers({
-              'Authorization': `Bearer ${self.token}`
+              'Authorization': `Bearer ${self.userToken}`
             });
 
             self.http.put(url, form, { headers: headers })
@@ -135,7 +135,7 @@ export class ProfileComponent implements OnInit {
     url = `${this.url}/api/user/${this.userId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.token}`
+      Authorization: `Bearer ${this.userToken}`
     });
 
     return this.http.get(url, { headers: headers })

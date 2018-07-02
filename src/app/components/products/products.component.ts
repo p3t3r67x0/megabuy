@@ -31,7 +31,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
   url: string;
   limit: number;
   page: number;
-  token: string;
   error: any = {};
   products: any = [];
   userId: string;

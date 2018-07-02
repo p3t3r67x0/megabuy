@@ -37,7 +37,7 @@ export class InboxComponent implements OnInit {
   error: any = {};
   messages: any[];
   userId: string;
-  token: string;
+  userToken: string;
   url: string;
 
   constructor(private fb: FormBuilder,
@@ -47,6 +47,7 @@ export class InboxComponent implements OnInit {
     private auth: AuthService) {
     this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
@@ -61,7 +62,6 @@ export class InboxComponent implements OnInit {
     this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
 
-    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
     this.messages = [];
   }
@@ -89,7 +89,7 @@ export class InboxComponent implements OnInit {
 
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     for (let i = 0; i < this.messages.length; i++) {
@@ -121,7 +121,7 @@ export class InboxComponent implements OnInit {
     read = true;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     for (let j = 0; j < this.messages.length; j++) {
@@ -140,7 +140,7 @@ export class InboxComponent implements OnInit {
   }
 
   checkUserStatus() {
-    this.auth.loginStatus(this.token)
+    this.auth.loginStatus(this.userToken)
       .then((user) => {
         // console.log(user.json());
         this.data.changeUserStatus(true);
@@ -161,7 +161,7 @@ export class InboxComponent implements OnInit {
     url = `${this.url}/api/inbox/user/${this.userId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     return this.http.get(url, { headers: headers })

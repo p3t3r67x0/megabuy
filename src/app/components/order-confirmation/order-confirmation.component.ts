@@ -31,7 +31,7 @@ export class OrderConfirmationComponent implements OnInit {
   hover: boolean;
   orderId: string;
   userId: string;
-  token: string;
+  userToken: string;
   url: string;
   sub: any;
 
@@ -42,6 +42,7 @@ export class OrderConfirmationComponent implements OnInit {
     private data: DataService) {
     this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
@@ -60,7 +61,6 @@ export class OrderConfirmationComponent implements OnInit {
       this.orderId = params['id'];
     });
 
-    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
@@ -76,7 +76,7 @@ export class OrderConfirmationComponent implements OnInit {
     url = `${this.url}/api/order/${this.orderId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     this.http.get(url, { headers: headers })

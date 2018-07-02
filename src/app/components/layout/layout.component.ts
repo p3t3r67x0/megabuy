@@ -26,7 +26,7 @@ export class LayoutComponent implements OnInit {
   textColor: string;
 
   loading: boolean;
-  token: string;
+  userToken: string;
   layoutId: string;
   userId: string;
   url: string;
@@ -36,6 +36,7 @@ export class LayoutComponent implements OnInit {
     private data: DataService,
     private layout: LayoutService) {
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
@@ -56,7 +57,6 @@ export class LayoutComponent implements OnInit {
       this.loading = false;
     });
 
-    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
@@ -92,6 +92,6 @@ export class LayoutComponent implements OnInit {
     this.layout.changeLinkColor(this.linkColor);
     this.layout.changeTextColor(this.textColor);
 
-    this.layout.upadateLayout(this.layoutId, postData, this.token);
+    this.layout.upadateLayout(this.layoutId, postData, this.userToken);
   }
 }

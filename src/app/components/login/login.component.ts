@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   errorEmail: string;
   errorPassword: string;
   modalId = 'login-error';
-  rForm: FormGroup;
+  loginForm: FormGroup;
   hover: boolean;
   post: any;
 
@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
 
     this.errorEmail = 'The email address that you\'ve entered doesn\'t match any account.';
     this.errorPassword = 'Enter a combination of at least six numbers, letters and punctuation marks.';
-    this.rForm = fb.group({
+    this.loginForm = fb.group({
       'password': [null, Validators.required],
       'email': [null, Validators.compose([Validators.required, Validators.email])],
     });
@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit {
   onLogin(value): void {
     this.auth.login(value)
       .then((user) => {
-        console.log(user.json());
+        // console.log(user.json());
 
         if (user.json().user.admin) {
           this.data.changeAdminStatus(true);
@@ -117,7 +117,7 @@ export class LoginComponent implements OnInit {
         }
 
         localStorage.setItem('token', user.json().token);
-
+        this.data.changeUserToken(user.json().token);
         this.data.changeUserConfirmed(user.json().user.confirmed);
         this.data.changeUserAvatar(this.url + '/' + user.json().user.avatar);
         this.data.changeUserAddressId(user.json().user.address_id);

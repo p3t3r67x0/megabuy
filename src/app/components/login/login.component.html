@@ -1,22 +1,22 @@
-<form [formGroup]="rForm" (ngSubmit)="onLogin(rForm.value)">
+<form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)">
   <h1 [style.color]="headlineColor">Login</h1>
   <hr>
   <p [style.color]="textColor">{{ 'login_navigate_to_signup' | translate }} <a [style.color]="linkColor" routerLink="/register">{{ 'term_sign_up' | translate }}</a></p>
   <div class="form-group">
     <label [style.color]="textColor" for="email">Email</label>
     <input type="text" class="form-control" id="email" formControlName="email">
-    <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['email'].valid && rForm.controls['email'].touched">
+    <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!loginForm.controls['email'].valid && loginForm.controls['email'].touched">
       {{ errorEmail }}
     </div>
   </div>
   <div class="form-group">
     <label [style.color]="textColor" for="password">{{ 'term_password' | translate }}</label>
     <input type="password" class="form-control" id="password" formControlName="password">
-    <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">
+    <div [style.background-color]="alertColor" class="alert margin-top-9" *ngIf="!loginForm.controls['password'].valid && loginForm.controls['password'].touched">
       {{ errorPassword }}
     </div>
   </div>
-  <button [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary" [disabled]="!rForm.valid">{{ 'term_login' | translate }}</button>
+  <button [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">{{ 'term_login' | translate }}</button>
 </form>
 
 <app-modal [id]="modalId" [error]="error"></app-modal>

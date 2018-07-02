@@ -29,7 +29,7 @@ export class OrderOverviewComponent implements OnInit {
   loading: boolean;
   orders: any = [];
   userId: string;
-  token: string;
+  userToken: string;
   url: string;
 
   constructor(private http: Http,
@@ -38,6 +38,7 @@ export class OrderOverviewComponent implements OnInit {
     private data: DataService) {
     this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
@@ -52,7 +53,6 @@ export class OrderOverviewComponent implements OnInit {
     this.layout.currentInfoColor.subscribe(infoColor => this.infoColor = infoColor);
     this.layout.currentLinkColor.subscribe(linkColor => this.linkColor = linkColor);
 
-    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
@@ -68,7 +68,7 @@ export class OrderOverviewComponent implements OnInit {
     url = `${this.url}/api/order/user/${this.userId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     this.http.get(url, { headers: headers })
@@ -91,13 +91,13 @@ export class OrderOverviewComponent implements OnInit {
     url = `${this.url}/api/order/${orderId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     this.http.put(url, {}, { headers: headers })
       .toPromise()
       .then(res => {
-        console.log(res.json());
+        // console.log(res.json());
         const orderElement = document.getElementById('order-' + orderId);
         orderElement.parentNode.removeChild(orderElement);
       })

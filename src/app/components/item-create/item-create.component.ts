@@ -38,7 +38,6 @@ export class ItemCreateComponent implements OnInit {
   zip: string;
 
   url: string;
-  token: string;
   hover: boolean;
   currencies: string[];
   childCategory: any = {};
@@ -84,7 +83,6 @@ export class ItemCreateComponent implements OnInit {
       this.conditionId = '251e384c9c43';
     }
 
-    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
 
     this.itemName = localStorage.getItem('itemName');
@@ -195,7 +193,7 @@ export class ItemCreateComponent implements OnInit {
   }
 
   getAllProductCategories() {
-    this.loadAllProductCategories(this.token, -1, 1)
+    this.loadAllProductCategories(-1, 1)
       .then((productCategories) => {
         // console.log(productCategories.json());
         this.productCategories = productCategories.json()['product-categories'];
@@ -203,23 +201,17 @@ export class ItemCreateComponent implements OnInit {
       .catch((err) => {
         console.log(err.json());
         this.error = err.json();
-
-        if (err.status === 401) {
-          localStorage.removeItem('token');
-          this.router.navigateByUrl('/login');
-        }
       });
   }
 
-  loadAllProductCategories(token, limit, page) {
+  loadAllProductCategories(limit, page) {
     let url: string;
     let headers: Headers;
     const params = new URLSearchParams();
 
     url = `${this.url}/api/product-categories`;
     headers = new Headers({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      'Content-Type': 'application/json'
     });
 
     params.append('limit', limit);

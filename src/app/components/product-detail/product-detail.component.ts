@@ -39,7 +39,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   productId: string;
   userId: string;
   userName: string;
-  token: string;
   product: any = {};
   error: any = {};
 
@@ -69,7 +68,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.sub = this.route.params.subscribe(params => {
       this.productId = params['id'];
     });
-    this.token = localStorage.getItem('token');
+
     this.url = environment.apiUrl;
   }
 
@@ -120,7 +119,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         };
       })
       .catch((err) => {
-        console.log(err.json());
+        console.log(err);
         this.error = err.json();
       });
   }

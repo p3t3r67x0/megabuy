@@ -8,9 +8,13 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthGuard {
+  userToken: string;
+
   constructor(private auth: AuthService,
     private data: DataService,
-    private router: Router) { }
+    private router: Router) {
+    this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
+  }
 
   getFullName(firstName, lastName, name) {
     if (firstName && lastName) {
@@ -21,7 +25,7 @@ export class AuthGuard {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.auth.loginStatus(localStorage.getItem('token'))
+    return this.auth.loginStatus(this.userToken)
       .then((user) => {
         // console.log(user.json());
         this.data.changeUserStatus(true);
@@ -36,6 +40,7 @@ export class AuthGuard {
         // console.log(err.json());
         const url = this.router.url;
         localStorage.removeItem('token');
+        this.data.changeUserToken('');
         this.router.navigateByUrl('/login?redirect=' + url);
         return false;
       });

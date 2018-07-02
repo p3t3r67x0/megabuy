@@ -34,7 +34,7 @@ export class ProductCategoryComponent implements OnInit {
   url: string;
   limit: number;
   page: number;
-  token: string;
+  userToken: string;
   hover: boolean;
   editField: string;
   error: any = {};
@@ -50,6 +50,7 @@ export class ProductCategoryComponent implements OnInit {
     private data: DataService) {
     this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
@@ -70,7 +71,6 @@ export class ProductCategoryComponent implements OnInit {
       'description': [null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(500)])],
     });
 
-    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
@@ -90,7 +90,7 @@ export class ProductCategoryComponent implements OnInit {
   }
 
   addProductCategory(value) {
-    this.postProductCategory(value, this.token)
+    this.postProductCategory(value, this.userToken)
       .then((user) => {
         // console.log(user.json());
 
@@ -107,7 +107,7 @@ export class ProductCategoryComponent implements OnInit {
   }
 
   updateEntry(productCategory) {
-    this.updateProductCategory(productCategory, this.token)
+    this.updateProductCategory(productCategory, this.userToken)
       .then((res) => {
         // console.log(res.json());
       })
@@ -119,7 +119,7 @@ export class ProductCategoryComponent implements OnInit {
   }
 
   removeProductCategory(productCategoryId) {
-    this.deleteProductCategory(this.token, productCategoryId)
+    this.deleteProductCategory(this.userToken, productCategoryId)
       .then((productCategory) => {
         // console.log(productCategory.json());
         for (let i = 0; i < this.productCategories.length; i++) {
@@ -136,7 +136,7 @@ export class ProductCategoryComponent implements OnInit {
   }
 
   getProductCategories() {
-    this.loadProductCategories(this.token, this.limit, this.page)
+    this.loadProductCategories(this.userToken, this.limit, this.page)
       .then(res => {
         // console.log(res.json()['product-categories']);
         this.loading = false;
@@ -147,7 +147,7 @@ export class ProductCategoryComponent implements OnInit {
       });
   }
 
-  loadProductCategories(token, limit, page) {
+  loadProductCategories(userToken, limit, page) {
     let url: string;
     let headers: Headers;
     const params = new URLSearchParams();
@@ -155,7 +155,7 @@ export class ProductCategoryComponent implements OnInit {
     url = `${this.url}/api/product-categories/user`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      'Authorization': `Bearer ${userToken}`
     });
 
     params.append('limit', limit);
@@ -164,40 +164,40 @@ export class ProductCategoryComponent implements OnInit {
     return this.http.get(url, { params: params, headers: headers }).toPromise();
   }
 
-  updateProductCategory(productCategory, token) {
+  updateProductCategory(productCategory, userToken) {
     let url: string;
     let headers: Headers;
 
     url = `${this.url}/api/product-category/${productCategory.id}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${userToken}`
     });
 
     return this.http.put(url, productCategory, { headers: headers }).toPromise();
   }
 
-  deleteProductCategory(token, productCategoryId) {
+  deleteProductCategory(userToken, productCategoryId) {
     let url: string;
     let headers: Headers;
 
     url = `${this.url}/api/product-category/${productCategoryId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      'Authorization': `Bearer ${userToken}`
     });
 
     return this.http.delete(url, { headers: headers }).toPromise();
   }
 
-  postProductCategory(product, token): Promise<any> {
+  postProductCategory(product, userToken): Promise<any> {
     let url: string;
     let headers: Headers;
 
     url = `${this.url}/api/product-category`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      'Authorization': `Bearer ${userToken}`
     });
 
     return this.http.post(url, product, { headers: headers }).toPromise();

@@ -57,11 +57,11 @@ export class ProductUserTagComponent implements OnInit, OnDestroy {
     this.sub = this.route.params.subscribe(params => {
       this.userId = params['id'];
     });
+
     this.url = environment.apiUrl;
   }
 
   ngOnInit() {
-    this.checkUserStatus();
     this.getProducts();
   }
 
@@ -71,20 +71,6 @@ export class ProductUserTagComponent implements OnInit, OnDestroy {
 
   showProducts(products) {
     this.router.navigateByUrl('/');
-  }
-
-  checkUserStatus() {
-    this.auth.loginStatus(localStorage.getItem('token'))
-      .then((user) => {
-        // console.log(user.json());
-        this.data.changeUserStatus(true);
-        this.data.changeUserId(user.json().user_id);
-        this.data.changeUserName(user.json().name);
-        this.data.changeUserConfirmed(user.json().confirmed);
-      })
-      .catch((err) => {
-        console.log(err.json());
-      });
   }
 
   getProducts() {

@@ -34,7 +34,7 @@ export class SettingsComponent implements OnInit {
   userForm: FormGroup;
   pattern: string;
   hover: boolean;
-  token: string;
+  userToken: string;
   userId: string;
   error: any = {};
   url: string;
@@ -56,6 +56,7 @@ export class SettingsComponent implements OnInit {
     private data: DataService) {
     this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
@@ -87,7 +88,6 @@ export class SettingsComponent implements OnInit {
       'bio': [null, Validators.compose([Validators.minLength(30), Validators.maxLength(500)])]
     });
 
-    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
@@ -97,7 +97,7 @@ export class SettingsComponent implements OnInit {
   }
 
   submitUserForm(user) {
-    this.updateUser(user, this.token, this.userId)
+    this.updateUser(user, this.userToken, this.userId)
       .then((res) => {
         // console.log(res.json());
       })
@@ -106,7 +106,7 @@ export class SettingsComponent implements OnInit {
         this.error = err.json();
 
         if (err.status === 401) {
-          localStorage.removeItem('token');
+          localStorage.removeItem('userToken');
           this.router.navigateByUrl('/login');
         }
 
@@ -114,14 +114,14 @@ export class SettingsComponent implements OnInit {
       });
   }
 
-  updateUser(user, token, userId) {
+  updateUser(user, userToken, userId) {
     let url: string;
     let headers: Headers;
 
     url = `${this.url}/api/user/${userId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${userToken}`
     });
 
     return this.http.put(url, user, { headers: headers }).toPromise();
@@ -136,7 +136,7 @@ export class SettingsComponent implements OnInit {
   }
 
   getUser() {
-    this.loadUser(this.token, this.userId)
+    this.loadUser(this.userToken, this.userId)
       .then((user) => {
         // console.log(user.json());
         this.loading = false;
@@ -177,20 +177,20 @@ export class SettingsComponent implements OnInit {
         this.error = err.json();
 
         if (err.status === 401) {
-          localStorage.removeItem('token');
+          localStorage.removeItem('userToken');
           this.router.navigateByUrl('/login');
         }
       });
   }
 
-  loadUser(token, userId) {
+  loadUser(userToken, userId) {
     let url: string;
     let headers: Headers;
 
     url = `${this.url}/api/user/${userId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      'Authorization': `Bearer ${userToken}`
     });
 
     return this.http.get(url, { headers: headers }).toPromise();

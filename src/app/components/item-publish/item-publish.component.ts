@@ -46,7 +46,7 @@ export class ItemPublishComponent implements OnInit {
   userName: string;
   hover: boolean;
   userId: string;
-  token: string;
+  userToken: string;
   url: string;
 
   constructor(private http: Http,
@@ -56,6 +56,7 @@ export class ItemPublishComponent implements OnInit {
     this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
     this.data.currentUserName.subscribe(userName => this.userName = userName);
+    this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
     this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
@@ -82,7 +83,6 @@ export class ItemPublishComponent implements OnInit {
     this.city = localStorage.getItem('city');
     this.zip = localStorage.getItem('zip');
 
-    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
@@ -140,7 +140,7 @@ export class ItemPublishComponent implements OnInit {
     url = `${this.url}/api/product`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     const post = {

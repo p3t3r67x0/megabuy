@@ -90,7 +90,7 @@ export class RegisterComponent implements OnInit {
             console.log(err);
           });
 
-        localStorage.setItem('token', user.json().token);
+        this.data.changeUserToken(user.json().token);
         this.router.navigateByUrl('/product');
       })
       .catch((err) => {

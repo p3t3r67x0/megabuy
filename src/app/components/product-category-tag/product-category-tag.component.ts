@@ -61,25 +61,10 @@ export class ProductCategoryTagComponent implements OnInit, OnDestroy {
       this.categoryId = params['id'];
       this.getProducts();
     });
-    this.checkUserStatus();
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
-  }
-
-  checkUserStatus() {
-    this.auth.loginStatus(localStorage.getItem('token'))
-      .then((user) => {
-        // console.log(user.json());
-        this.data.changeUserStatus(true);
-        this.data.changeUserId(user.json().user_id);
-        this.data.changeUserName(user.json().name);
-        this.data.changeUserConfirmed(user.json().confirmed);
-      })
-      .catch((err) => {
-        console.log(err.json());
-      });
   }
 
   getProducts() {

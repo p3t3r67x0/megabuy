@@ -28,7 +28,6 @@ export class CheckoutComponent implements OnInit {
   productId: string;
   userId: string;
   product: any = {};
-  token: string;
   url: string;
   sub: any;
 
@@ -56,7 +55,6 @@ export class CheckoutComponent implements OnInit {
       this.productId = params['id'];
     });
 
-    this.token = localStorage.getItem('token');
     this.url = environment.apiUrl;
   }
 
@@ -76,7 +74,7 @@ export class CheckoutComponent implements OnInit {
     return this.http.get(url, { headers: headers })
       .toPromise()
       .then((product) => {
-        console.log(product.json());
+        // console.log(product.json());
         this.product = product.json();
       })
       .catch((err) => {
