@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Headers, Http, URLSearchParams } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,7 +13,7 @@ import { environment } from '../../../environments/environment';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
-export class ProductsComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit {
   backgroundColor: string;
   headlineColor: string;
   warningColor: string;
@@ -27,6 +27,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   linkColor: string;
   textColor: string;
 
+  searchResults: string[];
   loading: boolean;
   url: string;
   limit: number;
@@ -44,6 +45,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private auth: AuthService) {
     this.data.changeIsPublicPage(true);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentSearchResults.subscribe(searchResults => this.products = searchResults);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
@@ -62,23 +64,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.limit = -1;
     this.page = 1;
-    this.sub = this.route.params.subscribe(params => {
-      this.query = params['query'];
-
-      if (this.query) {
-        this.queryProducts();
-      } else {
-        this.getAllProducts();
-      }
-
-      this.loading = true;
-    });
-  }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.getAllProducts();
   }
 
   getAllProducts() {
@@ -100,34 +89,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
     const params = new URLSearchParams();
 
     url = `${this.url}/api/products`;
-    headers = new Headers({
-      'Content-Type': 'application/json'
-    });
-
-    params.append('limit', limit);
-    params.append('page', page);
-
-    return this.http.get(url, { params: params, headers: headers }).toPromise();
-  }
-
-  queryProducts() {
-    this.getQueryProducts(this.limit, this.page)
-      .then((products) => {
-        // console.log(products);
-        this.loading = false;
-        this.products = products.json().products;
-      })
-      .catch((err) => {
-        console.log(err.json());
-      });
-  }
-
-  getQueryProducts(limit, page) {
-    let url: string;
-    let headers: Headers;
-    const params = new URLSearchParams();
-
-    url = `${this.url}/api/search/${this.query}`;
     headers = new Headers({
       'Content-Type': 'application/json'
     });

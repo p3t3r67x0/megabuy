@@ -34,6 +34,7 @@ export class RadiusSearchComponent implements OnInit {
 
   constructor(private http: Http,
     private layout: LayoutService,
+    private router: Router,
     private fb: FormBuilder,
     private data: DataService) {
     this.data.currentUserId.subscribe(userId => this.userId = userId);
@@ -78,6 +79,8 @@ export class RadiusSearchComponent implements OnInit {
       .toPromise()
       .then(res => {
         console.log(res.json());
+        this.data.changeSearchResults(res.json().products);
+        this.router.navigateByUrl('/');
       })
       .catch(err => {
         console.log(err.json());

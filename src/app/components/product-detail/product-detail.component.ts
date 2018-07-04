@@ -108,15 +108,17 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         this.product = product.json();
         this.imageLength = this.product.image.split(',').length;
 
-        this.marker = marker([product.json().lat, product.json().lng]);
-        this.options = {
-          layers: [
-            tileLayer('https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', { maxZoom: 18 }), this.marker
-          ],
-          zoom: 15,
-          scrollWheelZoom: false,
-          center: latLng(product.json().lat, product.json().lng)
-        };
+        if (product.json().lat && product.json().lng) {
+          this.marker = marker([product.json().lat, product.json().lng]);
+          this.options = {
+            layers: [
+              tileLayer('https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', { maxZoom: 18 }), this.marker
+            ],
+            zoom: 15,
+            scrollWheelZoom: false,
+            center: latLng(product.json().lat, product.json().lng)
+          };
+        }
       })
       .catch((err) => {
         console.log(err);
