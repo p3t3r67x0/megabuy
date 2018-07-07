@@ -9,7 +9,7 @@
   <div id="firstChoise" class="col-sm-4">
     <ul class="list-group list-unstyled">
       <li *ngFor="let category of categories">
-        <div id="item-{{ category.id }}" class="list-group-item" (click)="querySubCategory(category.id); addClassActive(category.id, 'firstChoise');">
+        <div id="item-{{ category.id }}" class="category list-group-item" (click)="querySubCategory(category.id); addClassActive(category.id, 'firstChoise');">
           {{ category.name }}
         </div>
       </li>
@@ -18,7 +18,7 @@
   <div id="secondChoise" class="col-sm-4">
     <ul *ngIf="showSubCategories" class="list-unstyled list-group">
       <li *ngFor="let category of subCategories">
-        <div id="item-{{ category.id }}" class="list-group-item" (click)="addClassActive(category.id, 'secondChoise')">
+        <div id="item-{{ category.id }}" class="category list-group-item" (click)="addClassActive(category.id, 'secondChoise')">
           {{ category.name }}
         </div>
       </li>

@@ -161,6 +161,10 @@ a.inbox-links:hover {
   opacity: 0.5;
 }
 
+.category.list-group-item:hover {
+  cursor: pointer;
+}
+
 .margin-bottom-0 {
   margin-bottom: 0;
 }
@@ -552,8 +556,6 @@ a.inbox-links:hover {
   color: #95a5a6;
 }
 
-.current {}
-
 .tags a {
   float: left;
   position: relative;
@@ -562,11 +564,12 @@ a.inbox-links:hover {
   margin-left: 20px;
   padding: 0 12px;
   line-height: 30px;
-  background: #ff0055;
+  background: #36CFE7;
   color: #fff;
   font-size: 18px;
   font-weight: 600;
   text-decoration: none;
+  z-index: 8000;
 }
 
 .tags a:before {
@@ -588,13 +591,13 @@ a.inbox-links:hover {
   -webkit-border-radius: 2px;
   border-radius: 2px;
   background: #fff;
-  -moz-box-shadow: -1px -1px 2px #e6004c;
-  -webkit-box-shadow: -1px -1px 2px #e6004c;
-  box-shadow: -1px -1px 2px #e6004c;
+  -moz-box-shadow: -1px -1px 2px #36CFE7;
+  -webkit-box-shadow: -1px -1px 2px #36CFE7;
+  box-shadow: -1px -1px 2px #36CFE7;
 }
 
 .tags a:hover {
-  background: #e6004c;
+  background: #36CFE7;
 }
 
 /* Add rounded corners to right end of the anchor tag */
@@ -612,7 +615,7 @@ a.inbox-links:hover {
 
 .price-tag a:before {
   left: -15px;
-  border-color: transparent #ff0055 transparent transparent;
+  border-color: transparent #36CFE7 transparent transparent;
   border-width: 15px 15px 15px 0;
 }
 
@@ -623,7 +626,7 @@ a.inbox-links:hover {
 }
 
 .price-tag a:hover:before {
-  border-color: transparent #e6004c transparent transparent;
+  border-color: transparent #36CFE7 transparent transparent;
 }
 
 .inbox-checkbox-btn {
