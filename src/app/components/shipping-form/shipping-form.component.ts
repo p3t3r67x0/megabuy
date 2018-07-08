@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../services/data.service';
 import { LayoutService } from '../../services/layout.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 
 interface Order {

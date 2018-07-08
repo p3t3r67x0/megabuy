@@ -24,7 +24,7 @@
         <li><a [style.color]="linkColor" data-toggle="tab" href="#menu3">{{ 'term_reviews' | translate }}</a></li>
         <li class="pull-right">
           <div style="align-self: flex-end">
-            <button [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="button" class="margin-bottom-12 btn btn-primary">
+            <button (click)="addToWishlist()" [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="button" class="margin-bottom-12 btn btn-primary">
               {{ 'term_add_wishlist' | translate }}
             </button>
           </div>

@@ -35,7 +35,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   hover: boolean;
   marker: any = {};
   options: any = {};
+  userToken: string;
+  currentUrl: string;
   imageLength: number;
+  isLoggedIn: boolean;
   productId: string;
   userId: string;
   userName: string;
@@ -51,6 +54,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     private auth: AuthService) {
     this.data.changeIsPublicPage(true);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
+    this.data.currentUserStatus.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);
     this.layout.currentHeadlineColor.subscribe(headlineColor => this.headlineColor = headlineColor);
@@ -74,6 +79,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loading = true;
+    this.currentUrl = this.router.url;
     this.getProductById();
   }
 
@@ -89,6 +95,36 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     const el = this.element.nativeElement.querySelector('div.col-xs-12.margin-bottom-12');
     const src = event.target;
     el.innerHTML = src.outerHTML;
+  }
+
+  addToWishlist() {
+    if (!this.isLoggedIn) {
+      return this.router.navigateByUrl('/login?redirect=' + this.currentUrl);
+    }
+
+    let url: string;
+    let headers: Headers;
+
+    url = `${this.url}/api/wishlist`;
+
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.userToken}`
+    });
+
+    const post = {
+      'product_id': this.productId,
+      'user_id': this.userId
+    };
+
+    return this.http.post(url, post, { headers: headers })
+      .toPromise()
+      .then(res => {
+        console.log(res.json());
+      })
+      .catch((err) => {
+        console.log(err.json());
+      });
   }
 
   getProductById() {

@@ -135,7 +135,7 @@ export class ProfileComponent implements OnInit {
     url = `${this.url}/api/user/${this.userId}`;
     headers = new Headers({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.userToken}`
+      'Authorization': `Bearer ${this.userToken}`
     });
 
     return this.http.get(url, { headers: headers })

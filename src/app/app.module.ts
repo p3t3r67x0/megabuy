@@ -41,6 +41,7 @@ import { RadiusSearchComponent } from './components/radius-search/radius-search.
 import { ItemCategoryComponent } from './components/item-category/item-category.component';
 import { ItemCreateComponent } from './components/item-create/item-create.component';
 import { ItemPublishComponent } from './components/item-publish/item-publish.component';
+import { WishlistComponent } from './components/wishlist/wishlist.component';
 
 import { AuthService } from './services/auth.service';
 import { DataService } from './services/data.service';
@@ -94,6 +95,11 @@ export function HttpLoaderFactory(http: HttpClient) {
       {
         path: 'product',
         component: ProductComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'wishlist',
+        component: WishlistComponent,
         canActivate: [AuthGuard]
       },
       {
@@ -206,7 +212,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RadiusSearchComponent,
     ItemCategoryComponent,
     ItemCreateComponent,
-    ItemPublishComponent
+    ItemPublishComponent,
+    WishlistComponent
   ],
   providers: [
     AuthService,

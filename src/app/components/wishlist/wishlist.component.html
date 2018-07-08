@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h1>Wunschliste</h1>
+    <ul *ngIf="products" class="list-unstyled margin-bottom-0">
+      <li class="margin-bottom-24 white" *ngFor="let product of products">
+        <div class="row">
+          <div class="col-md-4 box-product-image">
+            <a routerLink="/product/{{ product.id }}">
+              <img width="100%" height="auto" src="{{ url }}/{{ product.thumbnail }}">
+            </a>
+          </div>
+          <div class="col-md-8 box-product-text">
+            <div class="padding-right-12 padding-bottom-12 padding-left-12">
+              <div class="pos-absolute pos-right-12">
+                <span class="tags">
+              	<span class="price-tag"><a href="javascript:void()">{{ product.price }}{{ product.currency }}</a></span>
+                </span>
+              </div>
+              <p class="margin-bottom-0"><a [style.color]="headlineColor" routerLink="/product/{{ product.id }}" class="h4">{{ product.name }}</a></p>
+              <p [style.color]="textColor" class="margin-bottom-12"><small>By <a [style.color]="linkColor" routerLink="/user/{{ product.user_id }}">{{ product.user_name }}</a> in <a [style.color]="linkColor" routerLink="/category/{{ product.category_id }}">{{ product.category }}</a></small></p>
+              <p [style.color]="textColor" class="margin-bottom-0">{{ (product.description.length > 300) ? (product.description | slice: 0: 300) + '...' : product.description }}</p>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div [style.color]="textColor" [style.background-color]="infoColor" class="alert" *ngIf="products.length == 0">Ooooo there are no items on your wishlist!</div>
+  </div>
+</div>

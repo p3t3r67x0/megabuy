@@ -119,8 +119,7 @@ export class AppComponent implements OnInit {
   checkUserStatus() {
     this.auth.loginStatus(this.userToken)
       .then((user) => {
-        console.log(user.json());
-        this.data.changeUserToken(user.json().token);
+        // console.log(user.json());
         this.data.changeUserAvatar(this.url + '/' + user.json().avatar);
         this.data.changeUserId(user.json().user_id);
         this.data.changeUserName(user.json().name);
