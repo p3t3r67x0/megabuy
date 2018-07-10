@@ -45,7 +45,8 @@ export class LoginComponent implements OnInit {
   fullName: string;
   userConfirmed: boolean;
   redirectUrl: string;
-  isAdmin: string;
+  currentUrl: string;
+  isAdmin: boolean;
   error: any = {};
   token: string;
   url: string;
@@ -90,7 +91,9 @@ export class LoginComponent implements OnInit {
     this.url = environment.apiUrl;
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.currentUrl = this.router.url;
+  }
 
   onLogin(value): void {
     this.auth.login(value)

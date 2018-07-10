@@ -7,7 +7,7 @@ export class LoginRedirectService implements CanActivate {
 
   canActivate(): boolean {
     if (localStorage.getItem('token')) {
-      this.router.navigateByUrl('/users');
+      this.router.navigateByUrl('/product');
       return false;
     } else {
       return true;

@@ -6,7 +6,7 @@ export class DataService {
   private isPublicPage = new BehaviorSubject<boolean>(false);
   private userConfirmedMessage = new BehaviorSubject<string>('');
   private userConfirmed = new BehaviorSubject<boolean>(false);
-  private userAdminStatus = new BehaviorSubject<string>('');
+  private userAdminStatus = new BehaviorSubject<boolean>(false);
   private userStatus = new BehaviorSubject<boolean>(false);
   private userAvatar = new BehaviorSubject<string>('');
   private userName = new BehaviorSubject<string>('');

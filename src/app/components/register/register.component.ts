@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { LayoutService } from '../../services/layout.service';
+import { environment } from '../../../environments/environment';
 import { User } from '../../models/user';
 
 declare var jquery: any;
@@ -34,6 +35,7 @@ export class RegisterComponent implements OnInit {
   errorEmail: string;
   errorPassword: string;
   modalId = 'signup-error';
+  redirectUrl: string;
   rForm: FormGroup;
   hover: boolean;
   post: any;
@@ -42,9 +44,12 @@ export class RegisterComponent implements OnInit {
   isLoggedIn: boolean;
   users: String[];
   error: any = {};
+  url: string;
+  sub: any;
 
   constructor(private fb: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private layout: LayoutService,
     private data: DataService,
     private auth: AuthService) {
@@ -71,6 +76,12 @@ export class RegisterComponent implements OnInit {
       'password': [null, Validators.required],
       'email': [null, Validators.compose([Validators.required, Validators.email])],
     });
+
+    this.sub = this.route.queryParams.subscribe(params => {
+      this.redirectUrl = params['redirect'];
+    });
+
+    this.url = environment.apiUrl;
   }
 
   ngOnInit() { }
@@ -90,8 +101,20 @@ export class RegisterComponent implements OnInit {
             console.log(err);
           });
 
+        localStorage.setItem('token', user.json().token);
         this.data.changeUserToken(user.json().token);
-        this.router.navigateByUrl('/product');
+        this.data.changeUserConfirmed(user.json().user.confirmed);
+        this.data.changeUserAvatar(this.url + '/' + user.json().user.avatar);
+        this.data.changeUserAddressId(user.json().user.address_id);
+        this.data.changeUserId(user.json().user.public_id);
+        this.data.changeUserName(user.json().name);
+        this.data.changeUserStatus(true);
+
+        if (this.redirectUrl !== '/login') {
+          this.router.navigateByUrl(this.redirectUrl);
+        } else {
+          this.router.navigateByUrl('/product');
+        }
       })
       .catch((err) => {
         this.error = err.json();

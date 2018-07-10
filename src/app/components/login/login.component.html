@@ -1,7 +1,7 @@
 <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)">
   <h1 [style.color]="headlineColor">Login</h1>
   <hr>
-  <p [style.color]="textColor">{{ 'login_navigate_to_signup' | translate }} <a [style.color]="linkColor" routerLink="/register">{{ 'term_sign_up' | translate }}</a></p>
+  <p [style.color]="textColor">{{ 'login_navigate_to_signup' | translate }} <a [style.color]="linkColor" [routerLink]="['/register']" [queryParams]="{redirect: currentUrl}">{{ 'term_sign_up' | translate }}</a></p>
   <div class="form-group">
     <label [style.color]="textColor" for="email">Email</label>
     <input type="text" class="form-control" id="email" formControlName="email">

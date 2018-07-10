@@ -46,6 +46,7 @@ export class SettingsComponent implements OnInit {
   errorEmail: string;
 
   name: string;
+  isAdmin: boolean;
   fullName: string;
   userName: string;
 
@@ -56,6 +57,7 @@ export class SettingsComponent implements OnInit {
     private data: DataService) {
     this.data.changeIsPublicPage(false);
     this.data.currentUserId.subscribe(userId => this.userId = userId);
+    this.data.currentAdminStatus.subscribe(isAdmin => this.isAdmin = isAdmin);
     this.data.currentUserToken.subscribe(userToken => this.userToken = userToken);
 
     this.layout.currentBackgroundColor.subscribe(backgroundColor => this.backgroundColor = backgroundColor);

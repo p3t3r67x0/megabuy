@@ -156,7 +156,7 @@ a.inbox-links:hover {
   margin-top: -20px;
   background-color: #000;
   width: 100%;
-  height: calc(100% - 50px);
+  height: calc(100% - 130px);
   z-index: 800;
   opacity: 0.5;
 }

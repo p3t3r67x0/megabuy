@@ -87,7 +87,7 @@ export class AppComponent implements OnInit {
   }
 
   setElementHeight(event) {
-    const height = document.querySelector('.min-height-100').scrollHeight - 53 + 'px';
+    const height = document.querySelector('.min-height-100').scrollHeight - 133 + 'px';
     const element = <HTMLElement>document.querySelector('.confirm-restricted');
     element.style.height = height;
   }

@@ -12,7 +12,6 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { UsersComponent } from './components/users/users.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { ProductComponent } from './components/product/product.component';
 import { ProductsComponent } from './components/products/products.component';
@@ -86,11 +85,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         path: 'register',
         component: RegisterComponent,
         canActivate: [LoginRedirectService]
-      },
-      {
-        path: 'users',
-        component: UsersComponent,
-        canActivate: [AuthGuard]
       },
       {
         path: 'product',
@@ -183,7 +177,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    UsersComponent,
     ModalComponent,
     PaginationComponent,
     ProductComponent,

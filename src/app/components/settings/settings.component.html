@@ -62,7 +62,7 @@
       </div>
     </div>
   </div>
-  <app-layout></app-layout>
+  <app-layout *ngIf="isAdmin"></app-layout>
 </div>
 
 <app-modal [error]="error"></app-modal>

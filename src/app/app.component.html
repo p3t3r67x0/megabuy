@@ -29,13 +29,12 @@
               {{ userName }} <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li *ngIf="isAdmin"><a class="nav-link" routerLink="/users">{{ 'term_users' | translate }}</a></li>
               <li><a class="nav-link" routerLink="/inbox">{{ 'term_inbox' | translate }}</a></li>
               <li><a class="nav-link" routerLink="/wishlist">Wunschliste</a></li>
               <li><a class="nav-link" routerLink="/item-category">Anzeige aufgeben</a></li>
               <li><a class="nav-link" routerLink="/orders">{{ 'term_my_orders' | translate }}</a></li>
               <li><a class="nav-link" routerLink="/product">{{ 'term_my_products' | translate }}</a></li>
-              <li><a class="nav-link" routerLink="/product-category">{{ 'term_my_categories' | translate }}</a></li>
+              <li *ngIf="isAdmin"><a class="nav-link" routerLink="/product-category">{{ 'term_my_categories' | translate }}</a></li>
               <li><a class="nav-link" routerLink="/settings">{{ 'term_settings' | translate }}</a></li>
               <li><a class="nav-link" (click)="onLogout()" style="cursor: pointer;">{{ 'term_logout' | translate }}</a></li>
             </ul>
