@@ -24,7 +24,8 @@
         <li><a [style.color]="linkColor" data-toggle="tab" href="#menu3">{{ 'term_reviews' | translate }}</a></li>
         <li class="pull-right">
           <div style="align-self: flex-end">
-            <button (click)="addToWishlist()" [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="button" class="margin-bottom-12 btn btn-primary">
+            <aside *ngIf="showItemAddedToWishlist" class="margin-top-9 text-success">{{ 'term_item_on_wishlist' | translate }}</aside>
+            <button *ngIf="!showItemAddedToWishlist" (click)="addToWishlist()" [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="button" class="margin-bottom-12 btn btn-primary">
               {{ 'term_add_wishlist' | translate }}
             </button>
           </div>
@@ -34,16 +35,16 @@
       <div class="tab-content">
         <div id="home" class="padding-15 tab-pane fade in active">
           <p class="margin-bottom-24 reader-settings">{{ product.description }}</p>
-          <h4 class="margin-bottom-0">Artikelzustand</h4>
+          <h4 class="margin-bottom-0">{{ 'term_item_condition' | translate }}</h4>
           <p class="margin-bottom-0">{{ product.condition }}</p>
           <div *ngIf="product.zip && product.city">
-            <h4 class="margin-bottom-0 margin-top-24">Artikelstandort</h4>
+            <h4 class="margin-bottom-0 margin-top-24">{{ 'term_item_location' | translate }}</h4>
             <p class="margin-bottom-12">{{ product.zip }} {{ product.city }}</p>
             <div *ngIf="product.lat && product.lng" style="height: 300px;" leaflet [leafletOptions]="options"></div>
           </div>
         </div>
         <div id="menu3" class="padding-15 tab-pane fade">
-          <p class="margin-bottom-0">Der Verkäufer ist für dieses Angebot verantwortlich.</p>
+          <p class="margin-bottom-0">{{ 'term_seller_responsible' | translate }}</p>
         </div>
       </div>
     </div>

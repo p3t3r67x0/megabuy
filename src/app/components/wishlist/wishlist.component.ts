@@ -28,6 +28,7 @@ export class WishlistComponent implements OnInit {
   userId: string;
   userToken: string;
   products: any = [];
+  loading: boolean;
 
   constructor(private http: Http,
     private router: Router,
@@ -54,6 +55,7 @@ export class WishlistComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.getWishlist();
   }
 
@@ -70,10 +72,34 @@ export class WishlistComponent implements OnInit {
     this.http.get(url, { headers: headers })
       .toPromise()
       .then(res => {
-        console.log(res.json());
+        // console.log(res.json());
+        this.loading = false;
         this.products = res.json().wishlist;
       })
       .catch(err => {
+        console.log(err.json());
+      });
+  }
+
+  removeFromWishlist(productId) {
+    let url: string;
+    let headers: Headers;
+
+    url = `${this.url}/api/wishlist/${productId}`;
+
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.userToken}`
+    });
+
+    return this.http.delete(url, { headers: headers })
+      .toPromise()
+      .then(res => {
+        // console.log(res.json());
+        const wishlistElement = document.getElementById('item-' + productId);
+        wishlistElement.parentNode.removeChild(wishlistElement);
+      })
+      .catch((err) => {
         console.log(err.json());
       });
   }

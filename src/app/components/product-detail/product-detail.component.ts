@@ -39,6 +39,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   currentUrl: string;
   imageLength: number;
   isLoggedIn: boolean;
+  showItemAddedToWishlist: boolean;
   productId: string;
   userId: string;
   userName: string;
@@ -81,6 +82,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.currentUrl = this.router.url;
     this.getProductById();
+    this.isItemOnWishlist();
   }
 
   ngOnDestroy() {
@@ -121,6 +123,32 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       .toPromise()
       .then(res => {
         console.log(res.json());
+        this.showItemAddedToWishlist = true;
+      })
+      .catch((err) => {
+        console.log(err.json());
+      });
+  }
+
+  isItemOnWishlist() {
+    let url: string;
+    let headers: Headers;
+
+    url = `${this.url}/api/wishlist/${this.productId}`;
+
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.userToken}`
+    });
+
+    return this.http.get(url, { headers: headers })
+      .toPromise()
+      .then(res => {
+        // console.log(res.json().wishlist);
+
+        if (res.json().wishlist) {
+          this.showItemAddedToWishlist = true;
+        }
       })
       .catch((err) => {
         console.log(err.json());

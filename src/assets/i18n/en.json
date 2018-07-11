@@ -61,5 +61,10 @@
   "term_country": "Country",
   "term_continue_checkout": "Continue to checkout",
   "term_shipping_fee": "Shipping fee",
-  "term_my_orders": "My orders"
+  "term_my_orders": "My orders",
+  "term_item_condition": "Item condition",
+  "term_item_location": "Item location",
+  "term_item_on_wishlist": "On your wishlist",
+  "term_seller_responsible": "Seller assumes all responsibility for this item.",
+  "": ""
 }

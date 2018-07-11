@@ -61,5 +61,10 @@
   "term_country": "Land",
   "term_continue_checkout": "Weiter zur Kasse",
   "term_shipping_fee": "Versandgebühr",
-  "term_my_orders": "Meine Bestellungen"
+  "term_my_orders": "Meine Bestellungen",
+  "term_item_condition": "Artikelzustand",
+  "term_item_location": "Artikelstandort",
+  "term_item_on_wishlist": "Auf deiner Wunschliste",
+  "term_seller_responsible": "Der Verkäufer ist für dieses Angebot verantwortlich.",
+  "": ""
 }

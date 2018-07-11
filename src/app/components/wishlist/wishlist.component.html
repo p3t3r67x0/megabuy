@@ -2,7 +2,7 @@
   <div class="col-xs-12">
     <h1>Wunschliste</h1>
     <ul *ngIf="products" class="list-unstyled margin-bottom-0">
-      <li class="margin-bottom-24 white" *ngFor="let product of products">
+      <li id="item-{{ product.id }}" class="margin-bottom-24 white" *ngFor="let product of products">
         <div class="row">
           <div class="col-md-4 box-product-image">
             <a routerLink="/product/{{ product.id }}">
@@ -20,10 +20,21 @@
               <p [style.color]="textColor" class="margin-bottom-12"><small>By <a [style.color]="linkColor" routerLink="/user/{{ product.user_id }}">{{ product.user_name }}</a> in <a [style.color]="linkColor" routerLink="/category/{{ product.category_id }}">{{ product.category }}</a></small></p>
               <p [style.color]="textColor" class="margin-bottom-0">{{ (product.description.length > 300) ? (product.description | slice: 0: 300) + '...' : product.description }}</p>
             </div>
+            <div class="col-xs-12 margin-bottom-12">
+              <button class="btn btn-xs btn-danger pull-right" (click)="removeFromWishlist(product.id)">Von Wunschliste entfernen</button>
+            </div>
           </div>
         </div>
       </li>
     </ul>
+    <div *ngIf="loading" style="display: flex; align-items: center; justify-content: center;">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
     <div [style.color]="textColor" [style.background-color]="infoColor" class="alert" *ngIf="products.length == 0">Ooooo there are no items on your wishlist!</div>
   </div>
 </div>
