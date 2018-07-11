@@ -19,16 +19,15 @@
         </div>
       </div>
 
-      <ul class="nav nav-tabs padding-left-12 padding-right-12">
+      <ul class="nav nav-tabs padding-left-12 padding-right-12 display-flex">
         <li class="active"><a [style.color]="linkColor" data-toggle="tab" href="#home">{{ 'term_description' | translate }}</a></li>
-        <li><a [style.color]="linkColor" data-toggle="tab" href="#menu3">{{ 'term_reviews' | translate }}</a></li>
-        <li class="pull-right">
-          <div style="align-self: flex-end">
-            <aside *ngIf="showItemAddedToWishlist" class="margin-top-9 text-success">{{ 'term_item_on_wishlist' | translate }}</aside>
-            <button *ngIf="!showItemAddedToWishlist" (click)="addToWishlist()" [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false" type="button" class="margin-bottom-12 btn btn-primary">
+        <li><a [style.color]="linkColor" data-toggle="tab" href="#productNote">Hinweis</a></li>
+        <li class="pull-right" style="align-self: flex-end; margin-left: auto;">
+          <aside *ngIf="showItemAddedToWishlist" style="margin-bottom: 11px;" class="text-success">{{ 'term_item_on_wishlist' | translate }}</aside>
+          <button *ngIf="!showItemAddedToWishlist" (click)="addToWishlist()" [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false"
+            type="button" style="margin-bottom: 8px;" class="margin-left-12 btn btn-primary">
               {{ 'term_add_wishlist' | translate }}
             </button>
-          </div>
         </li>
       </ul>
 
@@ -43,7 +42,7 @@
             <div *ngIf="product.lat && product.lng" style="height: 300px;" leaflet [leafletOptions]="options"></div>
           </div>
         </div>
-        <div id="menu3" class="padding-15 tab-pane fade">
+        <div id="productNote" class="padding-15 tab-pane fade">
           <p class="margin-bottom-0">{{ 'term_seller_responsible' | translate }}</p>
         </div>
       </div>
@@ -65,7 +64,7 @@
       <button (click)="onBuyNow()" [style.border-color]="successColor" [ngStyle]="hover ? { 'background-color': successColor | color: -0.1 } : { 'background-color': successColor }" (mouseover)="hover=true" (mouseleave)="hover=false" class="full-width btn btn-success">{{ 'term_buy_now' | translate }}</button>
     </div>
     <app-contact-user [product]="product"></app-contact-user>
-    <div class="padding-15 margin-bottom-24 white">
+    <div class="padding-15 white">
       <h4 [style.color]="headlineColor" class="margin-top-0">{{ 'term_seller_information' | translate }}</h4>
       <p class="margin-bottom-0">By <a [style.color]="linkColor" routerLink="/user/{{ product.user_id }}">{{ product.user_name }}</a> in <a [style.color]="linkColor" routerLink="/category/{{ product.category_id }}">{{ product.category }}</a></p>
     </div>

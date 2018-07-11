@@ -159,7 +159,7 @@ export class ItemPublishComponent implements OnInit {
     return this.http.post(url, post, { headers: headers })
       .toPromise()
       .then(res => {
-        console.log(res.json());
+        // console.log(res.json());
 
         localStorage.removeItem('itemName');
         localStorage.removeItem('categoryId');
@@ -176,6 +176,10 @@ export class ItemPublishComponent implements OnInit {
       })
       .catch(err => {
         console.log(err);
+
+        if (err.json().status === 'not authorized') {
+          return this.router.navigateByUrl('/login?redirect=' + this.currentUrl);
+        }
       });
   }
 }

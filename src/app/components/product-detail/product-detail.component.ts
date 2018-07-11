@@ -122,11 +122,15 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     return this.http.post(url, post, { headers: headers })
       .toPromise()
       .then(res => {
-        console.log(res.json());
+        // console.log(res.json());
         this.showItemAddedToWishlist = true;
       })
       .catch((err) => {
         console.log(err.json());
+
+        if (err.json().status === 'not authorized') {
+          return this.router.navigateByUrl('/login?redirect=' + this.currentUrl);
+        }
       });
   }
 

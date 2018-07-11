@@ -72,7 +72,7 @@ export class WishlistComponent implements OnInit {
     this.http.get(url, { headers: headers })
       .toPromise()
       .then(res => {
-        // console.log(res.json());
+        // console.log(res.json().wishlist);
         this.loading = false;
         this.products = res.json().wishlist;
       })
