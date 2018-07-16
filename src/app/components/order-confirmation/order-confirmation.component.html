@@ -1,14 +1,14 @@
 <div class="row">
   <div class="col-xs-12 col-sm-8 margin-bottom-24">
-    <h1>Order</h1>
-    <div *ngIf="!loading" class="wrapper margin-bottom-24">
+    <h1>Bestellung</h1>
+    <div *ngIf="!loading && order" class="wrapper margin-bottom-24">
       <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-2 padding-right-0">
           <img src="{{ url }}/{{ order.thumbnail }}" width="100%" height="auto">
         </div>
         <div class="col-sm-10">
           <p class="margin-bottom-0"><strong>{{ order.name }}</strong></p>
-          <p>{{ order.description }}</p>
+          <p class="margin-bottom-0">{{ order.description }}</p>
         </div>
       </div>
     </div>
@@ -34,19 +34,11 @@
         </div>
       </div>
       <div class="col-xs-12 margin-bottom-24">
-        <button class="btn btn-primary btn-lg btn-block" [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false">Jetzt zahlungspflichtig kaufen</button>
-      </div>
-    </div>
-    <div *ngIf="loading" style="display: flex; align-items: center; justify-content: center;">
-      <div class="lds-ring">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <button (click)="OnBuyNow(order.id)" class="btn btn-primary btn-lg btn-block" [style.border-color]="buttonColor" [ngStyle]="hover ? { 'background-color': buttonColor | color: -0.1 } : { 'background-color': buttonColor }" (mouseover)="hover=true" (mouseleave)="hover=false">Jetzt zahlungspflichtig kaufen</button>
       </div>
     </div>
   </div>
-  <div class="col-xs-12 col-sm-4">
+  <div *ngIf="!loading" class="col-xs-12 col-sm-4">
     <h1 class="text-muted display-flex justify-content-between align-items-center">
       Kasse
       <span class="badge badge-secondary badge-pill">1</span>
@@ -72,3 +64,13 @@
     </ul>
   </div>
 </div>
+
+<div *ngIf="loading" style="display: flex; align-items: center; justify-content: center;">
+  <div class="lds-ring">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+<div [style.color]="textColor" [style.background-color]="infoColor" class="alert" *ngIf="!order">Order was not found!</div>

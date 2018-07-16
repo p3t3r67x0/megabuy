@@ -57,6 +57,7 @@
   "term_city": "City",
   "term_address": "Adsress",
   "term_zipcode": "Zipcode",
+  "term_zip_abbr": "zip",
   "term_state": "State",
   "term_country": "Country",
   "term_continue_checkout": "Continue to checkout",
@@ -66,5 +67,7 @@
   "term_item_location": "Item location",
   "term_item_on_wishlist": "On your wishlist",
   "term_seller_responsible": "Seller assumes all responsibility for this item.",
+  "term_item_description": "Item description",
+  "term_location": "Location",
   "": ""
 }

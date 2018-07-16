@@ -105,7 +105,7 @@ export class LayoutService {
 
     return this.http.get(url, { headers: headers }).toPromise()
       .then(res => {
-        console.log(res.json());
+        // console.log(res.json());
         this.changeBackgroundColor(res.json().layout.background);
         this.changeHeadlineColor(res.json().layout.headline);
         this.changeWarningColor(res.json().layout.warning);

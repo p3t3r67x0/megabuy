@@ -27,12 +27,13 @@ export class OrderConfirmationComponent implements OnInit {
   textColor: string;
 
   loading: boolean;
-  order: any = {};
-  hover: boolean;
+  currentUrl: string;
+  userToken: string;
   orderId: string;
   userId: string;
-  userToken: string;
+  hover: boolean;
   url: string;
+  order: any = {};
   sub: any;
 
   constructor(private route: ActivatedRoute,
@@ -65,6 +66,7 @@ export class OrderConfirmationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentUrl = this.router.url;
     this.loading = true;
     this.getOrder();
   }
@@ -88,6 +90,39 @@ export class OrderConfirmationComponent implements OnInit {
       })
       .catch(err => {
         console.log(err.json());
+
+        if (err.json().status === 'not found') {
+          return this.router.navigateByUrl('/orders');
+        }
+      });
+  }
+
+  OnBuyNow(orderId) {
+    let url: string;
+    let headers: Headers;
+
+    url = `${this.url}/api/order/status/${orderId}`;
+    headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.userToken}`
+    });
+
+    return this.http.put(url, {}, { headers: headers })
+      .toPromise()
+      .then(res => {
+        console.log(res.json());
+        return this.router.navigateByUrl('/orders');
+      })
+      .catch(err => {
+        console.log(err);
+
+        if (err.json().status === 'not authorized') {
+          this.data.changeUserStatus(false);
+          this.data.changeUserName('');
+          this.data.changeUserToken('');
+          localStorage.removeItem('token');
+          return this.router.navigateByUrl('/login?redirect=' + this.currentUrl);
+        }
       });
   }
 

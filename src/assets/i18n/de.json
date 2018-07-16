@@ -57,14 +57,17 @@
   "term_city": "Stadt",
   "term_address": "Adresse",
   "term_zipcode": "Postleitzahl",
+  "term_zip_abbr": "PLZ",
   "term_state": "Bundesland",
   "term_country": "Land",
   "term_continue_checkout": "Weiter zur Kasse",
-  "term_shipping_fee": "Versandgebühr",
+  "term_shipping_fee": "Versandkosten",
   "term_my_orders": "Meine Bestellungen",
   "term_item_condition": "Artikelzustand",
   "term_item_location": "Artikelstandort",
   "term_item_on_wishlist": "Auf deiner Wunschliste",
   "term_seller_responsible": "Der Verkäufer ist für dieses Angebot verantwortlich.",
+  "term_item_description": "Artikelbezeichnung",
+  "term_location": "Ort",
   "": ""
 }

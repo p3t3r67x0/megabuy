@@ -14,7 +14,7 @@ textarea {
   min-height: 100px;
 }
 
-p {
+p, h1, h4, .h4 {
   word-break: break-all;
 }
 
@@ -341,11 +341,14 @@ a.inbox-links:hover {
   padding: 0;
 }
 
+.form-navbar-container {
+  display: flex;
+  -webkit-box-orient: vertical;
+  flex-direction: column;
+}
+
 .form-navbar-element {
-  margin-top: 2px;
   margin-bottom: 3px;
-  display: inline;
-  width: 153px;
 }
 
 .navbar {
@@ -403,6 +406,10 @@ a.inbox-links:hover {
 
 .navbar-toggle {
   background-color: #efefef;
+}
+
+.navbar-form {
+  margin-top: 8px;
 }
 
 .btn.btn-success {
@@ -471,6 +478,10 @@ a.inbox-links:hover {
     -moz-column-count: 2;
     -webkit-column-count: 2;
     column-count: 2;
+  }
+  .form-navbar-container {
+    -webkit-box-orient: horizontal;
+    flex-direction: row;
   }
 }
 
@@ -717,9 +728,6 @@ a.inbox-links:hover {
   }
   .box-order-date {
     float: right;
-  }
-  .navbar-form {
-    margin-top: 7px;
   }
 }
 

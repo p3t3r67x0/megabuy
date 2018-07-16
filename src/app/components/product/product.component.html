@@ -1,4 +1,4 @@
-<h1>{{ 'term_my_products' | translate }}</h1>
+<h1 class="margin-bottom-0">{{ 'term_my_products' | translate }}</h1>
 <div class="row">
   <div class="masonry-container" *ngIf="products.length > 0">
     <div class="masonry-brick margin-bottom-24 col-sm-6" *ngFor="let product of products">
@@ -20,7 +20,7 @@
         <div *ngIf="editField == product.id" class="row" id="{{ product.id }}">
           <div class="col-xs-12">
             <div class="form-group margin-top-12">
-              <label for="name-{{ product.id }}">Artikelbezeichnung</label>
+              <label for="name-{{ product.id }}">{{ 'term_item_description' | translate }}</label>
               <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.name" type="text" placeholder="Flowers" name="name" id="name-{{ product.id }}">
             </div>
             <div class="form-group">
@@ -32,7 +32,7 @@
               <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.price" type="text" placeholder="37€" name="price" id="price-{{ product.id }}">
             </div>
             <div class="form-group col-xs-4 padding-left-0 padding-right-0">
-              <label for="shippingFee-{{ product.id }}">Versandkosten</label>
+              <label for="shippingFee-{{ product.id }}">{{ 'term_shipping_fee' | translate }}</label>
               <input class="form-control" (blur)="updateEntry(product)" [(ngModel)]="product.shipping_fee" type="text" placeholder="37€" name="price" id="shippingFee-{{ product.id }}">
             </div>
             <div class="form-group col-xs-4 padding-right-0">
@@ -48,8 +48,8 @@
             </select>
             </div>
             <div class="form-group">
-              <label for="condition-{{ product.id }}" [style.color]="textColor">Artikelzustand</label>
-              <select class="form-control" (change)="updateEntry(product)" title="Artikelzustand" [(ngModel)]="product.condition_id" id="condition-{{ product.id }}">
+              <label for="condition-{{ product.id }}" [style.color]="textColor">{{ 'term_item_condition' | translate }}</label>
+              <select class="form-control" (change)="updateEntry(product)" title="{{ 'term_item_condition' | translate }}" [(ngModel)]="product.condition_id" id="condition-{{ product.id }}">
               <option *ngFor="let condition of productConditions" [ngValue]="condition.id">{{ condition.name }}</option>
             </select>
             </div>
@@ -58,11 +58,11 @@
               <input type="file" name="thumbnail" (change)="onFileSelected($event, product.id)" multiple id="thumbnail-{{ product.id }}">
             </div>
             <div class="col-xs-4 padding-left-0 padding-right-0">
-              <label for="zip-{{ product.id }}" [style.color]="textColor">PLZ</label>
+              <label for="zip-{{ product.id }}" [style.color]="textColor">{{ 'term_zip_abbr' | translate }}</label>
               <input class="form-control" (blur)="updateEntry(product)" name="zip" [(ngModel)]="product.zip" type="text" id="zip-{{ product.id }}">
             </div>
             <div class="col-xs-8 padding-right-0">
-              <label for="city-{{ product.id }}" [style.color]="textColor">Ort</label>
+              <label for="city-{{ product.id }}" [style.color]="textColor">{{ 'term_location' | translate }}</label>
               <input class="form-control" (blur)="updateEntry(product)" name="city" [(ngModel)]="product.city" type="text" id="city-{{ product.id }}">
             </div>
           </div>

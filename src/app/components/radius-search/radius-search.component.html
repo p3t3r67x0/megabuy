@@ -1,12 +1,12 @@
 <form [formGroup]="searchForm" class="navbar-form navbar-left padding-left-0" (ngSubmit)="submitSearchForm(searchForm.value)" role="search">
-  <div class="form-group">
+  <div class="form-group form-navbar-container">
     <input type="text" class="form-control form-navbar-element" formControlName="search" placeholder="Was suchst du?">
-    <select class="form-control form-navbar-element" formControlName="category">
+    <select class="form-control form-navbar-element hidden-xs" formControlName="category">
       <option value="">Alle Kategorien</option>
       <option *ngFor="let productCategory of productCategories" value="{{ productCategory.id }}">{{ productCategory.name }}</option>
     </select>
     <input type="text" class="form-control form-navbar-element" formControlName="city_or_zip" placeholder="PLZ oder Ort">
-    <select class="form-control form-navbar-element" formControlName="distance">
+    <select class="form-control form-navbar-element hidden-xs" formControlName="distance">
       <option value="1">5km</option>
       <option value="2">10km</option>
       <option value="3">15km</option>

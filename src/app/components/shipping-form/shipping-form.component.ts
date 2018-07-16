@@ -10,6 +10,7 @@ interface Order {
   user_id: string;
   product_id: string;
   address_id: string;
+  status: string;
 }
 
 
@@ -36,6 +37,7 @@ export class ShippingFormComponent implements OnInit {
 
   loading: boolean;
   userAddressId: string;
+  currentUrl: string;
   userId: string;
   hover: boolean;
   userToken: string;
@@ -85,6 +87,7 @@ export class ShippingFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentUrl = this.router.url;
     this.loading = true;
     this.getAddress();
   }
@@ -112,7 +115,6 @@ export class ShippingFormComponent implements OnInit {
           'city': res.json().address.city,
           'state': res.json().address.state,
           'zipcode': res.json().address.zipcode,
-          'address': res.json().address.street,
           'country': res.json().address.country
         });
       })
@@ -134,13 +136,14 @@ export class ShippingFormComponent implements OnInit {
     const value: Order = {
       user_id: userId,
       product_id: productId,
-      address_id: addressId
+      address_id: addressId,
+      status: 'pending'
     };
 
     return this.http.post(url, value, { headers: headers })
       .toPromise()
       .then(res => {
-        console.log(res.json());
+        // console.log(res.json());
         this.router.navigateByUrl('/order/' + res.json().id);
       })
       .catch(err => {
@@ -163,7 +166,7 @@ export class ShippingFormComponent implements OnInit {
       return this.http.post(url, value, { headers: headers })
         .toPromise()
         .then(res => {
-          console.log(res.json());
+          // console.log(res.json());
           this.createOrder(res.json().id, this.userId, this.productId);
         })
         .catch(err => {
@@ -175,11 +178,15 @@ export class ShippingFormComponent implements OnInit {
       return this.http.put(url, value, { headers: headers })
         .toPromise()
         .then(res => {
-          console.log(res.json());
+          // console.log(res.json());
           this.createOrder(this.userAddressId, this.userId, this.productId);
         })
         .catch(err => {
           console.log(err);
+
+          if (err.json().status === 'not authorized') {
+            return this.router.navigateByUrl('/login?redirect=' + this.currentUrl);
+          }
         });
     }
   }
